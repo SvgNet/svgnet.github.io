@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>SVG Arc to fucntion test</title>
+</head>
+
+<body>
+	<p>
+		<button onclick="generate()" class="button-primary">GENERATE</button>
+		<button onclick="triggerDownload()" class="button-primary">DOWNLOAD</button>
+	</p>
+	<div id="svg_wrapper">
+		<svg width="500" height="500" style="border:2px solid black;padding:4px" id="fig" xmlns="http://www.w3.org/2000/svg" version="1.1">
+		</svg>
+	</div>
+</body>
+<script>
+	crcText = function(x1, y1, rad, x2, y2, ccw) {
+		return ('M' + x1 + ',' + y1 + 'A' + rad + ',' + rad + ' 0 0,' + ccw + ' ' + x2 + ',' + y2)
+	};
+
+	function create_path(path_str, stroke_clr, stroke_wth, fill_clr, id_name) {
+		newpath = document.createElementNS('http://www.w3.org/2000/svg', "path");
+		newpath.setAttributeNS(null, "d", path_str);
+		newpath.setAttributeNS(null, "stroke", stroke_clr);
+		newpath.setAttributeNS(null, "stroke-width", stroke_wth);
+		newpath.setAttributeNS(null, "fill", fill_clr);
+		newpath.setAttribute("id", id_name);
+		document.getElementById("fig").appendChild(newpath);
+	};
+
+	function generate() {
+
+		for (var k = 0; k < 45; k++) {
+			var sw = .5;
+			if (k % 5) sw = .1;
+
+			var r = 250;
+			var cx = 250;
+			var cy = 250;
+			var arc_text = "";
+
+			arc_text = crcText(r, 0, r / Math.cos(torad(k * 2)), r, 2 * r, 0);
+			create_path(arc_text, "black", sw, "none");
+			arc_text = crcText(r, 0, r / Math.cos(torad(k * 2)), r, 2 * r, 1);
+			create_path(arc_text, "black", sw, "none");
+
+			arc_text = crcText(cx + r * Math.sin(torad(k * 2)), cy - r * Math.cos(torad(k * 2)), r * Math.tan(torad(k * 2)), cx - r * Math.sin(torad(k * 2)), cy - r * Math.cos(torad(k * 2)), 1);
+			create_path(arc_text, "black", sw, "none");
+			arc_text = crcText(cx + r * Math.sin(torad(k * 2)), cy + r * Math.cos(torad(k * 2)), r * Math.tan(torad(k * 2)), cx - r * Math.sin(torad(k * 2)), cy + r * Math.cos(torad(k * 2)), 0);
+			create_path(arc_text, "black", sw, "none");
+
+		}
+		document.getElementById("fig").innerHTML += ('<circle cx="250" cy="250" r="250" stroke="black" stroke-width=".5" fill="none" /><line x1="250" y1="0" x2="250" y2="500" stroke="black" stroke-width=".5"/> <line x1="0" y1="250" x2="500" y2="250" stroke="black" stroke-width=".5"/>');
+
+		var gsss = crcText(250, 0, 250 / Math.cos(torad(40)), 250, 500, 1);
+		create_path(gsss, "blue", .6, "none", "plane1");
+		var center = new pt(250, 250);
+		rotate_path("plane1", 45, center);
+
+	};
+
+	function pt(x_cord, y_cord) {
+		this.x = x_cord;
+		this.y = y_cord;
+	}
+
+	rotate_path = function(path_id, deg, cen) {
+		document.getElementById(path_id).setAttribute("transform", "rotate(" + deg + " " + cen.x + " " + cen.y + ")");
+	};
+	torad = function(degrees) {
+		return degrees * Math.PI / 180;
+	};
+
+	todeg = function(radians) {
+		return radians * 180 / Math.PI;
+	};
+
+	function toBase64(str) {
+		return window.btoa(unescape(encodeURIComponent(str)));
+	};
+
+	function triggerDownload() {
+		var html = 'data:text/attachment;base64,' + toBase64(document.getElementById('svg_wrapper').innerHTML);
+		var evt = new MouseEvent('click', {
+			view: window,
+			bubbles: false,
+			cancelable: true
+		});
+
+		var a = document.createElement('a');
+		a.setAttribute('download', 'gs.svg');
+		a.setAttribute('href', html);
+		a.setAttribute('target', '_blank');
+
+		a.dispatchEvent(evt);
+	};
+
+</script>
+
+</html>
