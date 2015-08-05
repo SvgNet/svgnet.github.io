@@ -17,3 +17,9 @@ function triggerDownload() {
 
 	a.dispatchEvent(evt);
 }
+
+var ur_pl = [];
+
+function addPl() {
+	ur_pl.push(new Plane(+document.getElementById("st").value, +document.getElementById("dd").value, "red", 0.5, "user_plane" + ur_pl.length));
+}
