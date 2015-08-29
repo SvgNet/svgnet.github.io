@@ -21,19 +21,19 @@ function todeg(radians) {
 	return radians * 180 / Math.PI;
 }
 
-function tp2cart(plunge, trend) {
+function Wtp2cart(plunge, trend) {
 	return (new Pt(
-		radius_primitive * Math.tan(Math.PI / 4 - 0.5 * torad(plunge)) * Math.sin(torad(trend)),
-		radius_primitive * Math.tan(Math.PI / 4 - 0.5 * torad(plunge)) * Math.cos(torad(trend))
+		radius_primitive * Math.tan(Math.PI / 4 - 0.5 * plunge) * Math.sin(trend),
+		radius_primitive * Math.tan(Math.PI / 4 - 0.5 * plunge) * Math.cos(trend)
 	));
 }
 
-function crcText(x1, y1, radius, x2, y2, ccw) {
-	return ('M' + x1 + ',' + y1 + 'A' + radius + ',' + radius + ' 0 0,' + ccw + ' ' + x2 + ',' + y2);
-}
-//"
 function linText(start, end) {
 	return ('M' + cart2svg(start).x + ',' + cart2svg(start).y + 'L' + cart2svg(end).x + ',' + cart2svg(end).y);
+}
+
+function pathtext(point) {
+	return ("M" + point.x + "," + point.y);
 }
 
 function arcText(start_angle, radius, end_angle, ccw) {
@@ -80,32 +80,63 @@ function Plane(strike, dip, clr, lwidth, id) {
 	this.strike = strike;
 	this.dip = dip;
 
-	if (this.dip !== 90) {
-		this.plot = new Path_obj(arcText(strike, radius_primitive / Math.cos(torad(this.dip)), 180 + strike, 1), clr, lwidth, "none", 0, id);
-	} else {
-		this.plot = new Path_obj(
-			linText(
-				new Pt(radius_primitive * Math.sin(torad(strike)), radius_primitive * Math.cos(torad(strike))),
-				new Pt(radius_primitive * Math.sin(torad(strike + 180)), radius_primitive * Math.cos(torad(strike + 180)))
-			), clr, lwidth, "none", 0, id);
+	this.draw = function () {
+		if (this.dip !== 90) {
+			this.plot = new Path_obj(
+				arcText(
+					this.strike, radius_primitive / Math.cos(torad(this.dip)), 180 + this.strike, 1),
+				clr, lwidth, "none", 0, id);
+		} else {
+			this.plot = new Path_obj(
+				linText(
+					new Pt(radius_primitive * Math.sin(torad(this.strike)), radius_primitive * Math.cos(torad(this.strike))),
+					new Pt(radius_primitive * Math.sin(torad(this.strike + 180)), radius_primitive * Math.cos(torad(this.strike + 180)))
+				), clr, lwidth, "none", 0, id);
+		}
 	}
+	if (clr != undefined)
+		this.draw();
 
 	this.modify = function () {
 		this.plot.newpath.parentNode.removeChild(this.plot.newpath);
-		this.plot = new Path_obj(arcText(this.strike, radius_primitive / Math.cos(torad(this.dip)), 180 + this.strike, 1), clr, lwidth, "none", 0, id);
-	};
+		this.draw();
+	}
 }
 
 function Line(trend, plunge, clr, id) {
 	this.trend = trend;
 	this.plunge = plunge;
-	this.plot = new Circ_obj(new tp2cart(plunge, trend), 2, clr, 3, "none", 0, id);
+	if (clr !== undefined) {
+		this.plot = new Circ_obj(new Wtp2cart(torad(plunge), torad(trend)), 2, clr, 3, "none", 0, id);
+	}
 	this.modify = function () {
 		this.plot.newpath.parentNode.removeChild(this.plot.newpath);
-		this.plot = new Circ_obj(new tp2cart(plunge, trend), 2, clr, 3, "none", 0, id);
-};
+		this.plot = new Circ_obj(new Wtp2cart(torad(plunge), torad(trend)), 2, clr, 3, "none", 0, id);
+
+	};
 }
 
+function LineonPlane(onPlane, pitch, op_flag, clr, id) {
+	if ((op_flag === true) && pitch != 90) {
+		onPlane.strike += 180;
+		pitch = 180 - pitch;
+	}
+	this.plunge = Math.asin(Math.sin(torad(onPlane.dip)) * Math.sin(torad(pitch)));
+	this.trend = torad(onPlane.strike) + Math.atan(Math.cos(torad(onPlane.dip)) * Math.tan(torad(pitch)));
+	if (clr !== undefined) {
+		this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, "red", 1.5, clr, 0, id);
+	}
+	this.plunge = todeg(this.plunge);
+	this.trend = todeg(this.trend);
+}
+
+function PoletoPlane(ofPlane, clr, id) {
+	this.plunge = 90 - ofPlane.dip;
+	this.trend = ofPlane.strike + 270;
+	if (clr !== undefined) {
+		this.plot = new Circ_obj(new Wtp2cart(torad(this.plunge), torad(this.trend)), 2, "blue", 1.5, clr, 0, id);
+	}
+}
 
 function WuffNet() {
 	var k = 0;
@@ -114,16 +145,16 @@ function WuffNet() {
 		if (k % 5) {
 			sw = 0.1;
 		}
-		new Plane(0, k * 2, "black", sw, "gc" + k);
-		new Plane(180, k * 2, "black", sw, "gc" + 90 + k);
+		Plane(0, k * 2, "black", sw, "gc" + k*2);
+		Plane(180, k * 2, "black", sw, "gc" + 90 + k*2);
 		Path_obj(arcText(k * 2, radius_primitive * Math.tan(torad(k * 2)), 360 - k * 2, 1), "black", sw, "none", 0, "sc" + k * 2);
 		Path_obj(arcText(180 + k * 2, radius_primitive * Math.tan(torad(k * 2)), 180 - k * 2, 1), "black", sw, "none", 0, "sc" + 180 + k * 2);
 
 	}
-	new Plane(0, 90, "black", 0.5, "plane0by90");
-	new Plane(90, 90, "black", 0.5, "plane90by90");
+	Plane(0, 90, "black", 0.5, "gc90");
+	Plane(90, 90, "black", 0.5, "sc90");
 	this.cls = function () {
 		document.getElementById("fig").innerHTML = "";
-	}
+	};
 
 }

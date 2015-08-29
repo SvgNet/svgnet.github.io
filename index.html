@@ -2,28 +2,204 @@
 <html>
 
 <head>
-	<title>SVG Arc to fucntion test</title>
+	<title>SvgNet</title>
 </head>
-<script src="wuff.js"></script>
-<script src="util.js"></script>
+<script src="js/wuff.js"></script>
+<script src="js/util.js"></script>
+
+<link rel="stylesheet" href="css/material.grey-amber.min.css">
+<script src="js/material.min.js"></script>
+<!--<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">-->
+<link rel="stylesheet" href="css/material.icons.css">
+<style>
+	.ifield {
+		display: inline-flex;
+	}
+
 </style>
 
 <body>
-	<p>
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+		<header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+				<span class="mdl-layout-title">SvgNet</span>
+				<div class="mdl-layout-spacer"></div>
 
-	</p>
-	<div class="icard">
-		<h3>Add Plane to Plot</h3>
-		<h4>Follow the Right Hand Rule</h4> Strike
-		<input type="number" id="st" max="360" min="0"> Dip
-		<input type="number" id="dd" max="90" min="0">
-		<button onclick="addPl()" class="btn-large waves-effect waves-light waves-grey center-align black">Draw</button>
-		<button onclick="x= new WuffNet()" class="btn-large waves-effect waves-light waves-yellow center-align teal lighten-3">GENERATE</button>
-		<button onclick="triggerDownload()" class="btn-large waves-effect waves-light waves-yellow center-align teal lighten-3">DOWNLOAD</button>
-	</div>
-	<div id="svg_wrapper">
-		<svg width="512" height="512" id="fig" xmlns="http://www.w3.org/2000/svg" version="1.1">
-		</svg>
+				<button id="menu-speed" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+					<i class="material-icons">more_vert</i>
+				</button>
+				<ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="menu-speed">
+					<li class="mdl-menu__item">Fast</li>
+					<li class="mdl-menu__item">Medium</li>
+					<li class="mdl-menu__item">Slow</li>
+				</ul>
+
+			</div>
+		</header>
+		<div class="mdl-layout__drawer">
+			<span class="mdl-layout-title">Preferences</span>
+			<nav class="mdl-navigation">
+				<div class="mdl-navigation__link">
+					<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="shownet">
+						<input type="checkbox" id="shownet" class="mdl-switch__input" onchange="wuffOn()" />
+						<span class="mdl-switch__label">Wuffnet Grids off/on</span>
+					</label>
+				</div>
+				<div class="mdl-navigation__link">
+					<label>
+						<span class="mdl-switch__label">Rotate Net</span>
+						<p style="width:100%">
+							<input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotatenet" min="0" max="359" value="0" step="1" oninput="rotateWuff()" />
+						</p>
+					</label>
+				</div>
+			</nav>
+		</div>
+		<main class="mdl-layout__content">
+			<div class="mdl-grid ">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-shadow--2dp">
+
+					<div id="svg_wrapper">
+						<svg width="100%" viewBox="0 0 512 512" id="fig" xmlns="http://www.w3.org/2000/svg" version="1.1">
+							<circle cx="256" cy="256" r="250" stroke="#ccc" stroke-width="2" fill="none"></circle>
+						</svg>
+					</div>
+					<hr>
+					<button onclick="triggerDownload()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+										Download Plot
+									</button>
+
+				</div>
+
+
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-shadow--4dp">
+					<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+						<div class="mdl-tabs__tab-bar mdl-color--grey-200 ">
+							<a href="#readme" class="mdl-tabs__tab is-active">Instructions</a>
+							<a href="#iPl" class="mdl-tabs__tab">Planes</a>
+							<a href="#iLn" class="mdl-tabs__tab">Lines</a>
+						</div>
+						<div class="mdl-tabs__panel mdl-grid is-active" id="readme">
+							<div class="mdl-card__title mdl-color--accent mdl-cell mdl-cell--12-col">
+								<h4>
+      The Right Hand Rule(RHR) i.e strike + 90&deg;&#61;dip direction is to be followed when entering the data
+    </h4>
+							</div>
+						</div>
+						<div class="mdl-tabs__panel mdl-grid mdl-color--accent" id="iPl">
+							<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text ifield">
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="st" max="360" min="0" step=".1">
+										<label class="mdl-textfield__label" for="st"> Strike</label>
+									</div>
+									<div class="mdl-layout-spacer"></div>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="dd" max="90" min="0" step=".1">
+										<label class="mdl-textfield__label" for="dd"> Dip</label>
+									</div>
+
+								</div>
+								<div class="mdl-card__actions ">
+									<button onclick="addPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+										Add Plane
+									</button>
+								</div>
+							</div>
+							<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text ifield">
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="pst" max="360" min="0" step=".1">
+										<label class="mdl-textfield__label" for="pst"> Strike</label>
+									</div>
+									<div class="mdl-layout-spacer"></div>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="pdd" max="90" min="0" step=".1">
+										<label class="mdl-textfield__label" for="pdd"> Dip</label>
+									</div>
+
+								</div>
+								<div class="mdl-card__actions">
+									<button onclick="addPoPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+										Add Pole to Plane
+									</button>
+								</div>
+							</div>
+
+						</div>
+						<div class="mdl-tabs__panel mdl-grid mdl-color--accent" id="iLn">
+							<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text ifield">
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="tr" max="360" min="0" step=".1">
+										<label class="mdl-textfield__label" for="tr"> Trend</label>
+									</div>
+									<div class="mdl-layout-spacer"></div>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="pl" max="90" min="0" step=".1">
+										<label class="mdl-textfield__label" for="pl"> Plunge</label>
+									</div>
+
+								</div>
+								<div class="mdl-card__actions ">
+									<button onclick="addLn()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+										Add Line
+									</button>
+								</div>
+							</div>
+							<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text ifield">
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="rst" max="360" min="0" step=".1">
+										<label class="mdl-textfield__label" for="rst"> Strike</label>
+									</div>
+									<div class="mdl-layout-spacer"></div>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="rdd" max="90" min="0" step=".1">
+										<label class="mdl-textfield__label" for="rdd"> Dip</label>
+									</div>
+									<div class="mdl-layout-spacer"></div>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="rpi" max="90" min="0" step=".1">
+										<label class="mdl-textfield__label" for="rpi">Rake/Pitch</label>
+									</div>
+								</div>
+								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ropfl">
+									<input type="checkbox" id="ropfl" class="mdl-checkbox__input" />
+									<span class="mdl-checkbox__label">Rake taken from 180+strike end</span>
+								</label>
+								<div class="mdl-card__actions">
+									<button onclick="addLnPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+										Add Line from Pitch/Rake data
+									</button>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<footer class="mdl-mini-footer">
+				<div class="mdl-mini-footer__left-section">
+					<div class="mdl-logo">
+						Mini-footer Heading
+					</div>
+					<ul class="mdl-mini-footer__link-list">
+						<li><a href="">Link 1</a></li>
+						<li><a href="">Link 2</a></li>
+						<li><a href="">Link 3</a></li>
+					</ul>
+				</div>
+				<div class="mdl-mini-footer__right-section">
+					<button class="mdl-mini-footer__social-btn"></button>
+					<button class="mdl-mini-footer__social-btn"></button>
+					<button class="mdl-mini-footer__social-btn"></button>
+				</div>
+			</footer>
+		</main>
+
+
 	</div>
 
 </body>
