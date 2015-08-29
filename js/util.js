@@ -42,6 +42,7 @@ function addLnPl() {
 function wuffOn() {
 
 	if (document.getElementById("shownet").checked) {
+		document.getElementById("rotatenet").removeAttribute("disabled");
 		x = new WuffNet();
 	} else {
 		for (var i = 0; i < 45; i++) {
@@ -52,13 +53,14 @@ function wuffOn() {
 		}
 		document.getElementById("fig").removeChild(document.getElementById("sc90"));
 		document.getElementById("fig").removeChild(document.getElementById("gc90"));
+		document.getElementById("rotatenet").setAttribute("disabled",true)
 	}
 }
 
 function rotateWuff() {
+	var deg = document.getElementById("rotatenet").value;
 	if (document.getElementById("shownet").checked) {
-		var deg = document.getElementById("rotatenet").value;
-		document.getElementById("rotatenet").setAttribute("data-badge",deg)
+		document.getElementById("rotatenet").setAttribute("data-badge", deg)
 		for (var i = 0; i < 45; i++) {
 			document.getElementById("gc" + i * 2).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
 			document.getElementById("gc" + 90 + i * 2).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
@@ -67,5 +69,26 @@ function rotateWuff() {
 		}
 		document.getElementById("sc90").setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
 		document.getElementById("gc90").setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+	}
+}
+
+function rotateOl() {
+	var deg = document.getElementById("rotateol").value;
+	document.getElementById("rotateol").setAttribute("data-badge", deg);
+	if (ur_pl.length) {
+		for (var i = 0; i < ur_pl.length; i++)
+			document.getElementById(ur_pl[i].plot.id).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+	}
+	if (ur_ln.length) {
+		for (var i = 0; i < ur_ln.length; i++)
+			document.getElementById(ur_ln[i].plot.id).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+	}
+	if (ur_popl.length) {
+		for (var i = 0; i < ur_popl.length; i++)
+			document.getElementById(ur_popl[i].plot.id).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+	}
+	if (ur_lnpl.length) {
+		for (var i = 0; i < ur_lnpl.length; i++)
+			document.getElementById(ur_lnpl[i].plot.id).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
 	}
 }
