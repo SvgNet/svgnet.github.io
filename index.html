@@ -3,20 +3,30 @@
 
 <head>
 	<title>SvgNet</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="Structural Geology Plots with SVG and JS">
+
+
+	<!-- Add to homescreen for Chrome on Android
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">-->
+
+	<script src="js/wuff.js"></script>
+	<script src="js/util.js"></script>
+
+	<link rel="stylesheet" href="css/material.grey-amber.min.css">
+	<script src="js/material.min.js"></script>
+	<!--<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">-->
+	<link rel="stylesheet" href="css/material.icons.css">
+	<style>
+		.ifield {
+			display: inline-flex;
+		}
+
+	</style>
 </head>
-<script src="js/wuff.js"></script>
-<script src="js/util.js"></script>
-
-<link rel="stylesheet" href="css/material.grey-amber.min.css">
-<script src="js/material.min.js"></script>
-<!--<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">-->
-<link rel="stylesheet" href="css/material.icons.css">
-<style>
-	.ifield {
-		display: inline-flex;
-	}
-
-</style>
 
 <body>
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -66,8 +76,8 @@
 					</div>
 					<hr>
 					<button onclick="triggerDownload()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-										Download Plot
-									</button>
+						Download Plot
+					</button>
 
 				</div>
 
