@@ -21,19 +21,15 @@ function todeg(radians) {
 	return radians * 180 / Math.PI;
 }
 
-function Wtp2cart(plunge, trend) {
-	return (new Pt(
-		radius_primitive * Math.tan(Math.PI / 4 - 0.5 * plunge) * Math.sin(trend),
-		radius_primitive * Math.tan(Math.PI / 4 - 0.5 * plunge) * Math.cos(trend)
-	));
-}
-
 function linText(start, end) {
 	return ('M' + cart2svg(start).x + ',' + cart2svg(start).y + 'L' + cart2svg(end).x + ',' + cart2svg(end).y);
 }
 
-function pathtext(point) {
-	return ("M" + point.x + "," + point.y);
+function polytext(points) {
+	var poltext = "M";
+	for (var i = 0; i < points.length; i++)
+		poltext += points[i].x + "," + points[i].y + " ";
+	return (poltext);
 }
 
 function arcText(start_angle, radius, end_angle, ccw) {
@@ -74,6 +70,20 @@ function Circ_obj(cen, radius, stroke, stroke_wth, fill, deg, id) {
 		this.newpath.setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
 	}
 	document.getElementById("fig").appendChild(this.newpath);
+}
+
+function Wtp2cart(plunge, trend) {
+	return (new Pt(
+		radius_primitive * Math.tan(Math.PI / 4 - 0.5 * plunge) * Math.sin(trend),
+		radius_primitive * Math.tan(Math.PI / 4 - 0.5 * plunge) * Math.cos(trend)
+	));
+}
+
+function Stp2cart(plunge, trend) {
+	return (new Pt(
+		Math.SQRT2 * radius_primitive * Math.tan(Math.PI / 4 - 0.5 * plunge) * Math.sin(trend),
+		Math.SQRT2 * radius_primitive * Math.tan(Math.PI / 4 - 0.5 * plunge) * Math.cos(trend)
+	));
 }
 
 function Plane(strike, dip, clr, lwidth, id) {
@@ -145,8 +155,8 @@ function WuffNet() {
 		if (k % 5) {
 			sw = 0.1;
 		}
-		Plane(0, k * 2, "black", sw, "gc" + k*2);
-		Plane(180, k * 2, "black", sw, "gc" + 90 + k*2);
+		Plane(0, k * 2, "black", sw, "gc" + k * 2);
+		Plane(180, k * 2, "black", sw, "gc" + 90 + k * 2);
 		Path_obj(arcText(k * 2, radius_primitive * Math.tan(torad(k * 2)), 360 - k * 2, 1), "black", sw, "none", 0, "sc" + k * 2);
 		Path_obj(arcText(180 + k * 2, radius_primitive * Math.tan(torad(k * 2)), 180 - k * 2, 1), "black", sw, "none", 0, "sc" + 180 + k * 2);
 
