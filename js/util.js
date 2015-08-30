@@ -25,6 +25,9 @@ var ur_lnpl = [];
 
 function addPl() {
 	ur_pl.push(new Plane(+document.getElementById("st").value, +document.getElementById("dd").value, "blue", 0.5, "user_plane" + ur_pl.length));
+	if(document.getElementById("poto").checked){
+		ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length-1], "orange", "user_poletoplane" + ur_pl.length));
+	}
 }
 
 function addLn() {
