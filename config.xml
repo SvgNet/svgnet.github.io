@@ -3,13 +3,13 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.arijit.SvgNet"
+        id        = "com.phonegap.SvgNet"
         version   = "1.9.95">
 
     <name>SvgNet</name>
 
     <description>
-        Structural Geology Plots with SVG, Javascript and HTML5
+       tructural Geology Plots with SVG, Javascript and HTML5
     </description>
 
     <author href="http://github.com/arijitlaik" email="laikarijit@gmail.com">
@@ -71,6 +71,7 @@
 
     <!-- Define app splash screen for each platform. -->
 
+    <gap:config-file platform="ios" parent="CFBundleShortVersionString">
     <string>100</string>
     </gap:config-file>
     <access origin="*"/>
