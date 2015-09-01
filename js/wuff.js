@@ -28,7 +28,7 @@ function linText(start, end) {
 function polytext(points) {
 	var poltext = "M";
 	for (var i = 0; i < points.length; i++)
-		poltext += points[i].x + "," + points[i].y + " ";
+		poltext += cart2svg(points[i]).x + "," + cart2svg(points[i]).y + " ";
 	return (poltext);
 }
 
@@ -81,9 +81,13 @@ function Wtp2cart(plunge, trend) {
 
 function Stp2cart(plunge, trend) {
 	return (new Pt(
-		Math.SQRT2 * radius_primitive * Math.tan(Math.PI / 4 - 0.5 * plunge) * Math.sin(trend),
-		Math.SQRT2 * radius_primitive * Math.tan(Math.PI / 4 - 0.5 * plunge) * Math.cos(trend)
+		Math.SQRT2 * radius_primitive * Math.sin(Math.PI / 4 - 0.5 * plunge) * Math.sin(trend),
+		Math.SQRT2 * radius_primitive * Math.sin(Math.PI / 4 - 0.5 * plunge) * Math.cos(trend)
 	));
+}
+
+function Ssdr2cart(strike, dip, rake) {
+	return Stp2cart(Math.asin(Math.sin(torad(dip)) * Math.sin(torad(rake))), torad(strike) + Math.atan(Math.cos(torad(dip)) * Math.tan(torad(rake))))
 }
 
 function Plane(strike, dip, clr, lwidth, id) {
@@ -152,9 +156,7 @@ function WuffNet() {
 	var k = 0;
 	for (k = 0; k < 45; k++) {
 		var sw = 0.5;
-		if (k % 5) {
-			sw = 0.1;
-		}
+		if (k % 5) sw = 0.1;
 		Plane(0, k * 2, "black", sw, "gc" + k * 2);
 		Plane(180, k * 2, "black", sw, "gc" + 90 + k * 2);
 		Path_obj(arcText(k * 2, radius_primitive * Math.tan(torad(k * 2)), 360 - k * 2, 1), "black", sw, "none", 0, "sc" + k * 2);
@@ -167,4 +169,17 @@ function WuffNet() {
 		document.getElementById("fig").innerHTML = "";
 	};
 
+}
+
+function SchmidtNet() {
+	var i = 0;
+
+	for (var dd = 0; dd <= 90; dd += 10) {
+		gsp = [];
+		var sw = 0.5;
+		if (dd % 5) sw = 0.1;
+		for (i = 0; i <= 90; i+=5) gsp.push(Ssdr2cart(0, dd, i));
+		for (i = 85; i >= 0; i-=5) gsp.push(Ssdr2cart(180, dd, 180 - i));
+		y = new Path_obj(polytext(gsp), "black", sw, "none", 0, "gc" + dd);
+	}
 }
