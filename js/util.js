@@ -26,20 +26,20 @@ var ur_lnpl = [];
 function addPl() {
 	ur_pl.push(new Plane(+document.getElementById("st").value, +document.getElementById("dd").value, "blue", 0.5, "user_plane" + ur_pl.length));
 	if(document.getElementById("poto").checked){
-		ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length-1], "orange", "user_poletoplane" + ur_pl.length));
+		ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length-1], "orange", "user_poletoplane" + ur_popl.length));
 	}
 }
 
 function addLn() {
-	ur_ln.push(new Line(+document.getElementById("tr").value, +document.getElementById("pl").value, "red", "user_line" + ur_pl.length));
+	ur_ln.push(new Line(+document.getElementById("tr").value, +document.getElementById("pl").value, "red", "user_line" + ur_ln.length));
 }
 
 function addPoPl() {
-	ur_popl.push(new PoletoPlane(new Plane(+document.getElementById("pst").value, +document.getElementById("pdd").value), "orange", "user_poletoplane" + ur_pl.length));
+	ur_popl.push(new PoletoPlane(new Plane(+document.getElementById("pst").value, +document.getElementById("pdd").value), "orange", "user_poletoplane" + ur_popl.length));
 }
 
 function addLnPl() {
-	ur_lnpl.push(new LineonPlane(new Plane(+document.getElementById("rst").value, +document.getElementById("rdd").value), document.getElementById("rpi").value, document.getElementById("ropfl").checked, "teal", "user_lineonplane" + ur_pl.length));
+	ur_lnpl.push(new LineonPlane(new Plane(+document.getElementById("rst").value, +document.getElementById("rdd").value), document.getElementById("rpi").value, document.getElementById("ropfl").checked, "teal", "user_lineonplane" + ur_lnpl.length));
 }
 
 function wuffOn() {
