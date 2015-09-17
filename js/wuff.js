@@ -86,7 +86,11 @@ function Stp2cart(plunge, trend) {
 	));
 }
 
-function Ssdr2cart(strike, dip, rake) {
+function Ssdr2cart(strike, dip, rake, op_flag) {
+	if ((op_flag === true) && rake != 90) {
+		strike += 180;
+		rake = 180 - rake;
+	}
 	return Stp2cart(Math.asin(Math.sin(torad(dip)) * Math.sin(torad(rake))), torad(strike) + Math.atan(Math.cos(torad(dip)) * Math.tan(torad(rake))))
 }
 
@@ -173,13 +177,38 @@ function WuffNet() {
 
 function SchmidtNet() {
 	var i = 0;
+	var sw = 0;
 
-	for (var dd = 0; dd <= 90; dd += 10) {
-		gsp = [];
-		var sw = 0.5;
+	for (var dd = 0; dd < 90; dd += 2) {
+		sw = 0.5;
 		if (dd % 5) sw = 0.1;
-		for (i = 0; i <= 90; i+=5) gsp.push(Ssdr2cart(0, dd, i));
-		for (i = 85; i >= 0; i-=5) gsp.push(Ssdr2cart(180, dd, 180 - i));
+
+		gsp = [];
+		for (i = 0; i <= 90; i += 5) gsp.push(Ssdr2cart(0, dd, i, false));
+		for (i = 85; i >= 0; i -= 5) gsp.push(Ssdr2cart(0, dd, i, true));
+		y = new Path_obj(polytext(gsp), "black", sw, "none", 0, "gc" + dd);
+
+		gsp = [];
+		for (i = 0; i <= 90; i += 5) gsp.push(Ssdr2cart(180, dd, i, true));
+		for (i = 85; i >= 0; i -= 5) gsp.push(Ssdr2cart(180, dd, i, false));
 		y = new Path_obj(polytext(gsp), "black", sw, "none", 0, "gc" + dd);
 	}
+
+	for (var pp = 0; pp < 90; pp += 2) {
+		sw = 0.5;
+		if (pp % 5) sw = 0.1;
+
+		gsp = [];
+		for (i = 0; i <= 90; i += 5) gsp.push(Ssdr2cart(0, i, pp, false));
+		for (i = 85; i >= 0; i -= 5) gsp.push(Ssdr2cart(180, i, pp, true));
+		y = new Path_obj(polytext(gsp), "black", sw, "none", 0, "sc" + pp);
+
+		gsp = [];
+		for (i = 0; i <= 90; i += 5) gsp.push(Ssdr2cart(180, i, pp, false));
+		for (i = 85; i >= 0; i -= 5) gsp.push(Ssdr2cart(0, i, pp, true));
+		y = new Path_obj(polytext(gsp), "black", sw, "none", 0, "sc" + pp);
+
+	}
+	Plane(0, 90, "black", 0.5, "gc90");
+	Plane(90, 90, "black", 0.5, "sc90");
 }
