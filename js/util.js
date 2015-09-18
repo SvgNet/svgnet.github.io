@@ -25,8 +25,8 @@ var ur_lnpl = [];
 
 function addPl() {
 	ur_pl.push(new Plane(+document.getElementById("st").value, +document.getElementById("dd").value, "blue", 0.5, "user_plane" + ur_pl.length));
-	if(document.getElementById("poto").checked){
-		ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length-1], "orange", "user_poletoplane" + ur_popl.length));
+	if (document.getElementById("poto").checked) {
+		ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length - 1], "orange", "user_poletoplane" + ur_popl.length));
 	}
 }
 
@@ -56,22 +56,7 @@ function wuffOn() {
 		}
 		document.getElementById("fig").removeChild(document.getElementById("sc90"));
 		document.getElementById("fig").removeChild(document.getElementById("gc90"));
-		document.getElementById("rotatenet").setAttribute("disabled",true)
-	}
-}
-
-function rotateWuff() {
-	var deg = document.getElementById("rotatenet").value;
-	if (document.getElementById("shownet").checked) {
-		document.getElementById("rotatenet").setAttribute("data-badge", deg)
-		for (var i = 0; i < 45; i++) {
-			document.getElementById("gc" + i * 2).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
-			document.getElementById("gc" + 90 + i * 2).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
-			document.getElementById("sc" + 180 + i * 2).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
-			document.getElementById("sc" + i * 2).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
-		}
-		document.getElementById("sc90").setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
-		document.getElementById("gc90").setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+		document.getElementById("rotatenet").setAttribute("disabled", true)
 	}
 }
 
@@ -94,4 +79,19 @@ function rotateOl() {
 		for (var i = 0; i < ur_lnpl.length; i++)
 			document.getElementById(ur_lnpl[i].plot.id).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
 	}
+}
+
+function rotateNet() {
+	var deg = document.getElementById("rotatenet").value;
+
+	document.getElementById("rotatenet").setAttribute("data-badge", deg);
+	for (var i = 0; i < 90; i += 2) {
+		document.getElementById("gc" + i).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+		document.getElementById("gc" + 90 + i).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+		document.getElementById("sc" + i).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+		document.getElementById("sc" + 90 + i).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+
+	}
+	document.getElementById("sc90").setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+	document.getElementById("gc90").setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
 }

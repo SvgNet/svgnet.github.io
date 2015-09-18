@@ -158,13 +158,13 @@ function PoletoPlane(ofPlane, clr, id) {
 
 function WuffNet() {
 	var k = 0;
-	for (k = 0; k < 45; k++) {
+	for (k = 0; k < 90; k += 2) {
 		var sw = 0.5;
 		if (k % 5) sw = 0.1;
-		Plane(0, k * 2, "black", sw, "gc" + k * 2);
-		Plane(180, k * 2, "black", sw, "gc" + 90 + k * 2);
-		Path_obj(arcText(k * 2, radius_primitive * Math.tan(torad(k * 2)), 360 - k * 2, 1), "black", sw, "none", 0, "sc" + k * 2);
-		Path_obj(arcText(180 + k * 2, radius_primitive * Math.tan(torad(k * 2)), 180 - k * 2, 1), "black", sw, "none", 0, "sc" + 180 + k * 2);
+		Plane(0, k, "black", sw, "gc" + k);
+		Plane(180, k, "black", sw, "gc" + 90 + k);
+		Path_obj(arcText(k, radius_primitive * Math.tan(torad(k)), 360 - k, 1), "black", sw, "none", 0, "sc" + k);
+		Path_obj(arcText(180 + k, radius_primitive * Math.tan(torad(k)), 180 - k, 1), "black", sw, "none", 0, "sc" + 90 + k);
 
 	}
 	Plane(0, 90, "black", 0.5, "gc90");
@@ -191,7 +191,8 @@ function SchmidtNet() {
 		gsp = [];
 		for (i = 0; i <= 90; i += 5) gsp.push(Ssdr2cart(180, dd, i, true));
 		for (i = 85; i >= 0; i -= 5) gsp.push(Ssdr2cart(180, dd, i, false));
-		y = new Path_obj(polytext(gsp), "black", sw, "none", 0, "gc" + dd);
+		y = new Path_obj(polytext(gsp), "black", sw, "none", 0, "gc" + 90 + dd);
+
 	}
 
 	for (var pp = 0; pp < 90; pp += 2) {
@@ -206,7 +207,7 @@ function SchmidtNet() {
 		gsp = [];
 		for (i = 0; i <= 90; i += 5) gsp.push(Ssdr2cart(180, i, pp, false));
 		for (i = 85; i >= 0; i -= 5) gsp.push(Ssdr2cart(0, i, pp, true));
-		y = new Path_obj(polytext(gsp), "black", sw, "none", 0, "sc" + pp);
+		y = new Path_obj(polytext(gsp), "black", sw, "none", 0, "sc" + 90 + pp);
 
 	}
 	Plane(0, 90, "black", 0.5, "gc90");
