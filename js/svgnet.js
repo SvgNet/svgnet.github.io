@@ -1,3 +1,5 @@
+var SchmidtNet_Flag = false;
+
 function Pt(x_cord, y_cord) {
 	this.x = x_cord;
 	this.y = y_cord;
@@ -126,13 +128,20 @@ function Plane(strike, dip, clr, lwidth, id) {
 function Line(trend, plunge, clr, id) {
 	this.trend = trend;
 	this.plunge = plunge;
+
+	this.draw = function () {
+		if (SchmidtNet_Flag)
+			this.plot = new Circ_obj(new Stp2cart(torad(this.plunge), torad(this.trend)), 2, clr, 3, "none", 0, id);
+		else
+			this.plot = new Circ_obj(new Wtp2cart(torad(this.plunge), torad(this.trend)), 2, clr, 3, "none", 0, id);
+	}
+
 	if (clr !== undefined) {
-		this.plot = new Circ_obj(new Wtp2cart(torad(plunge), torad(trend)), 2, clr, 3, "none", 0, id);
+		this.draw();
 	}
 	this.modify = function () {
 		this.plot.newpath.parentNode.removeChild(this.plot.newpath);
-		this.plot = new Circ_obj(new Wtp2cart(torad(plunge), torad(trend)), 2, clr, 3, "none", 0, id);
-
+		this.draw();
 	};
 }
 

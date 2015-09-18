@@ -48,16 +48,21 @@ function wuffOn() {
 		document.getElementById("rotatenet").removeAttribute("disabled");
 		x = new WuffNet();
 	} else {
-		for (var i = 0; i < 45; i++) {
-			document.getElementById("fig").removeChild(document.getElementById("gc" + i * 2));
-			document.getElementById("fig").removeChild(document.getElementById("gc" + 90 + i * 2));
-			document.getElementById("fig").removeChild(document.getElementById("sc" + 180 + i * 2));
-			document.getElementById("fig").removeChild(document.getElementById("sc" + i * 2));
-		}
-		document.getElementById("fig").removeChild(document.getElementById("sc90"));
-		document.getElementById("fig").removeChild(document.getElementById("gc90"));
-		document.getElementById("rotatenet").setAttribute("disabled", true)
+		clearNet();
 	}
+}
+
+function clearNet() {
+	fig = document.getElementById("fig")
+	for (var i = 0; i < 90; i += 2) {
+		fig.removeChild(document.getElementById("gc" + i));
+		fig.removeChild(document.getElementById("gc" + 90 + i));
+		fig.removeChild(document.getElementById("sc" + i));
+		fig.removeChild(document.getElementById("sc" + 90 + i));
+	}
+	fig.removeChild(document.getElementById("sc90"));
+	fig.removeChild(document.getElementById("gc90"));
+	document.getElementById("rotatenet").setAttribute("disabled", true)
 }
 
 function rotateOl() {
