@@ -104,7 +104,9 @@ function Plane(strike, dip, clr, lwidth, id) {
 				arcText(
 					this.strike, radius_primitive / Math.cos(torad(this.dip)), 180 + this.strike, 1),
 				clr, lwidth, "none", 0, id);
-		} else {
+		}
+		//else if ladder for projection type
+		else {
 			this.plot = new Path_obj(
 				linText(
 					new Pt(radius_primitive * Math.sin(torad(this.strike)), radius_primitive * Math.cos(torad(this.strike))),
