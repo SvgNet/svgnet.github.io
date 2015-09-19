@@ -1,5 +1,8 @@
+function toBase64(str) {
+	return window.btoa(unescape(encodeURIComponent(str)));
+}
 function triggerDownload() {
-	var svg_file = 'data:image/svg+xml,' + document.getElementById('svg_wrapper').innerHTML;
+	var svg_file = 'data:image/svg+xml;base64,' +toBase64(document.getElementById('svg_wrapper').innerHTML);
 	var dn_link = document.getElementById('pdl');
 	dn_link.setAttribute('download', 'SvgNet_export.svg');
 	dn_link.setAttribute('href', svg_file);
