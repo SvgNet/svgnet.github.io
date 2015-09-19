@@ -47,16 +47,29 @@
 			<span class="mdl-layout-title">Preferences</span>
 			<nav class="mdl-navigation">
 				<div class="mdl-navigation__link">
+					<b>Toggle Grids</b>
 					<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="shownet">
-						<input type="checkbox" id="shownet" class="mdl-switch__input" onchange="wuffOn()" />
-						<span class="mdl-switch__label">Wuffnet Grids off/on</span>
+						<input type="checkbox" id="shownet" class="mdl-switch__input" onchange="netOn()" />
+						<span class="mdl-switch__label">Grids off/on</span>
+					</label>
+				</div>
+
+				<div class="mdl-navigation__link">
+					<b>Projection Type</b>
+					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="towuff">
+						<input checked class="mdl-radio__button" id="towuff" name="netsw" type="radio" onchange="switchNet()">
+						<span class="mdl-radio__label">Wuff Net</span>
+					</label>
+					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="toschmidt">
+						<input class="mdl-radio__button" id="toschmidt" name="netsw" type="radio" onchange="switchNet()">
+						<span class="mdl-radio__label">Schmidt Net</span>
 					</label>
 				</div>
 
 			</nav>
 		</div>
 		<main class="mdl-layout__content">
-			<div class="mdl-grid mdl-color--yellow-200">
+			<div class="mdl-grid mdl-color--grey-500">
 				<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-shadow--4dp mdl-color--white">
 
 					<div id="svg_wrapper">
@@ -92,7 +105,7 @@
 				</div>
 
 
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-color--accent  mdl-shadow--4dp">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-color--primary  mdl-shadow--4dp">
 					<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect ">
 						<div class="mdl-tabs__tab-bar mdl-color--white">
 							<a href="#readme" class="mdl-tabs__tab is-active mdl-js-ripple-effect">Instructions</a>
@@ -213,7 +226,7 @@
 			<footer class="mdl-mini-footer">
 				<div class="mdl-mini-footer__left-section">
 					<div class="mdl-logo">
-						Structural Geology Plots with SVG, Javascript and HTML5
+						<b>SvgNet v0.9.9</b> - Structural Geology Plots with SVG, Javascript and HTML5;
 					</div>
 					<ul class="mdl-mini-footer__link-list">
 						<li><a href="https://github.com/arijitlaik/SvgNet">Sourcecode</a></li>
