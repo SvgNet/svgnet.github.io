@@ -102,13 +102,19 @@ function Plane(strike, dip, clr, lwidth, id) {
 
 	this.draw = function () {
 		if (this.dip !== 90) {
-			this.plot = new Path_obj(
-				arcText(
-					this.strike, radius_primitive / Math.cos(torad(this.dip)), 180 + this.strike, 1),
-				clr, lwidth, "none", 0, id);
-		}
-		//else if ladder for projection type
-		else {
+
+			if (SchmidtNet_Flag) {
+				gsp = [];
+				for (i = 0; i <= 90; i += 5) gsp.push(Ssdr2cart(this.strike, this.dip, i, false));
+				for (i = 85; i >= 0; i -= 5) gsp.push(Ssdr2cart(this.strike, this.dip, i, true));
+				this.plot = new Path_obj(polytext(gsp), clr, lwidth, "none", 0, id);
+			} else {
+				this.plot = new Path_obj(
+					arcText(
+						this.strike, radius_primitive / Math.cos(torad(this.dip)), 180 + this.strike, 1),
+					clr, lwidth, "none", 0, id);
+			}
+		} else {
 			this.plot = new Path_obj(
 				linText(
 					new Pt(radius_primitive * Math.sin(torad(this.strike)), radius_primitive * Math.cos(torad(this.strike))),
@@ -116,6 +122,7 @@ function Plane(strike, dip, clr, lwidth, id) {
 				), clr, lwidth, "none", 0, id);
 		}
 	}
+
 	if (clr != undefined)
 		this.draw();
 
@@ -152,19 +159,43 @@ function LineonPlane(onPlane, pitch, op_flag, clr, id) {
 	}
 	this.plunge = Math.asin(Math.sin(torad(onPlane.dip)) * Math.sin(torad(pitch)));
 	this.trend = torad(onPlane.strike) + Math.atan(Math.cos(torad(onPlane.dip)) * Math.tan(torad(pitch)));
+
+	this.draw = function () {
+		if (SchmidtNet_Flag)
+			this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, "red", 1.5, clr, 0, id);
+		else
+			this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, "red", 1.5, clr, 0, id);
+	};
+
 	if (clr !== undefined) {
-		this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, "red", 1.5, clr, 0, id);
+		this.draw();
 	}
-	this.plunge = todeg(this.plunge);
-	this.trend = todeg(this.trend);
+
+	this.modify = function () {
+		this.plot.newpath.parentNode.removeChild(this.plot.newpath);
+		this.draw();
+	};
 }
 
 function PoletoPlane(ofPlane, clr, id) {
 	this.plunge = 90 - ofPlane.dip;
 	this.trend = ofPlane.strike + 270;
+
+	this.draw = function () {
+		if (SchmidtNet_Flag)
+			this.plot = new Circ_obj(new Stp2cart(torad(this.plunge), torad(this.trend)), 2, "blue", 1.5, clr, 0, id);
+		else
+			this.plot = new Circ_obj(new Wtp2cart(torad(this.plunge), torad(this.trend)), 2, "blue", 1.5, clr, 0, id);
+	};
+
 	if (clr !== undefined) {
-		this.plot = new Circ_obj(new Wtp2cart(torad(this.plunge), torad(this.trend)), 2, "blue", 1.5, clr, 0, id);
+		this.draw();
 	}
+
+	this.modify = function () {
+		this.plot.newpath.parentNode.removeChild(this.plot.newpath);
+		this.draw();
+	};
 }
 
 function WuffNet() {
@@ -172,8 +203,10 @@ function WuffNet() {
 	for (k = 0; k < 90; k += 2) {
 		var sw = 0.5;
 		if (k % 5) sw = 0.1;
-		Plane(0, k, "black", sw, "gc" + k);
-		Plane(180, k, "black", sw, "gc" + 90 + k);
+
+		Path_obj(arcText(0, radius_primitive / Math.cos(torad(k)), 180, 1), "black", sw, "none", 0, "gc" + k);
+		Path_obj(arcText(0, radius_primitive / Math.cos(torad(k)), 180, 0), "black", sw, "none", 0, "gc" + 90 + k);
+
 		Path_obj(arcText(k, radius_primitive * Math.tan(torad(k)), 360 - k, 1), "black", sw, "none", 0, "sc" + k);
 		Path_obj(arcText(180 + k, radius_primitive * Math.tan(torad(k)), 180 - k, 1), "black", sw, "none", 0, "sc" + 90 + k);
 
