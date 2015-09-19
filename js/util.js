@@ -1,21 +1,8 @@
-function toBase64(str) {
-	return window.btoa(unescape(encodeURIComponent(str)));
-}
-
 function triggerDownload() {
-	var html = 'data:text/attachment;base64,' + toBase64(document.getElementById('svg_wrapper').innerHTML);
-	var evt = new MouseEvent('click', {
-		view: window,
-		bubbles: false,
-		cancelable: true
-	});
-
-	var a = document.createElement('a');
-	a.setAttribute('download', 'plot.svg');
-	a.setAttribute('href', html);
-	a.setAttribute('target', '_blank');
-
-	a.dispatchEvent(evt);
+	var svg_file = 'data:image/svg+xml,' + document.getElementById('svg_wrapper').innerHTML;
+	var dn_link = document.getElementById('pdl');
+	dn_link.setAttribute('download', 'SvgNet_export.svg');
+	dn_link.setAttribute('href', svg_file);
 }
 
 var ur_pl = [];
@@ -124,7 +111,7 @@ function switchNet() {
 		SchmidtNet_Flag = false;
 		modifyPlots();
 	}
-	if (document.getElementById("shownet").checked){
+	if (document.getElementById("shownet").checked) {
 		clearNet()
 		netOn();
 	}
