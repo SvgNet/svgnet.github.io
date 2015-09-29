@@ -5,8 +5,20 @@ function Pt(x_cord, y_cord) {
 	this.y = y_cord;
 }
 
+
 var center = new Pt(256, 256);
 var radius_primitive = 250;
+
+function Svg_obj(in_id, id) {
+	this.id=id;
+	this.svg_node = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+	this.svg_node.setAttributeNS(null, "width", "100%");
+	this.svg_node.setAttributeNS(null, "viewBox", "0 0 " + 2 * center.x + " " + 2 * center.y);
+	this.svg_node.setAttributeNS(null, "id", this.id);
+	this.svg_node.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+	this.svg_node.setAttributeNS(null, "version", "1.1");
+	document.getElementById(in_id).appendChild(this.svg_node);
+}
 
 function cart2svg(cart_cords) {
 	return (new Pt(
@@ -55,7 +67,7 @@ function Path_obj(d, stroke, stroke_wth, fill, deg, id) {
 	if (deg !== 0) {
 		this.newpath.setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
 	}
-	document.getElementById("fig").appendChild(this.newpath);
+	document.getElementById(gfx.id).appendChild(this.newpath);
 }
 
 function Circ_obj(cen, radius, stroke, stroke_wth, fill, deg, id) {
@@ -71,7 +83,7 @@ function Circ_obj(cen, radius, stroke, stroke_wth, fill, deg, id) {
 	if (deg !== 0) {
 		this.newpath.setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
 	}
-	document.getElementById("fig").appendChild(this.newpath);
+	document.getElementById(gfx.id).appendChild(this.newpath);
 }
 
 function Wtp2cart(plunge, trend) {
@@ -198,7 +210,7 @@ function PoletoPlane(ofPlane, clr, id) {
 	};
 }
 
-function WuffNet() {
+function WulffNet() {
 	var k = 0;
 	for (k = 0; k < 90; k += 2) {
 		var sw = 0.5;
@@ -213,10 +225,6 @@ function WuffNet() {
 	}
 	Plane(0, 90, "black", 0.5, "gc90");
 	Plane(90, 90, "black", 0.5, "sc90");
-	this.cls = function () {
-		document.getElementById("fig").innerHTML = "";
-	};
-
 }
 
 function SchmidtNet() {

@@ -15,7 +15,8 @@
 	<meta property="og:type" content="website" />
 
 	<meta name="mobile-web-app-capable" content="yes">
-	<link rel="icon" sizes="192x192" href="icon.png">
+	<link rel="icon" sizes="512x512" href="icon.png">
+
 
 	<script src="js/svgnet.js"></script>
 	<script src="js/util.js"></script>
@@ -59,7 +60,7 @@
 					<b>Projection Type</b>
 					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="towuff">
 						<input checked class="mdl-radio__button" id="towuff" name="netsw" type="radio" onchange="switchNet()">
-						<span class="mdl-radio__label">Wuff Net</span>
+						<span class="mdl-radio__label">Wulff Net</span>
 					</label>
 					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="toschmidt">
 						<input class="mdl-radio__button" id="toschmidt" name="netsw" type="radio" onchange="switchNet()">
@@ -74,9 +75,9 @@
 				<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-shadow--4dp mdl-color--white">
 
 					<div id="svg_wrapper">
-						<svg width="100%" viewBox="0 0 512 512" id="fig" xmlns="http://www.w3.org/2000/svg" version="1.1">
+					<!--	<svg width="100%" viewBox="0 0 512 512" id="fig" xmlns="http://www.w3.org/2000/svg" version="1.1">
 							<circle cx="256" cy="256" r="250" stroke="#ccc" stroke-width="2" fill="none"></circle>
-						</svg>
+						</svg>-->
 
 					</div>
 
@@ -86,7 +87,7 @@
 							<label>
 								<span class="mdl-switch__label">Rotate Net</span>
 								<p style="width:100%">
-									<input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotatenet" min="0" max="359" value="0" step="1" oninput="rotateNet()" />
+									<input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotatenet" min="0" max="359" value="0" step="1" oninput="rotateNet()" disabled/>
 								</p>
 							</label>
 						</div>
@@ -99,7 +100,7 @@
 								</p>
 							</label>
 						</div>
-						<a id="pdl" onclick="triggerDownload()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Download Plot
+						<a id="pdl" onclick="triggerDownload()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Download Plot
 						</a>
 					</div>
 				</div>
@@ -241,5 +242,5 @@
 	</div>
 
 </body>
-
+<script src="js/init.js"></script>
 </html>

@@ -38,7 +38,7 @@ function netOn() {
 		if (SchmidtNet_Flag)
 			var net = new SchmidtNet();
 		else
-			var net = new WuffNet();
+			var net = new WulffNet();
 	} else {
 		clearNet();
 	}
