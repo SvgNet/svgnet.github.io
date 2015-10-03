@@ -21,7 +21,7 @@
 	<script src="js/svgnet.js"></script>
 	<script src="js/util.js"></script>
 
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
+
 	<meta name="google-signin-client_id" content="521898460018-5js7ih9f7o73523bbre746r6gaopd0aj.apps.googleusercontent.com">
 
 	<link rel="stylesheet" href="css/material.cyan-blue.min.css">
@@ -31,6 +31,31 @@
 </head>
 
 <body>
+	<div id="my-signin2"></div>
+	<script>
+		function onSuccess(googleUser) {
+			console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+		}
+
+		function onFailure(error) {
+			console.log(error);
+		}
+
+		function renderButton() {
+			gapi.signin2.render('my-signin2', {
+				'scope': 'https://www.googleapis.com/auth/plus.login',
+				'width': 200,
+				'height': 50,
+				'longtitle': true,
+				'theme': 'dark',
+				'onsuccess': onSuccess,
+				'onfailure': onFailure
+			});
+		}
+
+	</script>
+
+	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
@@ -38,13 +63,14 @@
 				<div class="mdl-layout-spacer"></div>
 
 				<button id="menu-speed" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" disabled>
-					<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
 				</button>
 				<ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="menu-speed">
 					<li class="mdl-menu__item">Fast</li>
 					<li class="mdl-menu__item">Medium</li>
 					<li class="mdl-menu__item">Slow</li>
 				</ul>
+
 
 			</div>
 		</header>
@@ -242,4 +268,5 @@
 
 </body>
 <script src="js/init.js"></script>
+
 </html>
