@@ -1,0 +1,14 @@
+  application: svg-net
+  version: alpha
+  runtime: python27
+  api_version: 1
+  threadsafe: yes
+
+  handlers:
+
+  - url: /
+    static_dir: /
+
+	- url: /(.*)
+    static_files: /\1
+  	upload: /.*
