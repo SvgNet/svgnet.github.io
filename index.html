@@ -22,12 +22,10 @@
 	<script src="js/util.js"></script>
 
 	<link rel="stylesheet" href="css/material.cyan-blue.min.css">
+
 	<script src="js/material.min.js"></script>
 	<link rel="stylesheet" href="css/material.icons.css">
 	<link rel="stylesheet" href="css/material.custom.css">
-
-
-
 </head>
 
 <body>
@@ -42,9 +40,27 @@
 
 				</button>
 				<ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="menu-speed">
-					<li class="mdl-menu__item">Fast</li>
-					<li class="mdl-menu__item">Medium</li>
-					<li class="mdl-menu__item">Slow</li>
+					<div class="mdl-card mdl-shadow--2dp">
+										<div class="mdl-card__title mdl-color--accent">
+											<h2 class="mdl-card__title-text">Lines</h2>
+										</div>
+										<div class="mdl-card__supporting-text ">
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<input class="mdl-textfield__input" type="number" id="tr" max="360" min="0" step=".1">
+												<label class="mdl-textfield__label" for="tr"> Trend</label>
+											</div>
+
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<input class="mdl-textfield__input" type="number" id="pl" max="90" min="0" step=".1">
+												<label class="mdl-textfield__label" for="pl"> Plunge</label>
+											</div>
+
+										</div>
+										<div class="mdl-card__actions mdl-card--border">
+											<a href="#svg_wrapper" onclick="addLn()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Plot
+									</a>
+										</div>
+									</div>
 				</ul>
 
 
@@ -62,7 +78,7 @@
 				</div>
 
 				<div class="mdl-navigation__link">
-					<b>Projection Type</b></br>
+					<b>Projection Type</b><br>
 					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="towuff">
 						<input checked class="mdl-radio__button" id="towuff" name="netsw" type="radio" onchange="switchNet()">
 						<span class="mdl-radio__label">Wulff Net</span>
@@ -127,11 +143,11 @@
 						<div class="mdl-tabs__panel" id="iPl">
 							<div class="mdl-grid">
 								<div class="mdl-cell mdl-cell--6-col  mdl-cell--12-col-phone mdl-cell--12-col-tablet">
-									<div class="mdl-card mdl-shadow--2dp">
+									<div class="mdl-card mdl-shadow--2dp ">
 										<div class="mdl-card__title mdl-color--accent">
 											<h2 class="mdl-card__title-text">Planes</h2>
 										</div>
-										<div class="mdl-card__supporting-text ">
+										<div class="mdl-card__supporting-text">
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<input class="mdl-textfield__input" type="number" id="st" max="360" min="0" step=".1">
 												<label class="mdl-textfield__label" for="st"> Strike</label>
@@ -141,7 +157,7 @@
 												<input class="mdl-textfield__input" type="number" id="dd" max="90" min="0" step=".1">
 												<label class="mdl-textfield__label" for="dd"> Dip</label>
 											</div>
-											</br>
+											<br>
 											<div class="mdl-textfield mdl-js-textfield">
 												<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="poto">
 													<input type="checkbox" id="poto" class="mdl-checkbox__input" />
@@ -149,7 +165,7 @@
 												</label>
 											</div>
 										</div>
-										<div class="mdl-card__actions mdl-card--border ">
+										<div class="mdl-card__actions mdl-card--border">
 											<a onclick="addPl()" href="#svg_wrapper" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
 										Plot
 									</a>
@@ -174,7 +190,7 @@
 
 										</div>
 										<div class="mdl-card__actions mdl-card--border">
-											<a href="#svg_wrapper" onclick="addPoPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Add Pole to Plane
+											<a href="#svg_wrapper" onclick="addPoPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Plot
 									</a>
 										</div>
 									</div>
@@ -202,7 +218,7 @@
 
 										</div>
 										<div class="mdl-card__actions mdl-card--border">
-											<a href="#svg_wrapper" onclick="addLn()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Add Line
+											<a href="#svg_wrapper" onclick="addLn()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Plot
 									</a>
 										</div>
 									</div>
@@ -222,12 +238,12 @@
 												<input class="mdl-textfield__input" type="number" id="rdd" max="90" min="0" step=".1">
 												<label class="mdl-textfield__label" for="rdd"> Dip</label>
 											</div>
-											</br>
+											<br>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<input class="mdl-textfield__input" type="number" id="rpi" max="90" min="0" step=".1">
 												<label class="mdl-textfield__label" for="rpi">Pitch</label>
 											</div>
-											</br>
+											<br>
 											<div class="mdl-textfield mdl-js-textfield">
 												<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ropfl">
 													<input type="checkbox" id="ropfl" class="mdl-checkbox__input" />
@@ -237,8 +253,7 @@
 										</div>
 
 										<div class="mdl-card__actions mdl-card--border">
-											<a href="#svg_wrapper" onclick="addLnPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-										Plot
+											<a href="#svg_wrapper" onclick="addLnPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Plot
 									</a>
 										</div>
 									</div>
@@ -265,9 +280,8 @@
 
 
 	</div>
+<script src="js/ui.js"></script>
 
 </body>
-
-<script src="js/ui.js"></script>
 
 </html>
