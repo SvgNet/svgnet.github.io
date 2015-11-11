@@ -1,8 +1,7 @@
 var SchmidtNet_Flag = false;
 
 function Pt(x_cord, y_cord) {
-	this.x = x_cord;
-	this.y = y_cord;
+	this.x = x_cord,this.y = y_cord;
 }
 
 
