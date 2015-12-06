@@ -1,15 +1,14 @@
 var SchmidtNet_Flag = false;
 
 function Pt(x_cord, y_cord) {
-	this.x = x_cord,this.y = y_cord;
+	this.x = x_cord, this.y = y_cord;
 }
-
 
 var center = new Pt(256, 256);
 var radius_primitive = 250;
 
 function Svg_obj(in_id, id) {
-	this.id=id;
+	this.id = id;
 	this.svg_node = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 	this.svg_node.setAttributeNS(null, "width", "100%");
 	this.svg_node.setAttributeNS(null, "viewBox", "0 0 " + 2 * center.x + " " + 2 * center.y);
@@ -87,15 +86,15 @@ function Circ_obj(cen, radius, stroke, stroke_wth, fill, deg, id) {
 
 function Wtp2cart(plunge, trend) {
 	return (new Pt(
-		radius_primitive * Math.tan(Math.PI / 4 - 0.5 * plunge) * Math.sin(trend),
-		radius_primitive * Math.tan(Math.PI / 4 - 0.5 * plunge) * Math.cos(trend)
+		radius_primitive * Math.tan(Math.PI / 4 - 0.5 * torad(plunge)) * Math.sin(torad(trend)),
+		radius_primitive * Math.tan(Math.PI / 4 - 0.5 * torad(plunge)) * Math.cos(torad(trend))
 	));
 }
 
 function Stp2cart(plunge, trend) {
 	return (new Pt(
-		Math.SQRT2 * radius_primitive * Math.sin(Math.PI / 4 - 0.5 * plunge) * Math.sin(trend),
-		Math.SQRT2 * radius_primitive * Math.sin(Math.PI / 4 - 0.5 * plunge) * Math.cos(trend)
+		Math.SQRT2 * radius_primitive * Math.sin(Math.PI / 4 - 0.5 * torad(plunge)) * Math.sin(torad(trend)),
+		Math.SQRT2 * radius_primitive * Math.sin(Math.PI / 4 - 0.5 * torad(plunge)) * Math.cos(torad(trend))
 	));
 }
 
@@ -104,7 +103,12 @@ function Ssdr2cart(strike, dip, rake, op_flag) {
 		strike += 180;
 		rake = 180 - rake;
 	}
-	return Stp2cart(Math.asin(Math.sin(torad(dip)) * Math.sin(torad(rake))), torad(strike) + Math.atan(Math.cos(torad(dip)) * Math.tan(torad(rake))))
+	var Temp_Pl=Math.asin(Math.sin(torad(dip)) * Math.sin(torad(rake))),
+	 Temp_Tr=torad(strike) + Math.atan(Math.cos(torad(dip)) * Math.tan(torad(rake)));
+	return (new Pt(
+		Math.SQRT2 * radius_primitive * Math.sin(Math.PI / 4 - 0.5 * Temp_Pl) * Math.sin(Temp_Tr),
+		Math.SQRT2 * radius_primitive * Math.sin(Math.PI / 4 - 0.5 * Temp_Pl) * Math.cos(Temp_Tr)
+	));
 }
 
 function Plane(strike, dip, clr, lwidth, id) {
@@ -149,9 +153,9 @@ function Line(trend, plunge, clr, id) {
 
 	this.draw = function () {
 		if (SchmidtNet_Flag)
-			this.plot = new Circ_obj(new Stp2cart(torad(this.plunge), torad(this.trend)), 2, clr, 3, "none", 0, id);
+			this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, clr, 3, "none", 0, id);
 		else
-			this.plot = new Circ_obj(new Wtp2cart(torad(this.plunge), torad(this.trend)), 2, clr, 3, "none", 0, id);
+			this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, clr, 3, "none", 0, id);
 	}
 
 	if (clr !== undefined) {
@@ -168,8 +172,8 @@ function LineonPlane(onPlane, pitch, op_flag, clr, id) {
 		onPlane.strike += 180;
 		pitch = 180 - pitch;
 	}
-	this.plunge = Math.asin(Math.sin(torad(onPlane.dip)) * Math.sin(torad(pitch)));
-	this.trend = torad(onPlane.strike) + Math.atan(Math.cos(torad(onPlane.dip)) * Math.tan(torad(pitch)));
+	this.plunge = todeg(Math.asin(Math.sin(torad(onPlane.dip)) * Math.sin(torad(pitch))));
+	this.trend = (onPlane.strike + todeg(Math.atan(Math.cos(torad(onPlane.dip)) * Math.tan(torad(pitch)))))%360;
 
 	this.draw = function () {
 		if (SchmidtNet_Flag)
@@ -190,13 +194,13 @@ function LineonPlane(onPlane, pitch, op_flag, clr, id) {
 
 function PoletoPlane(ofPlane, clr, id) {
 	this.plunge = 90 - ofPlane.dip;
-	this.trend = ofPlane.strike + 270;
+	this.trend = (ofPlane.strike + 270) % 360;
 
 	this.draw = function () {
 		if (SchmidtNet_Flag)
-			this.plot = new Circ_obj(new Stp2cart(torad(this.plunge), torad(this.trend)), 2, "blue", 1.5, clr, 0, id);
+			this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, "blue", 1.5, clr, 0, id);
 		else
-			this.plot = new Circ_obj(new Wtp2cart(torad(this.plunge), torad(this.trend)), 2, "blue", 1.5, clr, 0, id);
+			this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, "blue", 1.5, clr, 0, id);
 	};
 
 	if (clr !== undefined) {
@@ -207,6 +211,10 @@ function PoletoPlane(ofPlane, clr, id) {
 		this.plot.newpath.parentNode.removeChild(this.plot.newpath);
 		this.draw();
 	};
+}
+
+function AngDist(LinA, LinB) {
+	return todeg(Math.acos(Math.cos(torad(LinA.trend - LinB.trend)) * Math.cos(torad(LinA.plunge)) * Math.cos(torad(LinB.plunge)) + Math.sin(torad(LinA.plunge)) * Math.sin(torad(LinB.plunge))));
 }
 
 function WulffNet() {

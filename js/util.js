@@ -1,8 +1,9 @@
 function toBase64(str) {
 	return window.btoa(unescape(encodeURIComponent(str)));
 }
+
 function triggerDownload() {
-	var svg_file = 'data:image/svg+xml;base64,' +toBase64(document.getElementById('svg_wrapper').innerHTML);
+	var svg_file = 'data:image/svg+xml;base64,' + toBase64(document.getElementById('svg_wrapper').innerHTML);
 	var dn_link = document.getElementById('pdl');
 	dn_link.setAttribute('download', 'SvgNet_export.svg');
 	dn_link.setAttribute('href', svg_file);
@@ -12,16 +13,27 @@ var ur_pl = [];
 var ur_ln = [];
 var ur_popl = [];
 var ur_lnpl = [];
+var ur_selected = [];
 
 function addPl() {
 	ur_pl.push(new Plane(+document.getElementById("st").value, +document.getElementById("dd").value, "blue", 0.5, "user_plane" + ur_pl.length));
 	if (document.getElementById("poto").checked) {
 		ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length - 1], "orange", "user_poletoplane" + ur_popl.length));
 	}
+
 }
 
 function addLn() {
 	ur_ln.push(new Line(+document.getElementById("tr").value, +document.getElementById("pl").value, "red", "user_line" + ur_ln.length));
+	document.getElementById(ur_ln[ur_ln.length - 1].plot.id).addEventListener("click", function () {
+		SelectThis(event);
+	});
+}
+
+function SelectThis(event) {
+	var targetElement = event.target;
+	console.log(targetElement.id);
+	targetElement.setAttributeNS(null, "stroke", "cyan");
 }
 
 function addPoPl() {
@@ -35,6 +47,7 @@ function addLnPl() {
 function netOn() {
 	if (document.getElementById("shownet").checked) {
 		document.getElementById("rotatenet").removeAttribute("disabled");
+		document.getElementById("fadenet").removeAttribute("disabled");
 		if (SchmidtNet_Flag)
 			var net = new SchmidtNet();
 		else
@@ -54,7 +67,8 @@ function clearNet() {
 	}
 	fig.removeChild(document.getElementById("sc90"));
 	fig.removeChild(document.getElementById("gc90"));
-	document.getElementById("rotatenet").setAttribute("disabled", true)
+	document.getElementById("rotatenet").setAttribute("disabled", true);
+	document.getElementById("fadenet").setAttribute("disabled", true)
 }
 
 function rotateOl() {
@@ -93,6 +107,24 @@ function rotateNet() {
 	document.getElementById("sc90").setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
 	document.getElementById("gc90").setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
 }
+
+function fadeNet() {
+	var opa = document.getElementById("fadenet").value;
+
+	document.getElementById("fadenet").setAttribute("data-badge", opa);
+
+	for (var i = 0; i < 90; i += 2) {
+		document.getElementById("gc" + i).setAttribute("opacity", opa / 100);
+		document.getElementById("gc" + 90 + i).setAttribute("opacity", opa / 100);
+		document.getElementById("sc" + i).setAttribute("opacity", opa / 100);
+		document.getElementById("sc" + 90 + i).setAttribute("opacity", opa / 100);
+
+	}
+	document.getElementById("sc90").setAttribute("opacity", opa / 100);
+	document.getElementById("gc90").setAttribute("opacity", opa / 100);
+
+}
+
 
 function modifyPlots() {
 	if (ur_pl.length)

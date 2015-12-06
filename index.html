@@ -41,15 +41,20 @@
 			<span class="mdl-layout-title">Preferences</span>
 			<nav class="mdl-navigation">
 				<div class="mdl-navigation__link">
-					<b>Toggle Grids</b>
+					<b>Grids</b>
 					<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="shownet">
 						<input type="checkbox" id="shownet" class="mdl-switch__input" onchange="netOn()" />
 						<span class="mdl-switch__label">Grids off/on</span>
 					</label>
+					<hr>
+					<label>
+						<span class="mdl-switch__label">Opacity</span>
+						<input class="mdl-slider mdl-js-slider mdl-badge" data-badge="100" type="range" id="fadenet" min="10" max="100" value="100" step="1" oninput="fadeNet()" disabled/> </label>
 				</div>
 
 				<div class="mdl-navigation__link">
-					<b>Projection Type</b><br>
+					<b>Projection</b>
+					<br>
 					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="towuff">
 						<input checked class="mdl-radio__button" id="towuff" name="netsw" type="radio" onchange="switchNet()">
 						<span class="mdl-radio__label">Wulff Net</span>
@@ -59,6 +64,7 @@
 						<span class="mdl-radio__label">Schmidt Net</span>
 					</label>
 				</div>
+
 
 			</nav>
 		</div>
@@ -76,15 +82,15 @@
 							<label>
 								<span class="mdl-switch__label">Rotate Net</span>
 
-									<input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotatenet" min="0" max="359" value="0" step="1" oninput="rotateNet()" disabled/>
-															</label>
+								<input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotatenet" min="0" max="359" value="0" step="1" oninput="rotateNet()" disabled/>
+							</label>
 						</div>
 
 						<div class="mdl-cell mdl-cell--12-col">
 							<label>
 								<span class="mdl-switch__label">Rotate Overlay</span>
 
-									<input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotateol" min="0" max="359" value="0" step="1" oninput="rotateOl()" />
+								<input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotateol" min="0" max="359" value="0" step="1" oninput="rotateOl()" />
 
 							</label>
 						</div>
@@ -100,6 +106,7 @@
 							<a href="#readme" class="mdl-tabs__tab is-active mdl-js-ripple-effect">Instructions</a>
 							<a href="#iPl" class="mdl-tabs__tab mdl-js-ripple-effect">Planes</a>
 							<a href="#iLn" class="mdl-tabs__tab mdl-js-ripple-effect">Lines</a>
+							<a href="#DatPan" class="mdl-tabs__tab mdl-js-ripple-effect">Data</a>
 						</div>
 						<div class="mdl-tabs__panel mdl-grid  is-active" id="readme">
 							<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
@@ -137,8 +144,8 @@
 										</div>
 										<div class="mdl-card__actions mdl-card--border">
 											<button onclick="addPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-										Plot
-									</button>
+												Plot
+											</button>
 										</div>
 									</div>
 								</div>
@@ -161,7 +168,7 @@
 										</div>
 										<div class="mdl-card__actions mdl-card--border">
 											<button onclick="addPoPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Plot
-									</button>
+											</button>
 										</div>
 									</div>
 								</div>
@@ -189,7 +196,7 @@
 										</div>
 										<div class="mdl-card__actions mdl-card--border">
 											<button onclick="addLn()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Plot
-									</button>
+											</button>
 										</div>
 									</div>
 								</div>
@@ -224,14 +231,19 @@
 
 										<div class="mdl-card__actions mdl-card--border">
 											<button onclick="addLnPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Plot
-									</button>
+											</button>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+						<div class="mdl-tabs__panel" id="DatPan">
+						</div>
 					</div>
 				</div>
+			</div>
+			<div class="mdl-grid">
+
 			</div>
 
 			<footer class="mdl-mini-footer">
@@ -250,7 +262,7 @@
 
 
 	</div>
-<script src="js/ui.js"></script>
+	<script src="js/ui.js"></script>
 
 </body>
 
