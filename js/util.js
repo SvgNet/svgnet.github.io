@@ -15,8 +15,16 @@ var ur_popl = [];
 var ur_lnpl = [];
 var ur_selected = [];
 
-function insertdata(ur_in) {
+function SelectThis(event) {
+	var targetElement = event.target;
+	console.log(targetElement.id);
+	targetElement.setAttributeNS(null, "stroke", "cyan");
+}
 
+function insertdata(ur_in) {
+	document.getElementById(ur_in.plot.id).addEventListener("click", function () {
+		SelectThis(event);
+	});
 	var table = document.getElementById("dataout").getElementsByTagName('tbody')[0];
 
 	var row = table.insertRow(table.rows.length);
@@ -51,27 +59,17 @@ function insertdata(ur_in) {
 }
 
 function addPl() {
-	ur_pl.push(new Plane(+document.getElementById("st").value, +document.getElementById("dd").value, "blue", 0.5, "user_plane" + ur_pl.length));
+	ur_pl.push(new Plane(+document.getElementById("st").value, +document.getElementById("dd").value, "blue", 1, "user_plane" + ur_pl.length));
 	insertdata(ur_pl[ur_pl.length - 1]);
 	if (document.getElementById("poto").checked) {
 		ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length - 1], "orange", "user_poletoplane" + ur_popl.length));
 		insertdata(ur_popl[ur_popl.length - 1]);
 	}
-
 }
 
 function addLn() {
 	ur_ln.push(new Line(+document.getElementById("tr").value, +document.getElementById("pl").value, "red", "user_line" + ur_ln.length));
-	document.getElementById(ur_ln[ur_ln.length - 1].plot.id).addEventListener("click", function () {
-		SelectThis(event);
-	});
-	insertdata(ur_ln[ur_ln.length - 1])
-}
-
-function SelectThis(event) {
-	var targetElement = event.target;
-	console.log(targetElement.id);
-	targetElement.setAttributeNS(null, "stroke", "cyan");
+	insertdata(ur_ln[ur_ln.length - 1]);
 }
 
 function addPoPl() {
@@ -131,12 +129,6 @@ function rotateOl() {
 			document.getElementById(ur_lnpl[i].plot.id).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
 	}
 }
-
-
-
-
-
-
 
 function rotateNet() {
 	var deg = document.getElementById("rotatenet").value;
