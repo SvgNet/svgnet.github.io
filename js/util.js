@@ -17,7 +17,13 @@ var ur_selected = [];
 
 function SelectThis(event) {
 	var targetElement = event.target;
-	console.log(targetElement.id.slice(3));
+
+	if (targetElement.checked) {
+		ur_selected.push(eval(targetElement.id.slice(3)));
+		console.log(targetElement.id.slice(3));
+	} else {
+		ur_selected.splice(ur_selected.lastIndexOf(eval(targetElement.id.slice(3))),1)
+	}
 }
 
 function insertdata(ur_in) {
@@ -67,7 +73,7 @@ function addPl() {
 	ur_pl.push(new Plane(+document.getElementById("st").value, +document.getElementById("dd").value, "blue", 1, "Pur_pl[" + ur_pl.length + "]"));
 	insertdata(ur_pl[ur_pl.length - 1]);
 	if (document.getElementById("poto").checked) {
-		ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length - 1], "orange", "Pur_popl" + ur_popl.length + "]"));
+		ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length - 1], "orange", "Pur_popl[" + ur_popl.length + "]"));
 		insertdata(ur_popl[ur_popl.length - 1]);
 	}
 }
@@ -78,7 +84,7 @@ function addLn() {
 }
 
 function addPoPl() {
-	ur_popl.push(new PoletoPlane(new Plane(+document.getElementById("pst").value, +document.getElementById("pdd").value), "orange", "Pur_popl" + ur_popl.length + "]"));
+	ur_popl.push(new PoletoPlane(new Plane(+document.getElementById("pst").value, +document.getElementById("pdd").value), "orange", "Pur_popl[" + ur_popl.length + "]"));
 	insertdata(ur_popl[ur_popl.length - 1]);
 }
 
