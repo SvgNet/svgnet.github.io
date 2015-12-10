@@ -17,22 +17,21 @@ var ur_selected = [];
 
 function SelectThis(event) {
 	var targetElement = event.target;
-	console.log(targetElement.id);
-	targetElement.setAttributeNS(null, "stroke", "cyan");
+	console.log(targetElement.id.slice(3));
 }
 
 function insertdata(ur_in) {
-	document.getElementById(ur_in.plot.id).addEventListener("click", function () {
-		SelectThis(event);
-	});
+
 	var table = document.getElementById("dataout").getElementsByTagName('tbody')[0];
 
 	var row = table.insertRow(table.rows.length);
 
 	var cell1 = row.insertCell(0);
+	cell1.innerHTML = '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="' + "sl" + ur_in.plot.id + '"><input type="checkbox" id="' + "sl" + ur_in.plot.id + '" class="mdl-checkbox__input" /></label>'
 	var cell2 = row.insertCell(1);
 	var cell3 = row.insertCell(2);
-	cell1.className = 'mdl-data-table__cell--non-numeric';
+	var cell4 = row.insertCell(3);
+	cell2.className = 'mdl-data-table__cell--non-numeric';
 
 	var dataType = "";
 	if (ur_in instanceof Line)
@@ -46,39 +45,45 @@ function insertdata(ur_in) {
 	else
 		dataType = "error";
 
-	cell1.innerHTML = dataType;
+	cell2.innerHTML = dataType;
 	if (ur_in instanceof Plane) {
-		cell2.innerHTML = ur_in.strike;
-		cell3.innerHTML = ur_in.dip;
+		cell3.innerHTML = ur_in.strike;
+		cell4.innerHTML = ur_in.dip;
 	} else {
-		cell2.innerHTML = ur_in.trend;
-		cell3.innerHTML = ur_in.plunge;
+		cell3.innerHTML = ur_in.trend;
+		cell4.innerHTML = ur_in.plunge;
 	}
+
 	componentHandler.upgradeElement(row);
+	componentHandler.upgradeElement(document.getElementById("sl" + ur_in.plot.id));
+	document.getElementById("sl" + ur_in.plot.id).addEventListener("change", function () {
+		SelectThis(event);
+	});
+	componentHandler.upgradeDom();
 
 }
 
 function addPl() {
-	ur_pl.push(new Plane(+document.getElementById("st").value, +document.getElementById("dd").value, "blue", 1, "user_plane" + ur_pl.length));
+	ur_pl.push(new Plane(+document.getElementById("st").value, +document.getElementById("dd").value, "blue", 1, "Pur_pl[" + ur_pl.length + "]"));
 	insertdata(ur_pl[ur_pl.length - 1]);
 	if (document.getElementById("poto").checked) {
-		ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length - 1], "orange", "user_poletoplane" + ur_popl.length));
+		ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length - 1], "orange", "Pur_popl" + ur_popl.length + "]"));
 		insertdata(ur_popl[ur_popl.length - 1]);
 	}
 }
 
 function addLn() {
-	ur_ln.push(new Line(+document.getElementById("tr").value, +document.getElementById("pl").value, "red", "user_line" + ur_ln.length));
+	ur_ln.push(new Line(+document.getElementById("tr").value, +document.getElementById("pl").value, "red", "Pur_ln[" + ur_ln.length + "]"));
 	insertdata(ur_ln[ur_ln.length - 1]);
 }
 
 function addPoPl() {
-	ur_popl.push(new PoletoPlane(new Plane(+document.getElementById("pst").value, +document.getElementById("pdd").value), "orange", "user_poletoplane" + ur_popl.length));
+	ur_popl.push(new PoletoPlane(new Plane(+document.getElementById("pst").value, +document.getElementById("pdd").value), "orange", "Pur_popl" + ur_popl.length + "]"));
 	insertdata(ur_popl[ur_popl.length - 1]);
 }
 
 function addLnPl() {
-	ur_lnpl.push(new LineonPlane(new Plane(+document.getElementById("rst").value, +document.getElementById("rdd").value), document.getElementById("rpi").value, document.getElementById("ropfl").checked, "teal", "user_lineonplane" + ur_lnpl.length));
+	ur_lnpl.push(new LineonPlane(new Plane(+document.getElementById("rst").value, +document.getElementById("rdd").value), document.getElementById("rpi").value, document.getElementById("ropfl").checked, "teal", "Pur_lnpl[" + ur_lnpl.length + "]"));
 	insertdata(ur_lnpl[ur_lnpl.length - 1])
 }
 
@@ -161,7 +166,6 @@ function fadeNet() {
 	document.getElementById("gc90").setAttribute("opacity", opa / 100);
 
 }
-
 
 function modifyPlots() {
 	if (ur_pl.length)

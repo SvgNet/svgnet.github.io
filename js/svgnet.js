@@ -103,8 +103,8 @@ function Ssdr2cart(strike, dip, rake, op_flag) {
 		strike += 180;
 		rake = 180 - rake;
 	}
-	var Temp_Pl=Math.asin(Math.sin(torad(dip)) * Math.sin(torad(rake))),
-	 Temp_Tr=torad(strike) + Math.atan(Math.cos(torad(dip)) * Math.tan(torad(rake)));
+	var Temp_Pl = Math.asin(Math.sin(torad(dip)) * Math.sin(torad(rake))),
+		Temp_Tr = torad(strike) + Math.atan(Math.cos(torad(dip)) * Math.tan(torad(rake)));
 	return (new Pt(
 		Math.SQRT2 * radius_primitive * Math.sin(Math.PI / 4 - 0.5 * Temp_Pl) * Math.sin(Temp_Tr),
 		Math.SQRT2 * radius_primitive * Math.sin(Math.PI / 4 - 0.5 * Temp_Pl) * Math.cos(Temp_Tr)
@@ -140,11 +140,6 @@ function Plane(strike, dip, clr, lwidth, id) {
 
 	if (clr != undefined)
 		this.draw();
-
-	this.modify = function () {
-		this.plot.newpath.parentNode.removeChild(this.plot.newpath);
-		this.draw();
-	}
 }
 
 function Line(trend, plunge, clr, id) {
@@ -161,10 +156,6 @@ function Line(trend, plunge, clr, id) {
 	if (clr !== undefined) {
 		this.draw();
 	}
-	this.modify = function () {
-		this.plot.newpath.parentNode.removeChild(this.plot.newpath);
-		this.draw();
-	};
 }
 
 function LineonPlane(onPlane, pitch, op_flag, clr, id) {
@@ -173,7 +164,7 @@ function LineonPlane(onPlane, pitch, op_flag, clr, id) {
 		pitch = 180 - pitch;
 	}
 	this.plunge = todeg(Math.asin(Math.sin(torad(onPlane.dip)) * Math.sin(torad(pitch))));
-	this.trend = (onPlane.strike + todeg(Math.atan(Math.cos(torad(onPlane.dip)) * Math.tan(torad(pitch)))))%360;
+	this.trend = (onPlane.strike + todeg(Math.atan(Math.cos(torad(onPlane.dip)) * Math.tan(torad(pitch))))) % 360;
 
 	this.draw = function () {
 		if (SchmidtNet_Flag)
@@ -186,10 +177,6 @@ function LineonPlane(onPlane, pitch, op_flag, clr, id) {
 		this.draw();
 	}
 
-	this.modify = function () {
-		this.plot.newpath.parentNode.removeChild(this.plot.newpath);
-		this.draw();
-	};
 }
 
 function PoletoPlane(ofPlane, clr, id) {
@@ -206,12 +193,12 @@ function PoletoPlane(ofPlane, clr, id) {
 	if (clr !== undefined) {
 		this.draw();
 	}
-
-	this.modify = function () {
-		this.plot.newpath.parentNode.removeChild(this.plot.newpath);
-		this.draw();
-	};
 }
+
+Plane.prototype.modify = Line.prototype.modify = PoletoPlane.prototype.modify = LineonPlane.prototype.modify = function () {
+	this.plot.newpath.parentNode.removeChild(this.plot.newpath);
+	this.draw();
+};
 
 function AngDist(LinA, LinB) {
 	return todeg(Math.acos(Math.cos(torad(LinA.trend - LinB.trend)) * Math.cos(torad(LinA.plunge)) * Math.cos(torad(LinB.plunge)) + Math.sin(torad(LinA.plunge)) * Math.sin(torad(LinB.plunge))));
