@@ -200,8 +200,13 @@ Plane.prototype.modify = Line.prototype.modify = PoletoPlane.prototype.modify = 
 	this.draw();
 };
 
-function AngDist(LinA, LinB) {
-	return todeg(Math.acos(Math.cos(torad(LinA.trend - LinB.trend)) * Math.cos(torad(LinA.plunge)) * Math.cos(torad(LinB.plunge)) + Math.sin(torad(LinA.plunge)) * Math.sin(torad(LinB.plunge))));
+function AngDist(InA, InB) {
+
+	if ((InA instanceof Plane) && (InB instanceof Plane)) {
+		var InA = new PoletoPlane(InA),
+			InB = new PoletoPlane(InB);
+	}
+	return todeg(Math.acos(Math.cos(torad(InA.trend - InB.trend)) * Math.cos(torad(InA.plunge)) * Math.cos(torad(InB.plunge)) + Math.sin(torad(InA.plunge)) * Math.sin(torad(InB.plunge))));
 }
 
 function WulffNet() {

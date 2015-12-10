@@ -33,7 +33,7 @@
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
-				<span class="mdl-layout-title">SvgNet</span>
+				<span class="mdl-layout-title">SvgNet<i class="material-icons">explore</i></span>
 				<div class="mdl-layout-spacer"></div>
 			</div>
 		</header>
@@ -64,8 +64,14 @@
 						<span class="mdl-radio__label">Schmidt Net</span>
 					</label>
 				</div>
-
-
+				<div class="mdl-navigation__link">
+					<b>Calcuations</b>
+					<br> Angle between two Selected Data:<br>
+					<b id="Angdat"></b><br>
+					<button onclick="AngleSelected()" class="mdl-button mdl-js-button mdl-button--mini-fab mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+						Calculate
+					</button>
+				</div>
 			</nav>
 		</div>
 		<main class="mdl-layout__content">
@@ -104,7 +110,7 @@
 				<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-color--grey-100 mdl-shadow--4dp">
 					<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect ">
 						<div class="mdl-tabs__tab-bar">
-							<a href="#readme" class="mdl-tabs__tab is-active mdl-js-ripple-effect">Instructions</a>
+							<a href="#readme" class="mdl-tabs__tab is-active mdl-js-ripple-effect"><i class="material-icons">info</i></a>
 							<a href="#iPl" class="mdl-tabs__tab mdl-js-ripple-effect">Planes</a>
 							<a href="#iLn" class="mdl-tabs__tab mdl-js-ripple-effect">Lines</a>
 							<a href="#DatPan" class="mdl-tabs__tab mdl-js-ripple-effect">Data</a>

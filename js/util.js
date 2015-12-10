@@ -25,7 +25,13 @@ function SelectThis(event) {
 		ur_selected.splice(ur_selected.lastIndexOf(eval(targetElement.id.slice(3))),1)
 	}
 }
-
+function AngleSelected(){
+	var res="Select only two Data";
+	if(ur_selected.length==2){
+		res=AngDist(ur_selected[0], ur_selected[1]);
+	}
+	document.getElementById("Angdat").innerHTML= res;
+}
 function insertdata(ur_in) {
 
 	var table = document.getElementById("dataout").getElementsByTagName('tbody')[0];
