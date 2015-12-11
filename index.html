@@ -28,20 +28,20 @@
 	<link rel="stylesheet" href="css/material.custom.css">
 </head>
 
-<body>
+<body class="mdl-typography--body-2">
 
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
-				<span class="mdl-layout-title">SvgNet<i class="material-icons ">explore</i></span>
+				<span class="mdl-layout-title ">SvgNet<i class="material-icons ">explore</i></span>
 				<div class="mdl-layout-spacer"></div>
 			</div>
 		</header>
 		<div class="mdl-layout__drawer">
 			<span class="mdl-layout-title">Preferences</span>
 			<nav class="mdl-navigation">
-				<div class="mdl-navigation__link">
-					<b>Grids</b>
+				<div class="mdl-navigation__link mdl-typography--body-1">
+					<b class="mdl-typography--button">Grids</b>
 					<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="shownet">
 						<input type="checkbox" id="shownet" class="mdl-switch__input" onchange="netOn()" />
 						<span class="mdl-switch__label">Grids off/on</span>
@@ -53,19 +53,20 @@
 				</div>
 
 				<div class="mdl-navigation__link">
-					<b>Projection</b>
+					<b class="mdl-typography--button">Projection</b>
 					<br>
 					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="towuff">
 						<input checked class="mdl-radio__button" id="towuff" name="netsw" type="radio" onchange="switchNet()">
-						<span class="mdl-radio__label">Wulff Net</span>
+						<span class="mdl-radio__label mdl-typography--body-2-color-contrast	">Wulff Net</span>
+
 					</label>
 					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="toschmidt">
 						<input class="mdl-radio__button" id="toschmidt" name="netsw" type="radio" onchange="switchNet()">
-						<span class="mdl-radio__label">Schmidt Net</span>
+						<span class="mdl-radio__label mdl-typography--body-2-color-contrast">Schmidt Net</span>
 					</label>
 				</div>
 				<div class="mdl-navigation__link">
-					<b>Calcuations</b>
+					<b class="mdl-typography--button">Calcuations</b>
 					<br> Angle between two Selected Data:
 					<br>
 					<b id="Angdat"></b>
@@ -103,8 +104,10 @@
 							</label>
 						</div>
 
-						<a id="pdl" onclick="triggerDownload()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Download Plot
-						</a>
+						<a id="pdl" onclick="triggerDownload()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--raised mdl-js-ripple-effect mdl-button--accent"><i class="material-icons">save</i></a>
+						<span class="mdl-tooltip mdl-tooltip--large" for="pdl">Save As Vector &#91;.SVG&#93;</span>
+						<a id="PNGdl" onclick="triggerDownloadPNG()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--raised mdl-js-ripple-effect mdl-button--accent"><i class="material-icons">photo</i></a>
+						<span class="mdl-tooltip  mdl-tooltip--large" for="PNGdl">Save As Raster &#91;.PNG&#93;</span>
 					</div>
 				</div>
 
@@ -120,8 +123,8 @@
 						<div class="mdl-tabs__panel mdl-grid  is-active" id="readme">
 							<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
 								<div class="mdl-card__title">
-									<h4 class="mdl-card__title-text">
-      The Right Hand Rule(RHR) i.e strike + 90&deg;&#61;dip direction is to be followed when entering the data
+									<h4 class="mdl-typography--subhead-color-contrast	">
+										The Right Hand Rule(RHR) i.e <b>strike + 90&deg;&#61;dip direction</b> is to be followed when entering the data in the <b>PLANES</b> and or <b>LINES</b>.<br> Select the data in the <b>DATA</b> tab for calulations, click on <i class="material-icons ">save</i> to save as Vector and <i class="material-icons">photo</i> to save as raster.
 								</h4>
 								</div>
 							</div>

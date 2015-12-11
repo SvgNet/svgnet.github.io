@@ -9,6 +9,31 @@ function triggerDownload() {
 	dn_link.setAttribute('href', svg_file);
 }
 
+function triggerDownloadPNG() {
+
+	var svg = document.querySelector("svg");
+	var svgData = new XMLSerializer().serializeToString(svg);
+
+	var canvas = document.createElement("canvas");
+	canvas.height = 512;
+	canvas.width = 512;
+	var ctx = canvas.getContext("2d");
+
+	var img = document.createElement("img");
+	img.setAttribute("src", "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData))));
+
+	ctx.drawImage(img, 0, 0);
+	var canvasdata = canvas.toDataURL("image/png");
+	var dn_link = document.getElementById('PNGdl');
+	dn_link.setAttribute('download', 'SvgNet_export.png');
+	dn_link.setAttribute('href', canvasdata);
+
+}
+
+
+
+
+
 var ur_pl = [];
 var ur_ln = [];
 var ur_popl = [];
@@ -22,16 +47,18 @@ function SelectThis(event) {
 		ur_selected.push(eval(targetElement.id.slice(3)));
 		console.log(targetElement.id.slice(3));
 	} else {
-		ur_selected.splice(ur_selected.lastIndexOf(eval(targetElement.id.slice(3))),1)
+		ur_selected.splice(ur_selected.lastIndexOf(eval(targetElement.id.slice(3))), 1)
 	}
 }
-function AngleSelected(){
-	var res="Select only two Data";
-	if(ur_selected.length==2){
-		res=AngDist(ur_selected[0], ur_selected[1]);
+
+function AngleSelected() {
+	var res = "Select only two Data";
+	if (ur_selected.length == 2) {
+		res = AngDist(ur_selected[0], ur_selected[1]);
 	}
-	document.getElementById("Angdat").innerHTML= res;
+	document.getElementById("Angdat").innerHTML = res;
 }
+
 function insertdata(ur_in) {
 
 	var table = document.getElementById("dataout").getElementsByTagName('tbody')[0];
