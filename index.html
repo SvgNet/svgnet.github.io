@@ -314,6 +314,7 @@
 				})
 				.then(function(registration) {
 					console.log("Service Worker Registered");
+					var worker = reg.installing;
 					worker.addEventListener('statechange', function() {
 						if (worker.state == 'redundant') {
 							console.log('Install failed');
