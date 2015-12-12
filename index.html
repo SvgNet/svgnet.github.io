@@ -305,29 +305,31 @@
 
 	</div>
 	<script src="js/ui.js"></script>
+
+
 	<script>
 		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker.register('sw.js', {
 					scope: '/'
 				})
 				.then(function(registration) {
-						console.log("Service Worker Registered");
-						var worker = registration.installing;
-						worker.addEventListener('statechange', function() {
-							if (worker.state == 'redundant') {
-								console.log('Install failed');
-							}
-							if (worker.state == 'installed') {
-								console.log('Install successful!');
-							}
-						});
-
-						navigator.serviceWorker.ready.then(function(registration) {
-							console.log("Service Worker Ready");
-						});
-					}
+					console.log("Service Worker Registered");
+					worker.addEventListener('statechange', function() {
+						if (worker.state == 'redundant') {
+							console.log('Install failed');
+						}
+						if (worker.state == 'installed') {
+							console.log('Install successful!');
+						}
+					});
+				});
+			navigator.serviceWorker.ready.then(function(registration) {
+				console.log("Service Worker Ready");
+			});
+		}
 
 	</script>
+
 </body>
 
 </html>
