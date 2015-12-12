@@ -308,20 +308,7 @@
 
 
 	<script>
-		function createToast(message) {
-			'use strict';
-			var snackbar = document.createElement('div'),
-				text = document.createElement('div');
-			snackbar.classList.add('mdl-snackbar');
-			text.classList.add('mdl-snackbar__text');
-			text.innerText = message;
-			snackbar.appendChild(text);
-			document.body.appendChild(snackbar);
-			// Remove after 10 seconds
-			setTimeout(function() {
-				snackbar.remove();
-			}, 10000);
-		}
+
 		navigator.serviceWorker.register('/sw.js').then(function(reg) {
 			if (!reg.installing) return;
 			console.log("There is a ServiceWorker installing");
@@ -332,7 +319,7 @@
 					console.log('Install failed');
 				}
 				if (worker.state == 'installed') {
-				createToast("Ready For OFFLINE USE");
+				console.log("Ready For OFFLINE USE");
 				}
 			});
 		});
