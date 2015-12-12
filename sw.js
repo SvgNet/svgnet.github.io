@@ -1,9 +1,9 @@
 importScripts('/cache-polyfill.js');
 
-self.addEventListener('install', function(e) {
-  e.waitUntil(
-    caches.open('SvgNet').then(function(cache) {
-      return cache.addAll([
+self.addEventListener('install', function (e) {
+	e.waitUntil(
+		caches.open('SvgNet').then(function (cache) {
+			return cache.addAll([
         '/',
         '/index.html',
 				'/css/material.icons.css',
@@ -19,23 +19,23 @@ self.addEventListener('install', function(e) {
         '/js/ui.js',
         '/js/material.min.js',
         '/icon.png'
-      ]).then(function() {
-        return self.skipWaiting();
-      });
-    })
-  );
+      ]).then(function () {
+				return self.skipWaiting();
+			});
+		})
+	);
 });
 
-self.addEventListener('activate', function(event) {
-  event.waitUntil(self.clients.claim());
+self.addEventListener('activate', function (event) {
+	event.waitUntil(self.clients.claim());
 });
 
-self.addEventListener('fetch', function(event) {
-  console.log(event.request.url);
+self.addEventListener('fetch', function (event) {
+	console.log(event.request.url);
 
-  event.respondWith(
-    caches.match(event.request).then(function(response) {
-      return response || fetch(event.request);
-    })
-  );
+	event.respondWith(
+		caches.match(event.request).then(function (response) {
+			return response || fetch(event.request);
+		})
+	);
 });
