@@ -17,6 +17,7 @@ self.addEventListener('install', function(e) {
         '/js/svgnet.js',
         '/js/util.js',
         '/js/ui.js',
+        '/js/material.min.js',
         '/icon.png'
       ]).then(function() {
         return self.skipWaiting();
