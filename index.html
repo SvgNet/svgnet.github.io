@@ -50,7 +50,9 @@
 		</header>
 		<div class="mdl-layout__drawer">
 			<span class="mdl-layout-title">Preferences</span>
-			<nav class="mdl-navigation">
+
+			<nav class="mdl-navigation ">
+
 				<div class="mdl-navigation__link mdl-typography--body-1">
 					<b class="mdl-typography--button">Grids</b>
 					<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="shownet">
@@ -63,7 +65,7 @@
 						<input class="mdl-slider mdl-js-slider mdl-badge" data-badge="100" type="range" id="fadenet" min="10" max="100" value="100" step="1" oninput="fadeNet()" disabled/> </label>
 				</div>
 
-				<div class="mdl-navigation__link">
+				<div class="mdl-navigation__link mdl-typography--body-1">
 					<b class="mdl-typography--button">Projection</b>
 					<br>
 					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="towuff">
@@ -76,8 +78,9 @@
 						<span class="mdl-radio__label mdl-typography--body-2-color-contrast">Schmidt Net</span>
 					</label>
 				</div>
-				<div class="mdl-navigation__link">
+				<div class="mdl-navigation__link mdl-typography--body-1">
 					<b class="mdl-typography--button">Calcuations</b>
+
 					<br> Angle between two Selected Data:
 					<br>
 					<b id="Angdat"></b>
@@ -284,16 +287,17 @@
 					</div>
 				</div>
 			</div>
-			<div class="mdl-grid">
 
-			</div>
 
 			<footer class="mdl-mini-footer">
 				<div class="mdl-mini-footer__left-section">
-					<div class="mdl-logo">
-						<b>SvgNet v0.1.2</b> - Structural Geology Plots with SVG, Javascript and HTML5;
+					<div class="mdl-logo mdl-typography--subhead">
+						<b class="mdl-typography--subhead-color-contrast">SvgNet v1.5.9</b> - Structural Geology Plots with SVG, Javascript and HTML5
 					</div>
-					<ul class="mdl-mini-footer__link-list">
+
+				</div>
+				<div class="mdl-mini-footer__right-section">
+					<ul class="mdl-mini-footer__link-list mdl-typography--subhead ">
 						<li><a href="https://github.com/arijitlaik/SvgNet">Sourcecode</a></li>
 						<li><a href="https://svgnet.github.io">Web App</a></li>
 						<li><a href="https://build.phonegap.com/apps/1624590/share">Mobile Apps</a></li>
@@ -307,7 +311,7 @@
 	<script src="js/ui.js"></script>
 
 
-	<script>
+	 <script>
 
 		navigator.serviceWorker.register('/sw.js').then(function(reg) {
 			if (!reg.installing) return;
@@ -319,7 +323,7 @@
 					console.log('Install failed');
 				}
 				if (worker.state == 'installed') {
-				console.log("Ready For OFFLINE USE");
+				alert("Ready For OFFLINE USE");
 				}
 			});
 		});
