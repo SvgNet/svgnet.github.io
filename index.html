@@ -324,15 +324,7 @@
 					console.log('Install failed');
 				}
 				if (worker.state == 'installed') {
-
-					var notification = document.querySelector('.mdl-js-snackbar');
-					var data = {
-						message: 'READY FOR OFFLINE USE',
-						actionHandler: function(event) {},
-						actionText: 'Undo',
-						timeout: 10000
-					};
-					notification.MaterialSnackbar.showSnackbar(data);
+					alert("SvgNet is ready for offline use")
 
 				}
 			});
