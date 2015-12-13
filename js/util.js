@@ -30,10 +30,6 @@ function triggerDownloadPNG() {
 
 }
 
-
-
-
-
 var ur_pl = [];
 var ur_ln = [];
 var ur_popl = [];
@@ -45,9 +41,11 @@ function SelectThis(event) {
 
 	if (targetElement.checked) {
 		ur_selected.push(eval(targetElement.id.slice(3)));
+		document.getElementById(targetElement.id).parentElement.parentElement.parentElement.classList.add("is-selected");
 		console.log(targetElement.id.slice(3));
 	} else {
-		ur_selected.splice(ur_selected.lastIndexOf(eval(targetElement.id.slice(3))), 1)
+		ur_selected.splice(ur_selected.lastIndexOf(eval(targetElement.id.slice(3))), 1);
+		document.getElementById(targetElement.id).parentElement.parentElement.parentElement.classList.toggle("is-selected");
 	}
 }
 
