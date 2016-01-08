@@ -32,7 +32,7 @@
 	<script src="js/svgnet.js"></script>
 	<script src="js/util.js"></script>
 
-	<link rel="stylesheet" href="css/material.cyan-blue.min.css">
+	<link rel="stylesheet" href="css/material.indigo-blue.min.css">
 
 	<script src="js/material.min.js"></script>
 	<link rel="stylesheet" href="css/material.icons.css">
@@ -70,7 +70,7 @@
 					<br>
 					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="towuff">
 						<input checked class="mdl-radio__button" id="towuff" name="netsw" type="radio" onchange="switchNet()">
-						<span class="mdl-radio__label mdl-typography--body-2-color-contrast	">Wulff Net</span>
+						<span class="mdl-radio__label mdl-typography--body-2-color-contrast">Wulff Net</span>
 
 					</label>
 					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="toschmidt">
@@ -81,7 +81,7 @@
 				<div class="mdl-navigation__link mdl-typography--body-1">
 					<b class="mdl-typography--button">Calcuations</b>
 
-					<br> Angle between two Selected Data:
+					<br> Angle between 2 Selected Data:
 					<br>
 					<b id="Angdat"></b>
 					<br>
@@ -92,8 +92,8 @@
 			</nav>
 		</div>
 		<main class="mdl-layout__content">
-			<div class="mdl-grid ">
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-shadow--4dp mdl-color--white">
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--5-col mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-shadow--4dp mdl-color--white">
 
 					<div id="svg_wrapper">
 					</div>
@@ -126,7 +126,7 @@
 				</div>
 
 
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-color--grey-100 mdl-shadow--4dp">
+				<div class="mdl-cell mdl-cell--7-col mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-color--grey-100 mdl-shadow--4dp">
 					<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect ">
 						<div class="mdl-tabs__tab-bar">
 							<a href="#readme" class="mdl-tabs__tab is-active mdl-js-ripple-effect"><i class="material-icons">info</i></a>
@@ -148,7 +148,7 @@
 								<div class="mdl-cell mdl-cell--6-col  mdl-cell--12-col-phone mdl-cell--12-col-tablet">
 									<div class="mdl-card mdl-shadow--2dp ">
 										<div class="mdl-card__title mdl-color--accent">
-											<h2 class="mdl-card__title-text">Planes</h2>
+											<h2 class="mdl-card__title-text mdl-color-text--accent-contrast">Planes</h2>
 										</div>
 										<div class="mdl-card__supporting-text">
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -178,7 +178,7 @@
 								<div class="mdl-cell mdl-cell--6-col  mdl-cell--12-col-phone mdl-cell--12-col-tablet">
 									<div class="mdl-card mdl-shadow--2dp">
 										<div class="mdl-card__title mdl-color--accent">
-											<h2 class="mdl-card__title-text">Poles to Planes</h2>
+											<h2 class="mdl-card__title-text mdl-color-text--accent-contrast">Poles to Planes</h2>
 										</div>
 										<div class="mdl-card__supporting-text">
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -206,7 +206,7 @@
 								<div class="mdl-cell mdl-cell--6-col  mdl-cell--12-col-phone mdl-cell--12-col-tablet">
 									<div class="mdl-card mdl-shadow--2dp">
 										<div class="mdl-card__title mdl-color--accent">
-											<h2 class="mdl-card__title-text">Lines</h2>
+											<h2 class="mdl-card__title-text mdl-color-text--accent-contrast">Lines</h2>
 										</div>
 										<div class="mdl-card__supporting-text ">
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -229,7 +229,7 @@
 								<div class="mdl-cell mdl-cell--6-col  mdl-cell--12-col-phone mdl-cell--12-col-tablet">
 									<div class="mdl-card mdl-shadow--2dp ">
 										<div class="mdl-card__title mdl-color--accent">
-											<h2 class="mdl-card__title-text">Lines on Planes</h2>
+											<h2 class="mdl-card__title-text mdl-color-text--accent-contrast">Lines on Planes</h2>
 										</div>
 										<div class="mdl-card__supporting-text ">
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -263,14 +263,18 @@
 								</div>
 							</div>
 						</div>
+						<!-- DATATABLE -->
 						<div class="mdl-tabs__panel" id="DatPan">
 							<div class="mdl-grid">
 								<div class="mdl-cell mdl-cell--12-col">
 									<table class="mdl-data-table mdl-shadow--2dp" id="dataout">
+
 										<thead>
 											<tr>
 												<th>
-
+													<label for="selectall" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select">
+														<input type="checkbox" id="selectall" class="mdl-checkbox__input">
+													</label>
 												</th>
 												<th class="mdl-data-table__cell--non-numeric">Datatype</th>
 												<th>Strike/Trend</th>
@@ -310,9 +314,6 @@
 	</div>
 	<script src="js/ui.js"></script>
 
-	<div ria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-js-snackbar">
-
-	</div>
 	<script>
 		navigator.serviceWorker.register('/sw.js').then(function(reg) {
 			if (!reg.installing) return;
