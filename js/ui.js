@@ -8,7 +8,7 @@ var headerCheckHandler = function (event) {
 			}
 		} else {
 			for (var i = 0, length = boxes.length; i < length; i++) {
-
+				if(boxes[i].querySelector('input').checked)
 				boxes[i].querySelector('input').click();
 			}
 		}
