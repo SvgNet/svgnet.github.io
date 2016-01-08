@@ -1,3 +1,11 @@
+if (!('remove' in Element.prototype)) {
+	Element.prototype.remove = function () {
+		if (this.parentNode) {
+			this.parentNode.removeChild(this);
+		}
+	};
+}
+
 function toBase64(str) {
 	return window.btoa(unescape(encodeURIComponent(str)));
 }
@@ -49,38 +57,84 @@ function SelectThis(event) {
 	}
 }
 
+function DeleteSelected() {
+	if (ur_selected.length) {
+		for (var i = 0; i < ur_selected.length; i++) {
+			document.getElementById(ur_selected[i].plot.id).remove();
+			if (ur_pl.lastIndexOf(ur_selected[i]) > -1)
+				ur_pl.splice(ur_pl.lastIndexOf(ur_selected[i]), 1);
+			if (ur_ln.lastIndexOf(ur_selected[i]) > -1)
+				ur_ln.splice(ur_ln.lastIndexOf(ur_selected[i]), 1);
+			if (ur_popl.lastIndexOf(ur_selected[i]) > -1)
+				ur_popl.splice(ur_popl.lastIndexOf(ur_selected[i]), 1);
+			if (ur_lnpl.lastIndexOf(ur_selected[i]) > -1)
+				ur_lnpl.splice(ur_lnpl.lastIndexOf(ur_selected[i]), 1);
+		};
+		ur_selected = [];
+		if(document.getElementById("selectall").checked){
+		document.getElementById("selectall").click();
+	}
+		updateData();
+	}
+}
+
 function AngleSelected() {
-	var res = "Select only two Data";
+	var res = "Select 2 Data";
 	if (ur_selected.length == 2) {
 		res = AngDist(ur_selected[0], ur_selected[1]);
 	}
 	document.getElementById("Angdat").innerHTML = res;
 }
 
+function updateData() {
+	document.getElementById("dataout").getElementsByTagName('tbody')[0].innerHTML = "";
+	if (ur_pl.length)
+		for (var i = 0; i < ur_pl.length; i++) insertdata(ur_pl[i]);
+	if (ur_ln.length)
+		for (var i = 0; i < ur_ln.length; i++) insertdata(ur_ln[i]);
+	if (ur_popl.length)
+		for (var i = 0; i < ur_popl.length; i++) insertdata(ur_popl[i]);
+	if (ur_lnpl.length)
+		for (var i = 0; i < ur_lnpl.length; i++) insertdata(ur_lnpl[i]);
+
+}
+
+
 function insertdata(ur_in) {
 
 	var table = document.getElementById("dataout").getElementsByTagName('tbody')[0];
 
 	var row = table.insertRow(table.rows.length);
+	var idf = "slP";
+	var dataType = "";
+	if (ur_in instanceof Line) {
+		dataType = "Line";
+		idf += "ur_ln[" + ur_ln.lastIndexOf(ur_in) + "]";
 
+	} else if (ur_in instanceof Plane) {
+		dataType = "Plane";
+		idf += "ur_pl[" + ur_pl.lastIndexOf(ur_in) + "]";
+
+	} else if (ur_in instanceof PoletoPlane) {
+		dataType = "Pole to Plane";
+		idf += "ur_popl[" + ur_popl.lastIndexOf(ur_in) + "]";
+
+	} else if (ur_in instanceof LineonPlane) {
+		dataType = "Line on Plane";
+		idf += "ur_lnpl[" + ur_lnpl.lastIndexOf(ur_in) + "]";
+
+	} else {
+		dataType = "error";
+		idf += "error"
+	}
 	var cell1 = row.insertCell(0);
-	cell1.innerHTML = '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="' + "sl" + ur_in.plot.id + '"><input type="checkbox" id="' + "sl" + ur_in.plot.id + '" class="mdl-checkbox__input" /></label>'
+	cell1.innerHTML = '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="' + idf + '"><input type="checkbox" id="' + idf + '" class="mdl-checkbox__input" /></label>'
 	var cell2 = row.insertCell(1);
 	var cell3 = row.insertCell(2);
 	var cell4 = row.insertCell(3);
 	cell2.className = 'mdl-data-table__cell--non-numeric';
 
-	var dataType = "";
-	if (ur_in instanceof Line)
-		dataType = "Line";
-	else if (ur_in instanceof Plane)
-		dataType = "Plane";
-	else if (ur_in instanceof PoletoPlane)
-		dataType = "Pole to Plane";
-	else if (ur_in instanceof LineonPlane)
-		dataType = "Line on Plane";
-	else
-		dataType = "error";
+
 
 	cell2.innerHTML = dataType;
 	if (ur_in instanceof Plane) {
@@ -92,8 +146,8 @@ function insertdata(ur_in) {
 	}
 
 	componentHandler.upgradeElement(row);
-	componentHandler.upgradeElement(document.getElementById("sl" + ur_in.plot.id));
-	document.getElementById("sl" + ur_in.plot.id).addEventListener("change", function (event) {
+	componentHandler.upgradeElement(document.getElementById(idf));
+	document.getElementById(idf).addEventListener("change", function (event) {
 		SelectThis(event);
 	});
 	componentHandler.upgradeDom();
@@ -102,26 +156,26 @@ function insertdata(ur_in) {
 
 function addPl() {
 	ur_pl.push(new Plane(+document.getElementById("st").value, +document.getElementById("dd").value, "blue", 1, "Pur_pl[" + ur_pl.length + "]"));
-	insertdata(ur_pl[ur_pl.length - 1]);
+	updateData();
 	if (document.getElementById("poto").checked) {
 		ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length - 1], "orange", "Pur_popl[" + ur_popl.length + "]"));
-		insertdata(ur_popl[ur_popl.length - 1]);
+		updateData();
 	}
 }
 
 function addLn() {
 	ur_ln.push(new Line(+document.getElementById("tr").value, +document.getElementById("pl").value, "red", "Pur_ln[" + ur_ln.length + "]"));
-	insertdata(ur_ln[ur_ln.length - 1]);
+	updateData();
 }
 
 function addPoPl() {
 	ur_popl.push(new PoletoPlane(new Plane(+document.getElementById("pst").value, +document.getElementById("pdd").value), "orange", "Pur_popl[" + ur_popl.length + "]"));
-	insertdata(ur_popl[ur_popl.length - 1]);
+	updateData();
 }
 
 function addLnPl() {
 	ur_lnpl.push(new LineonPlane(new Plane(+document.getElementById("rst").value, +document.getElementById("rdd").value), document.getElementById("rpi").value, document.getElementById("ropfl").checked, "teal", "Pur_lnpl[" + ur_lnpl.length + "]"));
-	insertdata(ur_lnpl[ur_lnpl.length - 1])
+	updateData();
 }
 
 function netOn() {

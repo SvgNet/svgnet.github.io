@@ -1,12 +1,18 @@
-function add_design(tag_mdl, class_mdl, addclass_mdl) {
-	var elements = document.getElementsByTagName(tag_mdl);
-	var len = elements.length;
-	for (var i = 0; i < len; i++) {
-		if (elements[i].className === "mdl-card__title-text") {
-			elements[i].classList.add(addclass_mdl);
-		}
-	}
-}
+var headerCheckHandler = function (event) {
+		var table = document.querySelector('table');
+		var boxes = table.querySelectorAll('tbody .mdl-data-table__select');
+		if (event.target.checked) {
+			for (var i = 0, length = boxes.length; i < length; i++) {
+				if(!boxes[i].querySelector('input').checked)
+				boxes[i].querySelector('input').click();
+			}
+		} else {
+			for (var i = 0, length = boxes.length; i < length; i++) {
 
-add_design("h2", "mdl-card__title-text", "mdl-color-text--white");
+				boxes[i].querySelector('input').click();
+			}
+		}
+	};
+document.getElementById("selectall").addEventListener('change', headerCheckHandler);
+
 
