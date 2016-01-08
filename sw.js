@@ -8,7 +8,7 @@ self.addEventListener('install', function (e) {
         '/index.html',
 				'/css/material.icons.css',
 				'/css/material.custom.css',
-				'/css/material.cyan-blue.min.css',
+				'/css/material.indigo-blue.min.css',
         '/fonts/MaterialIcons-Regular.woff2',
         '/fonts/MaterialIcons-Regular.woff',
         '/fonts/MaterialIcons-Regular.ttf',
