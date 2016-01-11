@@ -1,9 +1,10 @@
 importScripts('/cache-polyfill.js');
 
-self.addEventListener('install', function (e) {
-	e.waitUntil(
-		caches.open('SvgNet_v1.9.1.3').then(function (cache) {
-			return cache.addAll([
+const PREFIX = 'SvgNet';
+const VER = 'v1.9.1.5';
+const OFFLINE_CACHE = `${PREFIX}-${VER}`;
+
+var CACHE_URLS = [
         '/',
         '/index.html',
 				'/css/material.icons.css',
@@ -20,19 +21,47 @@ self.addEventListener('install', function (e) {
         'js/science.v1.min.js',
         '/js/material.min.js',
         '/icon.png'
-      ]).then(function () {
+      ]
+
+self.addEventListener('install', function (e) {
+	e.waitUntil(
+		caches.open(OFFLINE_CACHE).then(function (cache) {
+			return cache.addAll(CACHE_URLS).then(function () {
 				return self.skipWaiting();
 			});
 		})
 	);
 });
 
+//self.addEventListener('activate', function (event) {
+//	event.waitUntil(self.clients.claim());
+//});
+
 self.addEventListener('activate', function (event) {
+	// Delete old asset caches.
+	event.waitUntil(
+		caches.keys().then(function (keys) {
+			return Promise.all(
+				keys.map(function (key) {
+					console.log(key);
+					if (key != OFFLINE_CACHE)
+					{
+						console.log("Updating Cache...");
+						return caches.delete(key);
+					}
+					else{
+						console.log("Cache Okay")
+					}
+				})
+			);
+		})
+	);
 	event.waitUntil(self.clients.claim());
 });
 
+
 self.addEventListener('fetch', function (event) {
-	console.log(event.request.url);
+	//console.log(event.request.url);
 
 	event.respondWith(
 		caches.match(event.request).then(function (response) {
