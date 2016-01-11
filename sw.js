@@ -2,7 +2,7 @@ importScripts('/cache-polyfill.js');
 
 self.addEventListener('install', function (e) {
 	e.waitUntil(
-		caches.open('SvgNet_v1.9.1.1').then(function (cache) {
+		caches.open('SvgNet_v1.9.1.3').then(function (cache) {
 			return cache.addAll([
         '/',
         '/index.html',
@@ -17,6 +17,7 @@ self.addEventListener('install', function (e) {
         '/js/svgnet.js',
         '/js/util.js',
         '/js/ui.js',
+        'js/science.v1.min.js',
         '/js/material.min.js',
         '/icon.png'
       ]).then(function () {
