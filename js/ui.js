@@ -14,5 +14,3 @@ var headerCheckHandler = function (event) {
 		}
 	};
 document.getElementById("selectall").addEventListener('change', headerCheckHandler);
-
-
