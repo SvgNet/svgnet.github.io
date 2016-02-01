@@ -1,7 +1,7 @@
 importScripts('/cache-polyfill.js');
 
 const PREFIX = 'SvgNet';
-const VER = 'v2.1.3';
+const VER = 'v2.1.5';
 const OFFLINE_CACHE = `${PREFIX}-${VER}`;
 
 var CACHE_URLS = [
@@ -9,7 +9,7 @@ var CACHE_URLS = [
         '/index.html',
 				'/css/material.icons.css',
 				'/css/material.custom.css',
-				'/css/material.indigo-blue.min.css',
+				'/css/material.blue-indigo.min.css',
         '/fonts/MaterialIcons-Regular.woff2',
         '/fonts/MaterialIcons-Regular.woff',
         '/fonts/MaterialIcons-Regular.ttf',

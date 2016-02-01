@@ -135,7 +135,7 @@
 				<div class="mdl-cell mdl-cell--7-col mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-color--grey-100 mdl-shadow--4dp">
 					<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect ">
 						<div class="mdl-tabs__tab-bar">
-							<a href="#readme" class="mdl-tabs__tab is-active mdl-js-ripple-effect"><i class="material-icons">info</i></a>
+							<a href="#readme" class="mdl-tabs__tab is-active mdl-js-ripple-effect material-icons">info</a>
 							<a href="#iPl" class="mdl-tabs__tab mdl-js-ripple-effect">Planes</a>
 							<a href="#iLn" class="mdl-tabs__tab mdl-js-ripple-effect">Lines</a>
 							<a href="#DatPan" class="mdl-tabs__tab mdl-js-ripple-effect">Data</a>
@@ -302,7 +302,7 @@
 			<footer class="mdl-mini-footer">
 				<div class="mdl-mini-footer__left-section">
 					<div class="mdl-logo mdl-typography--subhead">
-						<b class="mdl-typography--subhead-color-contrast">SvgNet v2.1.3</b> - Structural Geology Plots with SVG, Javascript and HTML5
+						<b class="mdl-typography--subhead-color-contrast">SvgNet v2.1.5</b> - Structural Geology Plots with SVG, Javascript and HTML5
 					</div>
 
 				</div>
@@ -314,12 +314,16 @@
 				</div>
 			</footer>
 		</main>
-
+		<div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+			<div class="mdl-snackbar__text"></div>
+			<button class="mdl-snackbar__action" type="button"></button>
+		</div>
 
 	</div>
 	<script src="js/ui.js"></script>
 
 	<script>
+		var notification = document.querySelector('.mdl-js-snackbar');
 		navigator.serviceWorker.register('/sw.js').then(function(reg) {
 			if (!reg.installing) return;
 			console.log("There is a ServiceWorker installing");
@@ -328,9 +332,15 @@
 			worker.addEventListener('statechange', function() {
 				if (worker.state == 'redundant') {
 					console.log('Install failed');
+
+					notification.MaterialSnackbar.showSnackbar({
+						message: 'Offline install Failed:ServiceWorker not supported by browser'
+					});
 				}
 				if (worker.state == 'installed') {
-					alert("SvgNet is ready for offline use")
+					notification.MaterialSnackbar.showSnackbar({
+						message: 'SvgNet Ready For Offline Use'
+					});
 
 				}
 			});
