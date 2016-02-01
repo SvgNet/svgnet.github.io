@@ -5,6 +5,7 @@
 	<script>
 		if (!(window.location.host.startsWith("127.0.0.1") || window.location.host.startsWith("localhost")) && (window.location.protocol != "https:"))
 			window.location.protocol = "https";
+
 	</script>
 	<title>SvgNet</title>
 	<meta name="description" content="Structural Geology Plots with SVG and JS">
@@ -37,14 +38,14 @@
 	<script src="js/svgnet.js"></script>
 	<script src="js/util.js"></script>
 
-	<link rel="stylesheet" href="css/material.indigo-blue.min.css">
+	<link rel="stylesheet" href="css/material.blue-indigo.min.css">
 
-	<script src="js/material.min.js"></script>
+	<script defer src="js/material.min.js"></script>
 	<link rel="stylesheet" href="css/material.icons.css">
 	<link rel="stylesheet" href="css/material.custom.css">
 </head>
 
-<body class="mdl-typography--body-2">
+<body>
 
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
@@ -56,7 +57,7 @@
 		<div class="mdl-layout__drawer">
 			<span class="mdl-layout-title">Preferences</span>
 
-			<nav class="mdl-navigation ">
+			<nav class="mdl-navigation">
 
 				<div class="mdl-navigation__link mdl-typography--body-1">
 					<b class="mdl-typography--button">Grids</b>

@@ -1,21 +1,24 @@
-	.mdl-textfield {
-		width: auto;
+body {
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+.mdl-textfield {
+	width: auto;
+}
+.mdl-card {
+	width: auto;
+}
+.mdl-card__actions {
+	text-align: right;
+}
+#dataout {
+	width: 100%;
+}
+@media only screen and (max-width: 760px),
+{
+	.mdl-data-table td {
+		text-align: justify;
 	}
-	.mdl-card {
-		width: auto;
+	.mdl-data-table th {
+		text-align: left;
 	}
-	.mdl-card__actions {
-		text-align: right;
-	}
-	#dataout {
-		width: 100%;
-	}
-	@media only screen and (max-width: 760px),
-	(min-device-width: 768px) and (max-device-width: 1024px) {
-		.mdl-data-table td {
-			text-align: justify;
-		}
-		.mdl-data-table th {
-			text-align: left;
-		}
-	}
+}
