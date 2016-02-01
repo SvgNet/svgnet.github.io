@@ -2,6 +2,10 @@
 <html>
 
 <head>
+	<script>
+		if (!(window.location.host.startsWith("127.0.0.1") || window.location.host.startsWith("localhost")) && (window.location.protocol != "https:"))
+			window.location.protocol = "https";
+	</script>
 	<title>SvgNet</title>
 	<meta name="description" content="Structural Geology Plots with SVG and JS">
 	<meta name="author" content="Arijit Laik">
@@ -11,8 +15,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta property="og:title" content="SvgNet" />
 	<meta property="og:description" content="Structural Geology Plots with SVG and JS" />
-	<meta property="og:image" content="http://arijitlaik.cf/SvgNet/icon.png" />
+	<meta property="og:image" content="https://svgnet.github.io/icon.png" />
 	<meta property="og:type" content="website" />
+
 	<link rel="manifest" href="manifest.json">
 
 	<meta name="mobile-web-app-capable" content="yes">
