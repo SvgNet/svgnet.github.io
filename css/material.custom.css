@@ -1,17 +1,20 @@
 body {
 	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
-.mdl-textfield {
-	width: auto;
-}
 .mdl-card {
-	width: auto;
+	width:100%;
+}
+.mdl-card__supporting-text {
+	width:auto;
 }
 .mdl-card__actions {
 	text-align: right;
 }
+.mdl-tabs__tab>.material-icons {
+	line-height: inherit;
+}
 #dataout {
-	width: 100%;
+	width: 100%!important;
 }
 @media only screen and (max-width: 760px),
 {
