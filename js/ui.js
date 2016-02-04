@@ -18,7 +18,8 @@ document.getElementById("selectall").addEventListener('change', headerCheckHandl
 
 var x = document.querySelectorAll(".toggle-card--content")
 for (var i = 0; i < x.length; i++) {
-	x[i].addEventListener('click', function () {
-		this.parentElement.classList.toggle("content-hidden");
-	});
+	x[i].addEventListener('click',toggleCard );
 }
+function toggleCard() {
+		this.parentElement.classList.toggle("content-hidden");
+	}
