@@ -9,7 +9,7 @@ var CACHE_URLS = [
         '/index.html',
 				'/css/material.icons.css',
 				'/css/material.custom.css',
-				'/css/material.blue-indigo.min.css',
+				'/css/material.min.css',
         '/fonts/MaterialIcons-Regular.woff2',
         '/fonts/MaterialIcons-Regular.woff',
         '/fonts/MaterialIcons-Regular.ttf',
