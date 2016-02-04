@@ -4,9 +4,7 @@ body {
 .mdl-card {
 	width: 100%;
 }
-.mdl-card__supporting-text {
-	width: auto;
-}
+
 .mdl-layout__tab-panel {
 	box-sizing: border-box;
 	min-height: calc(100% - 164px);
@@ -34,7 +32,8 @@ body {
 }
 .toggle-card--content__icon {
 	transition-property: transform;
-	transition-duration: 0.2s
+	transition-duration: 0.2s;
+	color: white;
 }
 .content-hidden .toggle-card--content__icon {
 	transform: rotate(-180deg);
@@ -50,4 +49,7 @@ body {
 	.mdl-data-table th {
 		text-align: left;
 	}
+}
+.mdl-card__title-text{
+	text-transform: uppercase;
 }
