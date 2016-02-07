@@ -128,6 +128,7 @@ function insertdata(ur_in) {
 		idf += "error"
 	}
 	var cell1 = row.insertCell(0);
+	cell1.className="mdl-data-table__cell--checkbox";
 	cell1.innerHTML = '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="' + idf + '"><input type="checkbox" id="' + idf + '" class="mdl-checkbox__input" /></label>'
 	var cell2 = row.insertCell(1);
 	var cell3 = row.insertCell(2);

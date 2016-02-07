@@ -4,7 +4,6 @@ body {
 .mdl-card {
 	width: 100%;
 }
-
 .mdl-layout__tab-panel {
 	box-sizing: border-box;
 	min-height: calc(100% - 164px);
@@ -29,6 +28,11 @@ body {
 }
 .content-hidden {
 	min-height: 60px;
+	transition-property: all;
+	transition-duration: 0.3s;
+}
+.abspos {
+	position: absolute;
 }
 .toggle-card--content__icon {
 	transition-property: transform;
@@ -40,6 +44,11 @@ body {
 }
 #dataout {
 	width: 100%!important;
+}
+.mdl-data-table__cell--checkbox,
+.mdl-data-table__header--checkbox {
+	width: 48px!important;
+	max-width: 48px!important;
 }
 @media only screen and (max-width: 760px),
 {
