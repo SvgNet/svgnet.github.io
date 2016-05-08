@@ -29,7 +29,7 @@ body {
 .content-hidden {
 	min-height: 60px;
 	transition-property: all;
-	transition-duration: 0.3s;
+	transition-duration: 0.1s;
 }
 .abspos {
 	position: absolute;
