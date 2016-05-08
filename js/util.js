@@ -139,11 +139,11 @@ function insertdata(ur_in) {
 
 	cell2.innerHTML = dataType;
 	if (ur_in instanceof Plane) {
-		cell3.innerHTML = ur_in.strike;
-		cell4.innerHTML = ur_in.dip;
+		cell3.innerHTML = Math.round(ur_in.strike);
+		cell4.innerHTML = Math.round(ur_in.dip);
 	} else {
-		cell3.innerHTML = ur_in.trend;
-		cell4.innerHTML = ur_in.plunge;
+		cell3.innerHTML = Math.round(ur_in.trend);
+		cell4.innerHTML = Math.round(ur_in.plunge);
 	}
 
 	componentHandler.upgradeElement(row);
