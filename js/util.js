@@ -23,8 +23,8 @@ function triggerDownloadPNG() {
 	var svgData = new XMLSerializer().serializeToString(svg);
 
 	var canvas = document.createElement("canvas");
-	canvas.height = 512;
-	canvas.width = 512;
+	canvas.height = 2 *  Svg_Net.gfx.center.y ;
+	canvas.width = 2 *  Svg_Net.gfx.center.x ;
 	var ctx = canvas.getContext("2d");
 
 	var img = document.createElement("img");
@@ -60,7 +60,7 @@ function SelectThis(event) {
 function DeleteSelected() {
 	if (ur_selected.length) {
 		for (var i = 0; i < ur_selected.length; i++) {
-			document.getElementById(ur_selected[i].plot.id).remove();
+			ur_selected[i].plot.remove();
 			if (ur_pl.lastIndexOf(ur_selected[i]) > -1)
 				ur_pl.splice(ur_pl.lastIndexOf(ur_selected[i]), 1);
 			if (ur_ln.lastIndexOf(ur_selected[i]) > -1)
@@ -211,19 +211,19 @@ function rotateOl() {
 	document.getElementById("rotateol").setAttribute("data-badge", deg);
 	if (ur_pl.length) {
 		for (var i = 0; i < ur_pl.length; i++)
-			document.getElementById(ur_pl[i].plot.id).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+			ur_pl[i].plot.setAttribute("transform", "rotate(" + deg + " " +  Svg_Net.gfx.center.x + " " +  Svg_Net.gfx.center.y + ")");
 	}
 	if (ur_ln.length) {
 		for (var i = 0; i < ur_ln.length; i++)
-			document.getElementById(ur_ln[i].plot.id).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+			ur_ln[i].plot.setAttribute("transform", "rotate(" + deg + " " +  Svg_Net.gfx.center.x + " " +  Svg_Net.gfx.center.y + ")");
 	}
 	if (ur_popl.length) {
 		for (var i = 0; i < ur_popl.length; i++)
-			document.getElementById(ur_popl[i].plot.id).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+			ur_popl[i].plot.setAttribute("transform", "rotate(" + deg + " " +  Svg_Net.gfx.center.x + " " +  Svg_Net.gfx.center.y + ")");
 	}
 	if (ur_lnpl.length) {
 		for (var i = 0; i < ur_lnpl.length; i++)
-			document.getElementById(ur_lnpl[i].plot.id).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+			ur_lnpl[i].plot.setAttribute("transform", "rotate(" + deg + " " +  Svg_Net.gfx.center.x + " " +  Svg_Net.gfx.center.y + ")");
 	}
 }
 
@@ -232,14 +232,14 @@ function rotateNet() {
 
 	document.getElementById("rotatenet").setAttribute("data-badge", deg);
 	for (var i = 0; i < 90; i += 2) {
-		document.getElementById("gc" + i).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
-		document.getElementById("gc" + 90 + i).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
-		document.getElementById("sc" + i).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
-		document.getElementById("sc" + 90 + i).setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+		document.getElementById("gc" + i).setAttribute("transform", "rotate(" + deg + " " +  Svg_Net.gfx.center.x + " " +  Svg_Net.gfx.center.y + ")");
+		document.getElementById("gc" + 90 + i).setAttribute("transform", "rotate(" + deg + " " +  Svg_Net.gfx.center.x + " " +  Svg_Net.gfx.center.y + ")");
+		document.getElementById("sc" + i).setAttribute("transform", "rotate(" + deg + " " +  Svg_Net.gfx.center.x + " " +  Svg_Net.gfx.center.y + ")");
+		document.getElementById("sc" + 90 + i).setAttribute("transform", "rotate(" + deg + " " +  Svg_Net.gfx.center.x + " " +  Svg_Net.gfx.center.y + ")");
 
 	}
-	document.getElementById("sc90").setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
-	document.getElementById("gc90").setAttribute("transform", "rotate(" + deg + " " + center.x + " " + center.y + ")");
+	document.getElementById("sc90").setAttribute("transform", "rotate(" + deg + " " +  Svg_Net.gfx.center.x + " " +  Svg_Net.gfx.center.y + ")");
+	document.getElementById("gc90").setAttribute("transform", "rotate(" + deg + " " +  Svg_Net.gfx.center.x + " " +  Svg_Net.gfx.center.y + ")");
 }
 
 function fadeNet() {
