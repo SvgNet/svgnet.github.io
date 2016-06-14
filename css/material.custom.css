@@ -84,5 +84,5 @@ dialog .close {
 }
 .svg_container {
     position: relative;
-
 }
+dialog {z-index: 3}

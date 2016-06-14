@@ -1,13 +1,15 @@
-var dialog = document.querySelector('dialog');
+var input_Dialog = document.querySelector('dialog');
 var showDialogButton = document.querySelector('#show-dialog');
-if (!dialog.showModal) {
-    dialogPolyfill.registerDialog(dialog);
+if (!input_Dialog.showModal) {
+    dialogPolyfill.registerDialog(input_Dialog);
 }
 showDialogButton.addEventListener('click', function () {
-    dialog.showModal();
+    input_Dialog.showModal();
 });
-dialog.querySelector('.close').addEventListener('click', function () {
-    dialog.close();
+input_Dialog.querySelector('.close').addEventListener('click', function () {
+    input_Dialog.close();
+    document.querySelector('.mdl-layout__content').style.overflowX = 'auto';
+    document.querySelector('.mdl-layout__content').style.overflowX = '';
 });
 
 var headerCheckHandler = function (event) {
@@ -63,7 +65,7 @@ document.getElementById("input_type").onchange = function () {
     var val = document.getElementById("input_type").value;
     console.log(val);
     formInputsHide();
-    if (val !== "NONE")
+    if (!(val == "NONE"))
         formInputshow(val + "_form");
 }
 
