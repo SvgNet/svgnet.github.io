@@ -112,15 +112,7 @@
             </nav>
         </div>
         <main class="mdl-layout__content">
-            <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
-                <div class="page-content">
-
-                    <div class="mdl-grid">
-                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--accent mdl-js-ripple-effect fabRight mdl-cell--hide-desktop mdl-cell--hide-tablet" id="show-dialog">
-                            <i class="material-icons">add</i>
-                        </button>
-
-                        <dialog class="mdl-dialog">
+            <dialog class="mdl-dialog">
 
                             <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored close">
                                 <i class="material-icons">close</i>
@@ -231,13 +223,34 @@
 
                             </div>
                         </dialog>
+            <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+                <div class="page-content">
+
+                    <div class="mdl-grid">
+
+
+
                         <div class="mdl-cell mdl-cell--5-col  mdl-cell--4-col-tablet  mdl-shadow--4dp mdl-color--white">
 
 
 
                             <div class="mdl-grid ">
 
-                                <div class="mdl-cell mdl-cell--12-col mdl-cell--hide-phone">
+                                <div class="mdl-cell mdl-cell--12-col svg_container">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--accent mdl-js-ripple-effect fabURight mdl-cell--hide-desktop mdl-cell--hide-tablet" id="show-dialog">
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                      <div id="svg_wrapper" class="mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                                </div>
+
+
+
+                                </div>
+
+
+
+                                <div class="mdl-cell mdl-cell--12-col">
                                     <label>
                                         <span class="mdl-switch__label">Rotate Net</span>
 
@@ -245,15 +258,13 @@
                                     </label>
                                 </div>
 
-                                <div class="mdl-cell mdl-cell--12-col mdl-cell--hide-phone">
+                                <div class="mdl-cell mdl-cell--12-col">
                                     <label>
                                         <span class="mdl-switch__label">Rotate Overlay</span>
 
                                         <input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotateol" min="0" max="359" value="0" step="1" oninput="rotateOl()" />
 
                                     </label>
-                                </div>
-                                <div class="mdl-cell mdl-cell--12-col mdl-shadow--4dp" id="svg_wrapper">
                                 </div>
                             </div>
 

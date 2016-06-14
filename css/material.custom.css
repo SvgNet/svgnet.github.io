@@ -72,8 +72,17 @@ body {
     margin-bottom: 40px;
     z-index: 900;
 }
+.fabURight {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
 dialog .close {
     position: absolute;
     top: 8px;
     right: 8px;
+}
+.svg_container {
+    position: relative;
+
 }
