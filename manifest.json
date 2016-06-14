@@ -1,6 +1,7 @@
 {
   "short_name": "SvgNet",
   "name": "SvgNet: Structural Geology Plots with SVG and JS",
+  "version":"2.2.1",
   "icons": [
     {
       "src": "icon.png",

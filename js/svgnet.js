@@ -19,7 +19,33 @@ function Pt(x_cord, y_cord) {
 }
 
 
+function svg2cart(svg_cords) {
+    return (new Pt(
+        svg_cords.x - Svg_Net.gfx.x,
+        Svg_Net.gfx.y - svg_cords.y
+    ));
+}
 
+function cart2pol(cart_cord) {
+    radius = Math.sqrt(cart_cord.x * cart_cord.x + cart_cord.y * cart_cord.y);
+    theta = Math.atan2(cart_cord.y, cart_cord.x);
+    polarCord = {
+        rad: radius,
+        azh: theta
+    };
+    return polarCord
+}
+
+function pol2tp(pol) {
+    var plunge = SchmidtNet_Flag ? todeg(Math.PI / 2 - 2 * Math.asin(pol.rad / (radius_primitive * Math.SQRT2))) : todeg(Math.PI / 2 - 2 * Math.atan2(pol.rad, radius_primitive));
+    var trend = 90.0 - todeg(pol.azh);
+    if (trend < 0.0)
+        trend += 360.0;
+    return {
+        trend: trend,
+        plunge: plunge
+    }
+}
 
 function cart2svg(cart_cords) {
     return (new Pt(
