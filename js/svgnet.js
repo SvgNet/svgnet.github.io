@@ -122,6 +122,7 @@ function Circ_obj(cen, radius, stroke, stroke_wth, fill, deg, id) {
         this.newpath.setAttribute("transform", "rotate(" + deg + " " + Svg_Net.gfx.center.x + " " + Svg_Net.gfx.center.y + ")");
     }
     Svg_Net.gfx.svg_node.appendChild(this.newpath);
+    return this.newpath;
 }
 
 function Wtp2cart(plunge, trend) {
