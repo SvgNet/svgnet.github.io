@@ -1,7 +1,7 @@
 importScripts('/cache-polyfill.js');
 
 const PREFIX = 'SvgNet';
-const VER = 'v2.2.1.5.3';
+const VER = 'v2.2.1.5.5';
 const OFFLINE_CACHE = `${PREFIX}-${VER}`;
 
 var CACHE_URLS = [
@@ -22,7 +22,7 @@ var CACHE_URLS = [
     '/js/svgnet.js',
     '/js/util.js',
     '/js/ui.js',
-    'js/science.v1.min.js',
+   //'js/science.v1.min.js',
     '/js/material.min.js',
     '/icon.png'
       ]

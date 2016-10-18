@@ -1,5 +1,6 @@
 {
     "name": "SvgNet: Structural Geology Plots with SVG and JS",
+    "short_name":"SvgNet",
     "version": "2.2.1",
     "icons": [
         {
@@ -9,5 +10,7 @@
     }
   ],
     "start_url": "index.html",
+    "background_color": "#ffffff",
+	"theme_color": "#303f9f",
     "display": "standalone"
 }
