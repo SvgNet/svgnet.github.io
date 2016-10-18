@@ -3,8 +3,7 @@
 
 <head>
     <script>
-       if (!(window.location.host.startsWith("127.0.0.1") || window.location.host.startsWith("localhost")) && (window.location.protocol != "https:"))window.location.protocol = "https";
-
+        if (!(window.location.host.startsWith("127.0.0.1") || window.location.host.startsWith("localhost")) && (window.location.protocol != "https:")) window.location.protocol = "https";
     </script>
     <title>SvgNet</title>
     <meta name="description" content="An Structural Geology Plots Stereonet or Projection Web App with with SVG and JS HTML5">
@@ -17,111 +16,65 @@
     <meta property="og:description" content="Structural Geology Plots with SVG and JS" />
     <meta property="og:image" content="https://svgnet.github.io/icon.png" />
     <meta property="og:type" content="website" />
-
     <link rel="manifest" href="manifest.json">
-
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="SvgNet">
     <link rel="icon" sizes="512x512" href="icon.png">
-
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="SvgNet">
     <link rel="apple-touch-icon" href="icon.png">
-
-
-
     <meta name="msapplication-TileImage" content="icon.png">
     <meta name="msapplication-TileColor" content="#FFFFFF">
-
-
     <link rel="stylesheet" href="css/material.min.css">
     <link rel="stylesheet" href="css/mdl-selectfield.min.css">
     <link rel="stylesheet" href="css/dialog-polyfill.css" />
     <link rel="stylesheet" href="./css/material.icons.css">
     <link rel="stylesheet" href="css/material.custom.css">
-
     <script src="js/dialog-polyfill.js"></script>
     <script src="js/material.min.js"></script>
     <script src="js/mdl-selectfield.min.js"></script>
-    <script  src="js/ui.js" defer></script>
+    <script src="js/ui.js" defer></script>
     <script src="js/svgnet.js" defer></script>
     <script src="js/init.js" defer></script>
     <script src="js/util.js" defer></script>
-
-
 </head>
 
 <body>
-
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header  mdl-layout--fixed-tabs">
         <header class="mdl-layout__header">
-            <div class="mdl-layout__header-row ">
-                <span class="mdl-layout-title" id="rof">SvgNet<i class="material-icons ">explore</i></span>
-
-                <div class="mdl-layout-spacer"></div>
-
-                <a id="pdl" onclick="triggerDownload()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored  mdl-js-ripple-effect"><i class="material-icons">save</i></a>
-                <span class="mdl-tooltip mdl-tooltip--large" for="pdl">Save As Vector &#91;.SVG&#93;</span>
-                <a id="PNGdl" onclick="triggerDownloadPNG()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect"><i class="material-icons">photo</i></a>
-                <span class="mdl-tooltip  mdl-tooltip--large" for="PNGdl">Save As Raster &#91;.PNG&#93;</span>
-            </div>
-            <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-shadow--4dp">
-                <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Input and Plot</a>
-                <a href="#fixed-tab-2" class="mdl-layout__tab">Data Output</a>
-            </div>
+            <div class="mdl-layout__header-row "> <span class="mdl-layout-title" id="rof">SvgNet<i class="material-icons ">explore</i></span>
+                <div class="mdl-layout-spacer"></div> <a id="pdl" onclick="triggerDownload()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored  mdl-js-ripple-effect"><i class="material-icons">save</i></a> <span class="mdl-tooltip mdl-tooltip--large" for="pdl">Save As Vector &#91;.SVG&#93;</span> <a id="PNGdl" onclick="triggerDownloadPNG()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect"><i class="material-icons">photo</i></a> <span class="mdl-tooltip  mdl-tooltip--large" for="PNGdl">Save As Raster &#91;.PNG&#93;</span> </div>
+            <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-shadow--4dp"> <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Input and Plot</a> <a href="#fixed-tab-2" class="mdl-layout__tab">Data Output</a> </div>
         </header>
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">Preferences</span>
-
+        <div class="mdl-layout__drawer"> <span class="mdl-layout-title">Preferences</span>
             <nav class="mdl-navigation">
-
-                <div class="mdl-navigation__link mdl-typography--body-1">
-                    <b class="mdl-typography--button">Grids</b>
+                <div class="mdl-navigation__link mdl-typography--body-1"> <b class="mdl-typography--button">Grids</b>
                     <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="shownet">
-                        <input type="checkbox" id="shownet" class="mdl-switch__input" onchange="netOn()" />
-                        <span class="mdl-switch__label">Grids off/on</span>
-                    </label>
+                        <input type="checkbox" id="shownet" class="mdl-switch__input" onchange="netOn()" /> <span class="mdl-switch__label">Grids off/on</span> </label>
                     <hr>
-                    <label>
-                        <span class="mdl-switch__label">Opacity</span>
+                    <label> <span class="mdl-switch__label">Opacity</span>
                         <input class="mdl-slider mdl-js-slider mdl-badge" data-badge="100" type="range" id="fadenet" min="10" max="100" value="100" step="1" oninput="fadeNet()" disabled/> </label>
                 </div>
-
-                <div class="mdl-navigation__link mdl-typography--body-1">
-                    <b class="mdl-typography--button">Projection</b>
+                <div class="mdl-navigation__link mdl-typography--body-1"> <b class="mdl-typography--button">Projection</b>
                     <br>
                     <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="towuff">
-                        <input checked class="mdl-radio__button" id="towuff" name="netsw" type="radio" onchange="switchNet()">
-                        <span class="mdl-radio__label mdl-typography--body-2-color-contrast">Wulff Net</span>
-
-                    </label>
+                        <input checked class="mdl-radio__button" id="towuff" name="netsw" type="radio" onchange="switchNet()"> <span class="mdl-radio__label mdl-typography--body-2-color-contrast">Wulff Net</span> </label>
                     <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="toschmidt">
-                        <input class="mdl-radio__button" id="toschmidt" name="netsw" type="radio" onchange="switchNet()">
-                        <span class="mdl-radio__label mdl-typography--body-2-color-contrast">Schmidt Net</span>
-                    </label>
+                        <input class="mdl-radio__button" id="toschmidt" name="netsw" type="radio" onchange="switchNet()"> <span class="mdl-radio__label mdl-typography--body-2-color-contrast">Schmidt Net</span> </label>
                 </div>
-                <div class="mdl-navigation__link mdl-typography--body-1">
-                    <b class="mdl-typography--button">Calcuations</b>
-
+                <div class="mdl-navigation__link mdl-typography--body-1"> <b class="mdl-typography--button">Calcuations</b>
                     <br> Angle between 2 Selected Data:
+                    <br> <b id="Angdat"></b>
                     <br>
-                    <b id="Angdat"></b>
-                    <br>
-                    <button onclick="AngleSelected()" class="mdl-button mdl-js-button mdl-button--mini-fab mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-                        Calculate
-                    </button>
+                    <button onclick="AngleSelected()" class="mdl-button mdl-js-button mdl-button--mini-fab mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Calculate </button>
                 </div>
             </nav>
         </div>
         <main class="mdl-layout__content">
             <dialog class="mdl-dialog">
-
-                <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored close">
-                    <i class="material-icons">close</i>
-                </button>
+                <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored close"> <i class="material-icons">close</i> </button>
                 <div class="mdl-dialog__title">
-
                     <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
                         <select id="input_type" name="input_type" class="mdl-selectfield__select">
                             <option value="NONE"> </option>
@@ -132,12 +85,8 @@
                             <!--<option value="sc">Small Circle(Trend/Plunge/Radius)</option>-->
                         </select>
                         <label class="mdl-selectfield__label" for="input_type">Data Type</label>
-
                     </div>
-
-
                 </div>
-
                 <div class="mdl-dialog__content from_container">
                     <div id="form_error"></div>
                     <div class="form_input mdl-grid" id="pl_form">
@@ -145,56 +94,40 @@
                             <input class="mdl-textfield__input" type="number" id="mob_st" max="360" min="0" step=any>
                             <label class="mdl-textfield__label" for="mob_st"> Strike</label>
                         </div>
-
                         <div class="mdl-cell mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="number" id="mob_dd" max="90" min="0" step=any>
                             <label class="mdl-textfield__label" for="mob_dd"> Dip</label>
                         </div>
-
                         <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield">
                             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mob_poto">
-                                <input type="checkbox" id="mob_poto" class="mdl-checkbox__input" />
-                                <span class="mdl-checkbox__label">Plot the <b>Pole</b> to this <b>Plane</b></span>
-                            </label>
+                                <input type="checkbox" id="mob_poto" class="mdl-checkbox__input" /> <span class="mdl-checkbox__label">Plot the <b>Pole</b> to this <b>Plane</b></span> </label>
                         </div>
                     </div>
-
                     <div class="form_input mdl-grid" id="popl_form">
-
                         <div class="mdl-cell  mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="number" id="mob_pst" max="360" min="0" step=any>
                             <label class="mdl-textfield__label" for="mob_pst"> Strike</label>
                         </div>
-
                         <div class="mdl-cell  mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="number" id="mob_pdd" max="90" min="0" step=any>
                             <label class="mdl-textfield__label" for="mob_pdd"> Dip</label>
                         </div>
-
-
                     </div>
-
                     <div class="form_input mdl-grid" id="ln_form">
-
                         <div class="mdl-cell mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="number" id="mob_tr" max="360" min="0" step=any>
                             <label class="mdl-textfield__label" for="mob_tr"> Trend</label>
                         </div>
-
                         <div class="mdl-cell mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="number" id="mob_pl" max="90" min="0" step=any>
                             <label class="mdl-textfield__label" for="mob_pl"> Plunge</label>
                         </div>
-
                     </div>
-
                     <div class="form_input mdl-grid" id="lnpl_form">
-
                         <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="number" id="mob_rst" max="360" min="0" step=any>
                             <label class="mdl-textfield__label" for="mob_rst"> Strike</label>
                         </div>
-
                         <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--1-col-phone mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="number" id="mob_rdd" max="90" min="0" step=any>
                             <label class="mdl-textfield__label" for="mob_rdd"> Dip</label>
@@ -207,86 +140,43 @@
                         <br>
                         <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield ">
                             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mob_ropfl">
-                                <input type="checkbox" id="mob_ropfl" class="mdl-checkbox__input" />
-                                <span class="mdl-checkbox__label">Pitch taken from 180+strike end</span>
-                            </label>
+                                <input type="checkbox" id="mob_ropfl" class="mdl-checkbox__input" /> <span class="mdl-checkbox__label">Pitch taken from 180+strike end</span> </label>
                         </div>
                     </div>
-
-                    <div class="form_input mdl-grid" id="sc_form">
-
-                    </div>
+                    <div class="form_input mdl-grid" id="sc_form"> </div>
                 </div>
                 <div class="mdl-dialog__actions">
-
-
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="plot_input">
-                        Plot
-                    </button>
-
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="plot_input"> Plot </button>
                 </div>
             </dialog>
             <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
                 <div class="page-content">
-
                     <div class="mdl-grid">
-
-
-
                         <div class="mdl-cell mdl-cell--5-col  mdl-cell--4-col-tablet  mdl-shadow--4dp mdl-color--white">
-
-
-
                             <div class="mdl-grid ">
-
-                                <div class="mdl-cell mdl-cell--12-col svg_container">
-                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--accent mdl-js-ripple-effect fabURight mdl-cell--hide-desktop mdl-cell--hide-tablet" id="show-dialog">
-                                        <i class="material-icons">add</i>
-                                    </button>
-                                    <div id="svg_wrapper" class="mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                                    </div>
-
-
-
+                                <div class="mdl-cell mdl-cell--12-col svgnet_container">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--accent mdl-js-ripple-effect fabURight mdl-cell--hide-desktop mdl-cell--hide-tablet" id="show-dialog"> <i class="material-icons">add</i> </button>
+                                    <div id="svg_wrapper" class="mdl-shadow--4dp mdl-cell mdl-cell--12-col"> </div>
                                 </div>
-
-
-
                                 <div class="mdl-cell mdl-cell--12-col">
-                                    <label>
-                                        <span class="mdl-switch__label">Rotate Net</span>
-
-                                        <input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotatenet" min="0" max="359" value="0" step="1" oninput="rotateNet()" disabled/>
-                                    </label>
+                                    <label> <span class="mdl-switch__label">Rotate Net</span>
+                                        <input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotatenet" min="0" max="359" value="0" step="1" oninput="rotateNet()" disabled/> </label>
                                 </div>
-
                                 <div class="mdl-cell mdl-cell--12-col">
-                                    <label>
-                                        <span class="mdl-switch__label">Rotate Overlay</span>
-
-                                        <input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotateol" min="0" max="359" value="0" step="1" oninput="rotateOl()" />
-
-                                    </label>
+                                    <label> <span class="mdl-switch__label">Rotate Overlay</span>
+                                        <input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotateol" min="0" max="359" value="0" step="1" oninput="rotateOl()" /> </label>
                                 </div>
                             </div>
-
                         </div>
-
                         <div class="mdl-cell mdl-cell--7-col  mdl-cell--4-col-tablet mdl-color--grey-100 mdl-shadow--4dp mdl-cell--hide-phone">
                             <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect ">
-                                <div class="mdl-tabs__tab-bar">
-                                    <a href="#readme" class="mdl-tabs__tab is-active mdl-js-ripple-effect">Instructions.</a>
-                                    <a href="#iPl" class="mdl-tabs__tab mdl-js-ripple-effect">Input</a>
-                                </div>
+                                <div class="mdl-tabs__tab-bar"> <a href="#readme" class="mdl-tabs__tab is-active mdl-js-ripple-effect">Instructions.</a> <a href="#iPl" class="mdl-tabs__tab mdl-js-ripple-effect">Input</a> </div>
                                 <div class="mdl-tabs__panel mdl-grid  is-active" id="readme">
                                     <div class="mdl-cell mdl-cell--12-col">
                                         <h4 class="mdl-typography--subhead-color-contrast">
 												Click on the <b>INPUT</b> tab to enter data, select the type of data then click the PLOT button.
 										The Right Hand Rule(RHR) i.e <b>strike + 90&deg;&#61;dip direction</b> is to be followed when entering the data in the .<br> Select the data in the <b>DATA</b> tab for calulations, click on <i class="material-icons ">save</i> to save as Vector and <i class="material-icons">photo</i> to save as raster.
-								</h4>
-
-                                    </div>
+								</h4> </div>
                                 </div>
                                 <div class="mdl-tabs__panel" id="iPl">
                                     <div class="mdl-grid">
@@ -296,16 +186,13 @@
                                                 <div class="mdl-card__title mdl-color--blue-900 mdl-shadow--2dp toggle-card--content">
                                                     <h2 class="mdl-card__title-text mdl-color-text--white">Plane</h2>
                                                     <div class="mdl-layout-spacer"></div>
-                                                    <button class="mdl-button mdl-js-button mdl-button--icon toggle-card--content__icon ">
-                                                        <i class="material-icons">expand_less</i>
-                                                    </button>
+                                                    <button class="mdl-button mdl-js-button mdl-button--icon toggle-card--content__icon "> <i class="material-icons">expand_less</i> </button>
                                                 </div>
                                                 <div class="mdl-card__supporting-text mdl-grid">
                                                     <div class="mdl-cell mdl-cell--6-col  mdl-cell--4-col-tablet mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                                         <input class="mdl-textfield__input" type="number" id="st" max="360" min="0" step=any>
                                                         <label class="mdl-textfield__label" for="st"> Strike</label>
                                                     </div>
-
                                                     <div class="mdl-cell mdl-cell--6-col  mdl-cell--4-col-tablet mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                                         <input class="mdl-textfield__input" type="number" id="dd" max="90" min="0" step=any>
                                                         <label class="mdl-textfield__label" for="dd"> Dip</label>
@@ -313,15 +200,11 @@
                                                     <br>
                                                     <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield">
                                                         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="poto">
-                                                            <input type="checkbox" id="poto" class="mdl-checkbox__input" />
-                                                            <span class="mdl-checkbox__label">Plot the <b>Pole</b> to this <b>Plane</b></span>
-                                                        </label>
+                                                            <input type="checkbox" id="poto" class="mdl-checkbox__input" /> <span class="mdl-checkbox__label">Plot the <b>Pole</b> to this <b>Plane</b></span> </label>
                                                     </div>
                                                 </div>
                                                 <div class="mdl-card__actions mdl-card--border">
-                                                    <button onclick="addPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-                                                        Plot
-                                                    </button>
+                                                    <button onclick="addPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Plot </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -331,25 +214,20 @@
                                                 <div class="mdl-card__title mdl-color--light-blue-800 mdl-shadow--2dp toggle-card--content">
                                                     <h2 class="mdl-card__title-text mdl-color-text--white">Pole to Plane</h2>
                                                     <div class="mdl-layout-spacer"></div>
-                                                    <button class="mdl-button mdl-js-button mdl-button--icon toggle-card--content__icon">
-                                                        <i class="material-icons">expand_less</i>
-                                                    </button>
+                                                    <button class="mdl-button mdl-js-button mdl-button--icon toggle-card--content__icon"> <i class="material-icons">expand_less</i> </button>
                                                 </div>
                                                 <div class="mdl-card__supporting-text mdl-grid">
                                                     <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label">
                                                         <input class="mdl-textfield__input" type="number" id="pst" max="360" min="0" step=any>
                                                         <label class="mdl-textfield__label" for="pst"> Strike</label>
                                                     </div>
-
                                                     <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label">
                                                         <input class="mdl-textfield__input" type="number" id="pdd" max="90" min="0" step=any>
                                                         <label class="mdl-textfield__label" for="pdd"> Dip</label>
                                                     </div>
-
                                                 </div>
                                                 <div class="mdl-card__actions mdl-card--border">
-                                                    <button onclick="addPoPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Plot
-                                                    </button>
+                                                    <button onclick="addPoPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Plot </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -359,25 +237,20 @@
                                                 <div class="mdl-card__title mdl-color--teal-800 mdl-shadow--2dp toggle-card--content">
                                                     <h2 class="mdl-card__title-text mdl-color-text--white">Line</h2>
                                                     <div class="mdl-layout-spacer"></div>
-                                                    <button class="mdl-button mdl-js-button mdl-button--icon toggle-card--content__icon">
-                                                        <i class="material-icons">expand_less</i>
-                                                    </button>
+                                                    <button class="mdl-button mdl-js-button mdl-button--icon toggle-card--content__icon"> <i class="material-icons">expand_less</i> </button>
                                                 </div>
                                                 <div class="mdl-card__supporting-text mdl-grid ">
                                                     <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label">
                                                         <input class="mdl-textfield__input" type="number" id="tr" max="360" min="0" step=any>
                                                         <label class="mdl-textfield__label" for="tr"> Trend</label>
                                                     </div>
-
                                                     <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label">
                                                         <input class="mdl-textfield__input" type="number" id="pl" max="90" min="0" step=any>
                                                         <label class="mdl-textfield__label" for="pl"> Plunge</label>
                                                     </div>
-
                                                 </div>
                                                 <div class="mdl-card__actions mdl-card--border">
-                                                    <button onclick="addLn()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Plot
-                                                    </button>
+                                                    <button onclick="addLn()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Plot </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -387,16 +260,13 @@
                                                 <div class="mdl-card__title mdl-color--cyan-800 mdl-shadow--2dp toggle-card--content">
                                                     <h2 class="mdl-card__title-text mdl-color-text--white">Line on Plane</h2>
                                                     <div class="mdl-layout-spacer"></div>
-                                                    <button class="mdl-button mdl-js-button mdl-button--icon toggle-card--content__icon">
-                                                        <i class="material-icons">expand_less</i>
-                                                    </button>
+                                                    <button class="mdl-button mdl-js-button mdl-button--icon toggle-card--content__icon"> <i class="material-icons">expand_less</i> </button>
                                                 </div>
                                                 <div class="mdl-card__supporting-text mdl-grid ">
                                                     <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--2-col-phone mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label">
                                                         <input class="mdl-textfield__input" type="number" id="rst" max="360" min="0" step=any>
                                                         <label class="mdl-textfield__label" for="rst"> Strike</label>
                                                     </div>
-
                                                     <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--1-col-phone mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label">
                                                         <input class="mdl-textfield__input" type="number" id="rdd" max="90" min="0" step=any>
                                                         <label class="mdl-textfield__label" for="rdd"> Dip</label>
@@ -409,69 +279,49 @@
                                                     <br>
                                                     <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield ">
                                                         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ropfl">
-                                                            <input type="checkbox" id="ropfl" class="mdl-checkbox__input" />
-                                                            <span class="mdl-checkbox__label">Pitch taken from 180+strike end</span>
-                                                        </label>
+                                                            <input type="checkbox" id="ropfl" class="mdl-checkbox__input" /> <span class="mdl-checkbox__label">Pitch taken from 180+strike end</span> </label>
                                                     </div>
                                                 </div>
-
                                                 <div class="mdl-card__actions mdl-card--border">
-                                                    <button onclick="addLnPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Plot
-                                                    </button>
+                                                    <button onclick="addLnPl()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Plot </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
             <section class="mdl-layout__tab-panel" id="fixed-tab-2">
-
                 <div class="page-content">
-                    <div class="mdl-grid">
-                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--accent mdl-js-ripple-effect fabRight" onclick="DeleteSelected()">
-                            <i class="material-icons">delete</i>
-                        </button>
-                        <div class="mdl-cell mdl-cell--12-col">
-
-
+                    <div class="mdl-grid ">
+                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--accent mdl-js-ripple-effect fabDRight" onclick="DeleteSelected()"> <i class="material-icons">delete</i> </button>
+                        <div class="mdl-cell mdl-cell--12-col tabData">
                             <table class="mdl-data-table mdl-shadow--2dp" id="dataout">
-
                                 <thead>
                                     <tr>
                                         <th class="mdl-data-table__header--checkbox">
                                             <label for="selectall" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select">
-                                                <input type="checkbox" id="selectall" class="mdl-checkbox__input">
-                                            </label>
+                                                <input type="checkbox" id="selectall" class="mdl-checkbox__input"> </label>
                                         </th>
                                         <th class="mdl-data-table__cell--non-numeric">Datatype</th>
                                         <th>Strike/Trend</th>
                                         <th>Dip/Plunge</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-
-                                </tbody>
+                                <tbody> </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </section>
-
-
-
-
             <footer class="mdl-mini-footer">
                 <div class="mdl-mini-footer__left-section">
-                    <div class="mdl-logo mdl-typography--subhead">
-                        <b class="mdl-typography--subhead-color-contrast">SvgNet v2.2.1.5.1</b> - Structural Geology Plots with SVG, Javascript and HTML5
+                    <div class="mdl-logo mdl-typography--subhead"> <b class="mdl-typography--subhead-color-contrast">SvgNet v2.2.1.5.1</b> - Structural Geology Plots with SVG, Javascript and HTML5
                         <p>You are currently using a Development build, for a stable build visit <a href="https://svgnet.arijitlaik.cf">this link</a></p>
                     </div>
-
                 </div>
                 <div class="mdl-mini-footer__right-section">
                     <ul class="mdl-mini-footer__link-list mdl-typography--subhead ">
@@ -485,22 +335,17 @@
             <div class="mdl-snackbar__text"></div>
             <button class="mdl-snackbar__action" type="button"></button>
         </div>
-
     </div>
-
-
     <script>
         var notification = document.querySelector('.mdl-js-snackbar');
         if (!(window.location.host.startsWith("127.0.0.1") || window.location.host.startsWith("localhost"))) {
-            navigator.serviceWorker.register('/sw.js').then(function(reg) {
+            navigator.serviceWorker.register('/sw.js').then(function (reg) {
                 if (!reg.installing) return;
                 console.log("There is a ServiceWorker installing");
-
                 var worker = reg.installing;
-                worker.addEventListener('statechange', function() {
+                worker.addEventListener('statechange', function () {
                     if (worker.state == 'redundant') {
                         console.log('Install failed');
-
                         notification.MaterialSnackbar.showSnackbar({
                             message: 'Offline install Failed:ServiceWorker not supported by browser, please use a modern browser'
                         });
@@ -509,14 +354,11 @@
                         notification.MaterialSnackbar.showSnackbar({
                             message: 'SvgNet Ready For Offline Use'
                         });
-
                     }
                 });
             });
         }
-
     </script>
-
 </body>
 
 </html>

@@ -1,59 +1,75 @@
 body {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
+
 #svg_wrapper {
     margin: 10px;
     border-radius: 50%;
 }
+
 .mdl-card {
     width: 100%;
 }
+
 .mdl-layout__tab-panel {
     box-sizing: border-box;
     min-height: calc(100% - 164px);
 }
+
 .mdl-layout .mdl-layout__content {
     height: 100%;
 }
+
 .mdl-card__actions {
     text-align: right;
 }
+
 .mdl-tabs__tab>.material-icons {
     line-height: inherit;
 }
+
 .mdl-layout__header-row .mdl-button {
     margin-left: 10px;
 }
+
 .content-hidden .mdl-card__supporting-text {
     display: none;
 }
+
 .content-hidden .mdl-card__actions {
     display: none;
 }
+
 .content-hidden {
     min-height: 60px;
     transition-property: all;
     transition-duration: 0.1s;
 }
+
 .abspos {
     position: absolute;
 }
+
 .toggle-card--content__icon {
     transition-property: transform;
     transition-duration: 0.2s;
     color: white;
 }
+
 .content-hidden .toggle-card--content__icon {
     transform: rotate(-180deg);
 }
+
 #dataout {
     width: 100%!important;
 }
+
 .mdl-data-table__cell--checkbox,
 .mdl-data-table__header--checkbox {
     width: 48px!important;
     max-width: 48px!important;
 }
+
 @media only screen and (max-width: 760px),
 {
     .mdl-data-table td {
@@ -63,7 +79,8 @@ body {
         text-align: left;
     }
 }
-.fabRight {
+
+.fabDRight {
     position: fixed;
     display: block;
     right: 0;
@@ -72,17 +89,27 @@ body {
     margin-bottom: 40px;
     z-index: 900;
 }
+
 .fabURight {
     position: absolute;
     bottom: 0;
     right: 0;
 }
+
 dialog .close {
     position: absolute;
     top: 8px;
     right: 8px;
 }
-.svg_container {
+
+.svgnet_container {
     position: relative;
 }
-dialog {z-index: 3}
+
+.tabData {
+    min-height: 380px;
+}
+
+dialog {
+    z-index: 3
+}
