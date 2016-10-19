@@ -1,6 +1,6 @@
 importScripts('/cache-polyfill.js');
 const PREFIX = 'SvgNet';
-const VER = 'v2.3.1';
+const VER = 'v2.3.5.1';
 const OFFLINE_CACHE = `${PREFIX}-${VER}`;
 var CACHE_URLS = [
     '/'
@@ -20,8 +20,8 @@ var CACHE_URLS = [
     , '/js/svgnet.js'
     , '/js/util.js'
     , '/js/ui.js'
-   , //'js/science.v1.min.js',
-    '/js/material.min.js'
+    , 'js/pouchdb.min.js'
+    ,'/js/material.min.js'
     , '/icon.png'
       ]
 self.addEventListener('install', function (e) {
@@ -42,8 +42,7 @@ self.addEventListener('activate', function (event) {
             if (key != OFFLINE_CACHE) {
                 console.log("Updating Cache...");
                 return caches.delete(key);
-            }
-            else {
+            } else {
                 console.log("Cache Okay")
             }
         }));
