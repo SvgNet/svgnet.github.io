@@ -1,22 +1,15 @@
 function Pt(cord_x, cord_y) {
-
     this.x = cord_x;
     this.y = cord_y;
 }
 
 function cart2svg(cart_cords, origin_coords) {
-    return (new Pt(
-        origin_coords.x + cart_cords.x,
-        origin_coords.y - cart_cords.y
-    ));
+    return (new Pt(origin_coords.x + cart_cords.x, origin_coords.y - cart_cords.y));
 }
 
-
 function svgNet(net_props) {
-
     this.svgOrigin = net_props.center === undefined ? new Pt(net_props.radius_primitive, net_props.radius_primitive) : net_props.center;
     this.radius_primitive = net_props.radius_primitive ? net_props.radius_primitive : 256;
-
     this.Svg_obj = function (in_id, id, obj_center) {
         this.id = id;
         this.svg_node = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -27,7 +20,6 @@ function svgNet(net_props) {
         this.svg_node.setAttributeNS(null, "version", "1.1");
         document.getElementById(in_id).appendChild(this.svg_node);
     };
-
     this.Circ_obj = function (cen, radius, stroke, stroke_wth, fill, deg, id) {
         this.id = id;
         var _cent = cart2svg(cen, _svgOrigin);
@@ -36,58 +28,47 @@ function svgNet(net_props) {
         this.path_node.setAttributeNS(null, "cy", _cent.y);
         this.path_node.setAttributeNS(null, "r", radius);
         this.setParams({
-            stroke: stroke,
-            strokeWidth: stroke_wth,
-            fill: fill
+            stroke: stroke
+            , strokeWidth: stroke_wth
+            , fill: fill
         });
         if (deg !== 0) {
             this.path_node.setAttribute("transform", "rotate(" + deg + " " + _cent.x + " " + _cent.y + ")");
         }
         _svg_node.appendChild(this.path_node);
-
     }
-
-
     this.Path_obj = function (d, stroke, stroke_wth, fill, deg, id) {
         this.id = id;
         this.path_node = document.createElementNS('http://www.w3.org/2000/svg', "path");
         this.path_node.setAttributeNS(null, "d", d);
         this.setParams({
-            stroke: stroke,
-            stroke_width: stroke_wth,
-            fill: fill
+            stroke: stroke
+            , stroke_width: stroke_wth
+            , fill: fill
         });
         if (deg !== 0) {
             this.path_node.setAttribute("transform", "rotate(" + deg + " " + Svg_Net.gfx.center.x + " " + Svg_Net.gfx.center.y + ")");
         }
         _svg_node.appendChild(this.newpath);
     }
-
     this.Path_obj.prototype.setParams = this.Circ_obj.prototype.setParams = function (attrParams) {
         this.path_node.setAttributeNS(null, "stroke", attrParams.stroke);
         this.path_node.setAttributeNS(null, "stroke-width", attrParams.strokeWidth);
         this.path_node.setAttributeNS(null, "fill", attrParams.fill == undefined ? "none" : attrParams.fill);
         this.path_node.setAttributeNS(null, "id", this.id);
     }
-
     this.gfx = new this.Svg_obj("Svgnet_Container", "fig", new Pt(this.radius_primitive, this.radius_primitive))
     var _svg_node = this.gfx.svg_node;
     var _svgOrigin = this.svgOrigin;
     this.primitiveCircle = new this.Circ_obj(new Pt(0, 0), this.radius_primitive, "#ccc", "2", "#FFF", 0, "prim_circ", this.gfx.svg_node)
-
-
 }
-
 Svg_Net = new svgNet({
-    radius_primitive: 512,
-    center: {
-        x: 512,
-        y: 512
+    radius_primitive: 512
+    , center: {
+        x: 512
+        , y: 512
     }
 });
-
-
-
 /*
 var SchmidtNet_Flag = false;
 function torad(degrees) {
