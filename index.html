@@ -338,6 +338,7 @@
         var notification = document.querySelector('.mdl-js-snackbar');
         if (!(window.location.host.startsWith("127.0.0.1") || window.location.host.startsWith("localhost"))) {
             navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                
                 if (!reg.installing) return;
                 notification.MaterialSnackbar.showSnackbar({
                     message: 'Offline install/update initiated'
@@ -347,7 +348,7 @@
                     if (worker.state == 'redundant') {
                         console.log('Install failed');
                         notification.MaterialSnackbar.showSnackbar({
-                            message: 'Offline install Failed:ServiceWorker not supported by browser, please use a modern browser'
+                            message: 'Offline install Failed'
                         });
                     }
                     if (worker.state == 'installed') {
