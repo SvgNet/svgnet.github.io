@@ -33,7 +33,7 @@
     <script src="js/mdl-selectfield.min.js" defer></script>
     <script src="js/ui.js" defer></script>
     <script src="js/svgnet.js"></script>
-    <script src="js/pouchdb.min.js" ></script>
+    <script src="js/pouchdb.min.js"></script>
     <script src="js/init.js" defer></script>
     <script src="js/util.js" defer></script>
 </head>
@@ -337,11 +337,13 @@
     <script>
         var notification = document.querySelector('.mdl-js-snackbar');
         if (!(window.location.host.startsWith("127.0.0.1") || window.location.host.startsWith("localhost"))) {
-            navigator.serviceWorker.register('/sw.js').then(function (reg) {
+            navigator.serviceWorker.register('/sw.js').then(function(reg) {
                 if (!reg.installing) return;
-                console.log("There is a ServiceWorker installing");
+                notification.MaterialSnackbar.showSnackbar({
+                    message: 'Offline install/update initiated'
+                })
                 var worker = reg.installing;
-                worker.addEventListener('statechange', function () {
+                worker.addEventListener('statechange', function() {
                     if (worker.state == 'redundant') {
                         console.log('Install failed');
                         notification.MaterialSnackbar.showSnackbar({
@@ -356,7 +358,9 @@
                 });
             });
         }
+
     </script>
+
 </body>
 
 </html>
