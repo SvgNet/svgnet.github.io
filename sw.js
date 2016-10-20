@@ -1,6 +1,6 @@
 importScripts('/cache-polyfill.js');
 const PREFIX = 'SvgNet';
-const VER = 'v2.3.67';
+const VER = 'v3.0.1';
 const OFFLINE_CACHE = `${PREFIX}-${VER}`;
 var CACHE_URLS = [
     '/'
@@ -21,7 +21,7 @@ var CACHE_URLS = [
     , '/js/util.js'
     , '/js/ui.js'
     , 'js/pouchdb.min.js'
-    ,'/js/material.min.js'
+    , '/js/material.min.js'
     , '/icon.png'
       ]
 self.addEventListener('install', function (e) {
