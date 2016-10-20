@@ -200,38 +200,47 @@ function Line(trend, plunge, clr, id) {
 }
 
 function LineonPlane(onPlane, pitch, op_flag, clr, id) {
-    if ((op_flag === true) && pitch != 90) {
-        onPlane.strike += 180;
-        pitch = 180 - pitch;
+    if (onPlane !== undefined) {
+        this.clr = clr;
+        this.id = id;
+        if ((op_flag === true) && pitch != 90) {
+            onPlane.strike += 180;
+            pitch = 180 - pitch;
+        }
+        this.plunge = todeg(Math.asin(Math.sin(torad(onPlane.dip)) * Math.sin(torad(pitch))));
+        this.trend = (onPlane.strike + todeg(Math.atan(Math.cos(torad(onPlane.dip)) * Math.tan(torad(pitch))))) % 360;
     }
-    this.plunge = todeg(Math.asin(Math.sin(torad(onPlane.dip)) * Math.sin(torad(pitch))));
-    this.trend = (onPlane.strike + todeg(Math.atan(Math.cos(torad(onPlane.dip)) * Math.tan(torad(pitch))))) % 360;
 
     this.draw = function () {
         if (SchmidtNet_Flag)
-            this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, "red", 1.5, clr, 0, id);
+            this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, "red", 1.5, this.clr, 0, this.id);
         else
-            this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, "red", 1.5, clr, 0, id);
+        this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, "red", 1.5, this.clr, 0, this.id);
     };
 
-    if (clr !== undefined) {
+    if (this.clr !== undefined) {
         this.draw();
     }
 
 }
 
 function PoletoPlane(ofPlane, clr, id) {
-    this.plunge = 90 - ofPlane.dip;
-    this.trend = (ofPlane.strike + 270) % 360;
+    if (ofPlane !== undefined) {
+        this.id = id;
+        this.clr = clr;
+        this.plunge = 90 - ofPlane.dip;
+        this.trend = (ofPlane.strike + 270) % 360;
+    }
 
     this.draw = function () {
         if (SchmidtNet_Flag)
-            this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, "blue", 1.5, clr, 0, id);
+            this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, "blue", 1.5, clr, 0, this.id);
         else
-            this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, "blue", 1.5, clr, 0, id);
+            this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, "blue", 1.5, clr, 0, this.id);
     };
 
-    if (clr !== undefined) {
+
+    if (this.clr !== undefined) {
         this.draw();
     }
 }

@@ -19,12 +19,35 @@
      include_docs: true,
      descending: true
  }, function (err, doc) {
-     draw_Planes(doc.rows);
+     draw_offlineData(doc.rows);
  });
 
- function draw_Planes(savedPlanes) {
-     for (var i = 0; i < savedPlanes.length; i++) {
-         ur_pl.push(new Plane(savedPlanes[i].doc.strike, savedPlanes[i].doc.dip, "blue", 1, savedPlanes[i].id));
-         insertdata(ur_pl[ur_pl.length - 1]);
+ function draw_offlineData(savedData) {
+     for (var i = 0; i < savedData.length; i++) {
+         console.log(savedData[i].doc)
+         if (savedData[i].doc.orientType == "Plane") {
+             
+             ur_pl.push(new Plane(savedData[i].doc.strike, savedData[i].doc.dip, "blue", 1, savedData[i].id));
+             insertdata(ur_pl[ur_pl.length - 1]);
+         } else if (savedData[i].doc.orientType == "Line") {
+             ur_ln.push(new Line(savedData[i].doc.trend, savedData[i].doc.plunge, "red", savedData[i].id));
+             insertdata(ur_ln[ur_ln.length - 1]);
+         } else if (savedData[i].doc.orientType == "PoletoPlane") {
+             ur_popl.push(new PoletoPlane());
+             ur_popl[ur_popl.length - 1].trend = savedData[i].doc.trend;
+             ur_popl[ur_popl.length - 1].plunge = savedData[i].doc.plunge;
+             ur_popl[ur_popl.length - 1].id = savedData[i].id;
+             ur_popl[ur_popl.length - 1].draw();
+             insertdata(ur_popl[ur_popl.length - 1]);
+         } else if (savedData[i].doc.orientType == "LineonPlane") {
+             ur_lnpl.push(new LineonPlane());
+             ur_lnpl[ur_lnpl.length - 1].trend = savedData[i].doc.trend;
+             ur_lnpl[ur_lnpl.length - 1].plunge = savedData[i].doc.plunge;
+             ur_lnpl[ur_lnpl.length - 1].id = savedData[i].id;
+             ur_lnpl[ur_lnpl.length - 1].draw();
+             insertdata(ur_lnpl[ur_lnpl.length - 1]);
+
+         }
+
      }
  }

@@ -56,7 +56,7 @@ function DeleteSelected() {
             console.log()
             ur_selected[i].plot.remove();
             SvgNet_db.get(ur_selected[i].plot.id).then(function (doc) {
-            SvgNet_db.remove(doc);
+                SvgNet_db.remove(doc);
             });
             if (ur_pl.lastIndexOf(ur_selected[i]) > -1) ur_pl.splice(ur_pl.lastIndexOf(ur_selected[i]), 1);
             if (ur_ln.lastIndexOf(ur_selected[i]) > -1) ur_ln.splice(ur_ln.lastIndexOf(ur_selected[i]), 1);
@@ -138,7 +138,7 @@ function insertdata(ur_in) {
 function addPl() {
     var mob_input = input_Dialog.open ? "mob_" : "";
     ur_pl.push(new Plane(+document.getElementById(mob_input + "st").value, +document.getElementById(mob_input + "dd").value, "blue", 1, "Pur_pl[" + ur_pl.length + "]"));
-    insertdata(ur_pl[ur_pl.length - 1]);
+
     SvgNet_db.put({
         _id: ur_pl[ur_pl.length - 1].plot.id,
         orientType: "Plane",
@@ -146,32 +146,69 @@ function addPl() {
         dip: ur_pl[ur_pl.length - 1].dip
     }, function callback(err, result) {
         if (!err) {
-            console.log('Saved posted a plane!');
-        }
-        else(console.error(err))
+            
+            insertdata(ur_pl[ur_pl.length - 1]);
+        } else(console.error(err))
     });
     if (document.getElementById(mob_input + "poto").checked) {
         ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length - 1], "orange", "Pur_popl[" + ur_popl.length + "]"));
-        insertdata(ur_popl[ur_popl.length - 1])
+        SvgNet_db.put({
+            _id: ur_popl[ur_popl.length - 1].plot.id,
+            orientType: "PoletoPlane",
+            trend: ur_popl[ur_popl.length - 1].trend,
+            plunge: ur_popl[ur_popl.length - 1].plunge
+        }, function callback(err, result) {
+            if (!err) {
+                insertdata(ur_popl[ur_popl.length - 1]);
+            } else(console.error(err))
+        });
     }
 }
 
 function addLn() {
     var mob_input = input_Dialog.open ? "mob_" : "";
     ur_ln.push(new Line(+document.getElementById(mob_input + "tr").value, +document.getElementById(mob_input + "pl").value, "red", "Pur_ln[" + ur_ln.length + "]"));
-    insertdata(ur_ln[ur_ln.length - 1])
+    SvgNet_db.put({
+        _id: ur_ln[ur_ln.length - 1].plot.id,
+        orientType: "Line",
+        trend: ur_ln[ur_ln.length - 1].trend,
+        plunge: ur_ln[ur_ln.length - 1].plunge
+    }, function callback(err, result) {
+        if (!err) {
+            insertdata(ur_ln[ur_ln.length - 1])
+        } else(console.error(err))
+    });
 }
 
 function addPoPl() {
     var mob_input = input_Dialog.open ? "mob_" : "";
     ur_popl.push(new PoletoPlane(new Plane(+document.getElementById(mob_input + "pst").value, +document.getElementById(mob_input + "pdd").value), "orange", "Pur_popl[" + ur_popl.length + "]"));
-    insertdata(ur_popl[ur_popl.length - 1])
+    SvgNet_db.put({
+        _id: ur_popl[ur_popl.length - 1].plot.id,
+        orientType: "PoletoPlane",
+        trend: ur_popl[ur_popl.length - 1].trend,
+        plunge: ur_popl[ur_popl.length - 1].plunge
+    }, function callback(err, result) {
+        if (!err) {
+            insertdata(ur_popl[ur_popl.length - 1]);
+        } else(console.error(err))
+    });
 }
 
 function addLnPl() {
     var mob_input = input_Dialog.open ? "mob_" : "";
-    ur_lnpl.push(new LineonPlane(new Plane(+document.getElementById(mob_input + "rst").value, +document.getElementById("rdd").value), document.getElementById(mob_input + "rpi").value, document.getElementById(mob_input + "ropfl").checked, "teal", "Pur_lnpl[" + ur_lnpl.length + "]"));
-    insertdata(ur_lnpl[ur_lnpl.length - 1])
+    ur_lnpl.push(new LineonPlane(new Plane(+document.getElementById(mob_input + "rst").value, +document.getElementById(mob_input+"rdd").value), document.getElementById(mob_input + "rpi").value, document.getElementById(mob_input + "ropfl").checked, "teal", "Pur_lnpl[" + ur_lnpl.length + "]"));
+    SvgNet_db.put({
+        _id: ur_lnpl[ur_lnpl.length - 1].plot.id,
+        orientType: "LineonPlane",
+        trend: ur_lnpl[ur_lnpl.length - 1].trend,
+        plunge: ur_lnpl[ur_lnpl.length - 1].plunge
+    }, function callback(err, result) {
+        if (!err) {
+            insertdata(ur_lnpl[ur_lnpl.length - 1])
+        } else(console.error(err))
+    });
+
 }
 
 function netOn() {
