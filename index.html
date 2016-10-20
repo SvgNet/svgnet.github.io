@@ -339,10 +339,7 @@
         if (!(window.location.host.startsWith("127.0.0.1") || window.location.host.startsWith("localhost"))) {
             navigator.serviceWorker.register('/sw.js').then(function (reg) {
                 if (!reg.installing) return;
-                notification.MaterialSnackbar.showSnackbar({
-                            message: 'Offline install started'
-                        });
-                    }
+                console.log("There is a ServiceWorker installing");
                 var worker = reg.installing;
                 worker.addEventListener('statechange', function () {
                     if (worker.state == 'redundant') {
