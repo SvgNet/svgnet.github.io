@@ -340,8 +340,9 @@
             navigator.serviceWorker.register('/sw.js').then(function (reg) {
                 if (!reg.installing) return;
                 notification.MaterialSnackbar.showSnackbar({
-                            message: 'Offline install/update initiated'
-                        })
+                            message: 'Offline install started'
+                        });
+                    }
                 var worker = reg.installing;
                 worker.addEventListener('statechange', function () {
                     if (worker.state == 'redundant') {
