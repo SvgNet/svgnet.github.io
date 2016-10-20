@@ -1,6 +1,6 @@
 importScripts('/cache-polyfill.js');
 const PREFIX = 'SvgNet';
-const VER = 'v3.0.1';
+const VER = 'v3.0.0';
 const OFFLINE_CACHE = `${PREFIX}-${VER}`;
 var CACHE_URLS = [
     '/'
