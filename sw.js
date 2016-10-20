@@ -1,6 +1,6 @@
 importScripts('/cache-polyfill.js');
 const PREFIX = 'SvgNet';
-const VER = 'v3.0.0-releasecandidate';
+const VER = 'v3.0.0-beta';
 const OFFLINE_CACHE = `${PREFIX}-${VER}`;
 var CACHE_URLS = [
     '/'
@@ -31,9 +31,6 @@ self.addEventListener('install', function (e) {
         });
     }));
 });
-//self.addEventListener('activate', function (event) {
-//	event.waitUntil(self.clients.claim());
-//});
 self.addEventListener('activate', function (event) {
     // Delete old asset caches.
     event.waitUntil(caches.keys().then(function (keys) {
