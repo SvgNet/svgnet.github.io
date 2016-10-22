@@ -36,6 +36,7 @@
     <script src="js/pouchdb.min.js"></script>
     <script src="js/init.js" defer></script>
     <script src="js/util.js" defer></script>
+    <script src="js/loc.js" defer></script>
 </head>
 
 <body>
@@ -67,6 +68,24 @@
                     <br>
                     <button onclick="AngleSelected()" class="mdl-button mdl-js-button mdl-button--mini-fab mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Calculate </button>
                 </div>
+
+                <div class="mdl-navigation__link mdl-typography--body-1 LocBox">
+                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect " for="TogLoc">
+                        <input type="checkbox" id="TogLoc" class="mdl-switch__input" onchange="toggleLocation()" /> <span class="mdl-switch__label"><b class="mdl-typography--button"> <i class="material-icons" id="TrackIcon">location_off</i> Location </b></span></label>
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="number" max="180" min="-180" step=any id="Datalat">
+                        <label class="mdl-textfield__label" for="Datalat">Lat</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="number" max="90" min="-90" step=any id="Datalon">
+                        <label class="mdl-textfield__label" for="DataLon">Lon</label>
+                    </div>
+
+                    <b>Location Accuracy:</b><span id="AccLoc"></span>
+
+                </div>
+
             </nav>
         </div>
         <main class="mdl-layout__content">
@@ -98,7 +117,8 @@
                         </div>
                         <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield">
                             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="mob_poto">
-                                <input type="checkbox" id="mob_poto" class="mdl-checkbox__input" /> <span class="mdl-checkbox__label">Plot the <b>Pole</b> to this <b>Plane</b></span> </label>
+                                <input type="checkbox" id="mob_poto" class="mdl-checkbox__input" /> <span class="mdl-checkbox__label">Plot the <b>Pole</b> to this <b>Plane</b></span>
+                            </label>
                         </div>
                     </div>
                     <div class="form_input mdl-grid" id="popl_form">
@@ -338,7 +358,7 @@
         var notification = document.querySelector('.mdl-js-snackbar');
         if (!(window.location.host.startsWith("127.0.0.1") || window.location.host.startsWith("localhost"))) {
             navigator.serviceWorker.register('/sw.js').then(function(reg) {
-                
+
                 if (!reg.installing) return;
                 notification.MaterialSnackbar.showSnackbar({
                     message: 'Offline install/update initiated'
