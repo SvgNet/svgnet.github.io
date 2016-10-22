@@ -215,7 +215,7 @@ function LineonPlane(onPlane, pitch, op_flag, clr, id) {
         if (SchmidtNet_Flag)
             this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, "red", 1.5, this.clr, 0, this.id);
         else
-        this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, "red", 1.5, this.clr, 0, this.id);
+            this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, "red", 1.5, this.clr, 0, this.id);
     };
 
     if (this.clr !== undefined) {
@@ -249,6 +249,8 @@ Plane.prototype.modify = Line.prototype.modify = PoletoPlane.prototype.modify = 
     this.plot.remove();
     this.draw();
 };
+
+Plane.prototype.LocData = Line.prototype.LocData = PoletoPlane.prototype.LocData = LineonPlane.prototype.LocData = {lat: "", lon: "", acc: ""}
 
 function AngDist(InA, InB) {
 

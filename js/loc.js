@@ -48,7 +48,7 @@ function showPosition(position) {
 
     document.getElementById("Datalat").value = position.coords.latitude;
     document.getElementById("Datalon").value = position.coords.longitude;
-    document.getElementById("AccLoc").innerHTML = position.coords.accuracy;
+    document.getElementById("AccLoc").innerHTML = position.coords.accuracy.toFixed(3)+"m";
 }
 
 function getLocation() {
