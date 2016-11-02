@@ -1,4 +1,5 @@
 var watchID = "";
+var userLoc = "NTL";
 
 function toggleLocation() {
 
@@ -48,7 +49,8 @@ function showPosition(position) {
 
     document.getElementById("Datalat").value = position.coords.latitude;
     document.getElementById("Datalon").value = position.coords.longitude;
-    document.getElementById("AccLoc").innerHTML = position.coords.accuracy.toFixed(3)+"m";
+    document.getElementById("AccLoc").innerHTML = position.coords.accuracy.toFixed(3) + "m";
+    userLoc = position;
 }
 
 function getLocation() {
@@ -68,6 +70,7 @@ function stopLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.clearWatch(watchID);
     }
+    userLoc = "NTL";
 }
 
 function toggleEditLoc() {

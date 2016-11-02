@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="./css/material.icons.css">
     <link rel="stylesheet" href="css/material.custom.css">
     <script src="js/dialog-polyfill.js" defer></script>
+    <script src="https://code.jquery.com/pep/0.4.1/pep.js"></script>
+
     <script src="js/material.min.js"></script>
     <script src="js/mdl-selectfield.min.js" defer></script>
     <script src="js/ui.js" defer></script>
@@ -48,9 +50,11 @@
         </header>
         <div class="mdl-layout__drawer"> <span class="mdl-layout-title">Preferences</span>
             <nav class="mdl-navigation">
-                <div class="mdl-navigation__link mdl-typography--body-1"> <b class="mdl-typography--button">Grids</b>
+                <div class="mdl-navigation__link mdl-typography--body-1"> <b class="mdl-typography--button">Options</b>
                     <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="shownet">
-                        <input type="checkbox" id="shownet" class="mdl-switch__input" onchange="netOn()" /> <span class="mdl-switch__label">Grids off/on</span> </label>
+                        <input type="checkbox" id="shownet" class="mdl-switch__input" onchange="netOn()" /> <span class="mdl-switch__label">Grids</span> </label>
+                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="touchnet">
+                        <input type="checkbox" id="touchnet" class="mdl-switch__input" onchange="togglePin()" /> <span class="mdl-switch__label">Tap Input</span> </label>
                     <hr>
                     <label> <span class="mdl-switch__label">Opacity</span>
                         <input class="mdl-slider mdl-js-slider mdl-badge" data-badge="100" type="range" id="fadenet" min="10" max="100" value="100" step="1" oninput="fadeNet()" disabled/> </label>
@@ -175,6 +179,7 @@
                                 <div class="mdl-cell mdl-cell--12-col svgnet_container">
                                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--accent mdl-js-ripple-effect fabURight mdl-cell--hide-desktop mdl-cell--hide-tablet" id="show-dialog"> <i class="material-icons">add</i> </button>
                                     <div id="svg_wrapper" class="mdl-shadow--4dp mdl-cell mdl-cell--12-col"> </div>
+                                    <span><b class="mdl-typography--button">line:</b><b id="currTP">tap or movemouse</b></span>
                                 </div>
                                 <div class="mdl-cell mdl-cell--12-col">
                                     <label> <span class="mdl-switch__label">Rotate Net</span>

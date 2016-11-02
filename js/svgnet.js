@@ -27,17 +27,18 @@ function svg2cart(svg_cords) {
 }
 
 function cart2pol(cart_cord) {
-    radius = Math.sqrt(cart_cord.x * cart_cord.x + cart_cord.y * cart_cord.y);
-    theta = Math.atan2(cart_cord.y, cart_cord.x);
-    polarCord = {
-        rad: radius,
-        azh: theta
-    };
-    return polarCord
-}
+     distance = Math.sqrt(cart_cord.x * cart_cord.x + cart_cord.y * cart_cord.y);
+     radians = Math.atan2(cart_cord.y, cart_cord.x); //This takes y first
+     polarCord = {
+         rad: distance,
+         azh: radians
+     };
+     return polarCord
+ }
 
 function pol2tp(pol) {
-    var plunge = SchmidtNet_Flag ? todeg(Math.PI / 2 - 2 * Math.asin(pol.rad / (radius_primitive * Math.SQRT2))) : todeg(Math.PI / 2 - 2 * Math.atan2(pol.rad, radius_primitive));
+
+    var plunge = SchmidtNet_Flag ? todeg(Math.PI / 2 - 2 * Math.asin(pol.rad / (Svg_Net.radius_primitive * Math.SQRT2))) : todeg(Math.PI / 2 - 2 * Math.atan2(pol.rad, Svg_Net.radius_primitive));
     var trend = 90.0 - todeg(pol.azh);
     if (trend < 0.0)
         trend += 360.0;
@@ -250,7 +251,7 @@ Plane.prototype.modify = Line.prototype.modify = PoletoPlane.prototype.modify = 
     this.draw();
 };
 
-Plane.prototype.LocData = Line.prototype.LocData = PoletoPlane.prototype.LocData = LineonPlane.prototype.LocData = {lat: "", lon: "", acc: ""}
+Plane.prototype.LocData = Line.prototype.LocData = PoletoPlane.prototype.LocData = LineonPlane.prototype.LocData = {}
 
 function AngDist(InA, InB) {
 
@@ -320,3 +321,4 @@ function SchmidtNet() {
     Plane(0, 90, "black", 0.5, "gc90");
     Plane(90, 90, "black", 0.5, "sc90");
 }
+

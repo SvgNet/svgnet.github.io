@@ -54,24 +54,25 @@ function DeleteSelected() {
     if (ur_selected.length) {
         for (var i = 0; i < ur_selected.length; i++) {
             console.log()
-            var delID=ur_selected[i].plot.id
+            var delID = ur_selected[i].plot.id
             ur_selected[i].plot.remove();
-            var DelID = ur_selected[i].plot.id
+            var DelID = ur_selected[i].plot.id;
             if (ur_pl.lastIndexOf(ur_selected[i]) > -1) ur_pl.splice(ur_pl.lastIndexOf(ur_selected[i]), 1);
             if (ur_ln.lastIndexOf(ur_selected[i]) > -1) ur_ln.splice(ur_ln.lastIndexOf(ur_selected[i]), 1);
             if (ur_popl.lastIndexOf(ur_selected[i]) > -1) ur_popl.splice(ur_popl.lastIndexOf(ur_selected[i]), 1);
             if (ur_lnpl.lastIndexOf(ur_selected[i]) > -1) ur_lnpl.splice(ur_lnpl.lastIndexOf(ur_selected[i]), 1);
             SvgNet_db.get(delID).then(function (doc) {
                 SvgNet_db.remove(doc);
-            });
+            }).catch();
         };
 
         ur_selected = [];
         if (document.getElementById("selectall").checked) {
             document.getElementById("selectall").click();
         }
-        updateData();
     }
+
+
 }
 
 function AngleSelected() {
@@ -81,6 +82,7 @@ function AngleSelected() {
     }
     document.getElementById("Angdat").innerHTML = res;
 }
+
 
 function updateData() {
     document.getElementById("dataout").getElementsByTagName('tbody')[0].innerHTML = "";
@@ -137,20 +139,24 @@ function insertdata(ur_in) {
     });
     componentHandler.upgradeDom();
 }
+SvgNet_db.changes({
+    since: 'now',
+    live: true
+}).on('change', updateData);
 
 function addPl() {
     var mob_input = input_Dialog.open ? "mob_" : "";
     ur_pl.push(new Plane(+document.getElementById(mob_input + "st").value, +document.getElementById(mob_input + "dd").value, "blue", 1, "Pur_pl[" + ur_pl.length + "]"));
+    ur_pl[ur_pl.length - 1].LocData = userLoc.coords;
 
-    SvgNet_db.put({
-        _id: "Pur_pl[" + (ur_pl.length - 1) + "]",
+    SvgNet_db.post({
         orientType: "Plane",
         strike: ur_pl[ur_pl.length - 1].strike,
-        dip: ur_pl[ur_pl.length - 1].dip
-    }, function callback(err, result) {
+        dip: ur_pl[ur_pl.length - 1].dip,
+        gpsdata: ur_pl[ur_pl.length - 1].LocData
+    }, function (err, result) {
         if (!err) {
-
-            insertdata(ur_pl[ur_pl.length - 1]);
+            console.log(result.id)
         } else(console.error(err))
     });
     if (document.getElementById(mob_input + "poto").checked) {
@@ -161,57 +167,56 @@ function addPl() {
             trend: ur_popl[ur_popl.length - 1].trend,
             plunge: ur_popl[ur_popl.length - 1].plunge
         }, function callback(err, result) {
-            if (!err) {
-                insertdata(ur_popl[ur_popl.length - 1]);
+            if (!err) {;
             } else(console.error(err))
         });
     }
-     updateData()
 }
 
-function addLn() {
+function addLn(trend, plunge) {
     var mob_input = input_Dialog.open ? "mob_" : "";
-    ur_ln.push(new Line(+document.getElementById(mob_input + "tr").value, +document.getElementById(mob_input + "pl").value, "red", "Pur_ln[" + ur_ln.length + "]"));
+
+    ur_ln.push(new Line(
+        (trend == undefined || plunge == undefined) ? +document.getElementById(mob_input + "tr").value : trend, (trend == undefined || plunge == undefined) ? +document.getElementById(mob_input + "pl").value : plunge, "red", "Pur_ln[" + ur_ln.length + "]"));
+    ur_ln[ur_ln.length - 1].LocData = JSON.stringify(userLoc.coords);
     SvgNet_db.put({
-        _id: "Pur_ln[" +(ur_ln.length - 1) + "]",
+        _id: "Pur_ln[" + (ur_ln.length - 1) + "]",
         orientType: "Line",
         trend: ur_ln[ur_ln.length - 1].trend,
-        plunge: ur_ln[ur_ln.length - 1].plunge
+        plunge: ur_ln[ur_ln.length - 1].plunge,
+        gpsdata: JSON.stringify(ur_ln[ur_ln.length - 1].LocData)
     }, function callback(err, result) {
         if (!err) {
-            insertdata(ur_ln[ur_ln.length - 1])
+
         } else(console.error(err))
     });
-     updateData()
 }
 
 function addPoPl() {
     var mob_input = input_Dialog.open ? "mob_" : "";
     ur_popl.push(new PoletoPlane(new Plane(+document.getElementById(mob_input + "pst").value, +document.getElementById(mob_input + "pdd").value), "orange", "Pur_popl[" + ur_popl.length + "]"));
     SvgNet_db.put({
-        _id: "Pur_ln[" +(ur_ln.length - 1) + "]",
+        _id: "Pur_ln[" + (ur_ln.length - 1) + "]",
         orientType: "PoletoPlane",
         trend: ur_popl[ur_popl.length - 1].trend,
         plunge: ur_popl[ur_popl.length - 1].plunge
     }, function callback(err, result) {
-        if (!err) {
-            insertdata(ur_popl[ur_popl.length - 1]);
-        } else(console.error(err))
+        if (!err) {} else(console.error(err))
     });
-     updateData()
+
 }
 
 function addLnPl() {
     var mob_input = input_Dialog.open ? "mob_" : "";
     ur_lnpl.push(new LineonPlane(new Plane(+document.getElementById(mob_input + "rst").value, +document.getElementById(mob_input + "rdd").value), document.getElementById(mob_input + "rpi").value, document.getElementById(mob_input + "ropfl").checked, "teal", "Pur_lnpl[" + ur_lnpl.length + "]"));
     SvgNet_db.put({
-        _id: "Pur_lnpl[" + (ur_lnpl.length-1) + "]",
+        _id: "Pur_lnpl[" + (ur_lnpl.length - 1) + "]",
         orientType: "LineonPlane",
         trend: ur_lnpl[ur_lnpl.length - 1].trend,
         plunge: ur_lnpl[ur_lnpl.length - 1].plunge
     }, function callback(err, result) {
         if (!err) {
-            insertdata(ur_lnpl[ur_lnpl.length - 1])
+
         } else(console.error(err))
     });
 
