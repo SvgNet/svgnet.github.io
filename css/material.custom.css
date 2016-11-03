@@ -97,3 +97,4 @@ dialog {
 .LocBox {
     color: #424242!important;
 }
+.svgnet_container >*{touch-action:none}
