@@ -102,71 +102,125 @@ var cursorSym = new Path_obj(linText({
 }), "black", 1.1, "none", 0, "cursor")
 var pointers = {};
 
+var linSymbol = new Circ_obj(new Pt(0, 0), 50, "#00b468", 4, "none", 0)
+
+
 function clearcurTP() {
     cursorSym.setAttribute('transform', "translate(0,0)");
     document.getElementById("currTP").innerHTML = "tap or movemouse";
 }
 
-Svg_Net.gfx.svg_node.addEventListener("pointermove", onPointerMove, false);
 Svg_Net.gfx.svg_node.addEventListener("touchmove", onPointerMove, false);
-Svg_Net.gfx.svg_node.addEventListener("pointerdown", onPointerDown, false);
-Svg_Net.gfx.svg_node.addEventListener("pointerup", onPointerUp, false);
-Svg_Net.gfx.svg_node.addEventListener('pointercancel', onPointerUp, false);
+Svg_Net.gfx.svg_node.addEventListener("mousemove", onPointerMove, false);
+//Svg_Net.gfx.svg_node.addEventListener("mousedown", onPointerDown, false);
+//Svg_Net.gfx.svg_node.addEventListener("touchdown", onPointerDown, false);
+//Svg_Net.gfx.svg_node.addEventListener("touchemd", onPointerUp, false);
+//Svg_Net.gfx.svg_node.addEventListener("mouseleave", onPointerUp, false);
 
 
+var curPL = new Plane(0, 90, 4, "white", "curpl");
+//var curLN = new Line(0, 90, "white", "curln")
+var curXY = {};
 
-function onPointerDown(e) {
-    console.log(e.type)
-    e.preventDefault();
-    pointers[e.pointerId] = {
-        x: e.clientX,
-        y: e.clientY,
-        pointerType: e.pointerType,
-        pointerId: e.pointerId
-    };
-    showTP(e)
-}
 
 function onPointerMove(e) {
-    console.log(e.type)
-    console.log(e)
-        //console.log(e)
-        // Prevent the browser from doing its default thing (scroll, zoom)
+
     e.preventDefault();
-    var pointer = pointers[e.pointerId];
-    if (pointer) {
-        pointer.clientX = e.clientX;
-        pointer.clientX = e.clientY;
-    }
-    console.log(e)
-    if (e.type = "touchmove") {
-        showTP(e.touches[0])
-    }
-    showTP(e);
+
+    if (e.type === "touchmove") {
+        curXY = e.touches[0];
+    } else
+        curXY = e;
+    showTP(curXY)
 }
+
+
+
 
 function onPointerUp(e) {
-    console.log(e.type)
-    delete pointers[e.pointerId];
+    clearcurTP()
 }
-
-
-
+/*
+lineDash = new Line_obj({
+    x: 0,
+    y: 0
+}, {
+    x: 100,
+    y: 100
+}, {
+    color: "gray",
+    width: 3
+}, "lineDash")
+lineDash.setAttribute("stroke-dasharray","10, 5")*/
 function showTP(evt) {
+    /*var showlin = function(){linSymbol.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
+            EnD = cart2svg({
+                x: Svg_Net.radius_primitive * Math.cos(pol.azh),
+                y: Svg_Net.radius_primitive * Math.sin(pol.azh)
+            }, Svg_Net.svgOrigin)
+            lineDash.setAttribute('x1', Svgxy.x);
+            lineDash.setAttribute('x2', EnD.x);
+            lineDash.setAttribute('y1', Svgxy.y);
+            lineDash.setAttribute('y2', EnD.y)}*/
+    var Svgxy = cursorPoint(evt)
 
-
-
-    var pt = svg2cart(cursorPoint(evt));
+    var pt = svg2cart(Svgxy);
     var pol = cart2pol(pt);
     //var pnt = pt.matrixTransform(Svg_Net.gfx.svg_node.getScreenCTM().inverse());
 
     if (pol.rad <= Svg_Net.radius_primitive) {
+
         cursorSym.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
         var tp = pol2tp(pol);
-        document.getElementById("currTP").innerHTML = Math.round(tp.plunge) + "&rarr;" + Math.round(tp.trend);
+
+
+        if (document.getElementById("optin_ln").checked) {
+            curPL.clr = "white";
+            curPL.modify();
+            showlin()
+
+
+            document.getElementById("currType").innerHTML = "Line:";
+            document.getElementById("currTP").innerHTML = Math.round(tp.plunge) + "&rarr;" + Math.round(tp.trend);
+        }
+        if (document.getElementById("optin_pl").checked) {
+            curPL.plot.remove();
+            document.getElementById("currType").innerHTML = "Plane:";
+            curPL.strike = (tp.trend + 90) % 360;
+            curPL.dip = 90 - tp.plunge;
+            curPL.clr = "#00d4d4";
+            document.getElementById("currTP").innerHTML = Math.round(curPL.strike) + "/" + Math.round(curPL.dip);
+            curPL.modify();
+        }
+        if (document.getElementById("optin_lnpl").checked) {
+            curPL.clr = "#00d4d4";
+
+
+            //document.getElementById("currTP").innerHTML = Math.round(curPL.strike) + "/" + Math.round(curPL.dip);
+
+            curPL.modify();
+            showlin();
+            var plnlang = AngDist(tp, curPL);
+            if (plnlang < 88 || plnlang > 92) {
+                linSymbol.setAttribute('stroke', "#ff2525")
+                console.log("red")
+            } else
+                linSymbol.setAttribute('stroke', "#00b468")
+            linSymbol.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
+            ang = AngDist(new Line(curPL.strike, 0), tp);;
+            document.getElementById("currTP").innerHTML = Math.round(curPL.strike) + "/" + Math.round(curPL.dip) + " Rake:" +
+                (ang > 90 ?
+                    (180 - Math.round(ang)) + "from" + ((Math.round(curPL.strike) + 180) % 360) : Math.round(ang) + "from" + Math.round(curPL.strike));
+        }
+
+
+
+    } else {
+        clearcurTP()
     }
 
 }
+
 
 
 function handlePin(evt) {
@@ -175,19 +229,25 @@ function handlePin(evt) {
     var pol = cart2pol(pt);
     if (pol.rad <= Svg_Net.radius_primitive) {
         cursorSym.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
-        var tp = pol2tp(pol);
 
-        addLn(tp.trend, tp.plunge)
-            //document.getElementById("currTP").innerHTML = Math.round(tp.plunge) + "&rarr;" + Math.round(tp.trend);
+        var tp = pol2tp(pol);
+        if (document.getElementById("touchnet").checked)
+            addLn(tp.trend, tp.plunge);
+
+        //document.getElementById("currTP").innerHTML = Math.round(tp.plunge) + "&rarr;" + Math.round(tp.trend);
     } else {
         clearcurTP()
     }
 }
+Svg_Net.gfx.svg_node.addEventListener("touchdown", handlePin, false);
+Svg_Net.gfx.svg_node.addEventListener("mousedown", handlePin, false);
+
 function togglePin() {
     if (document.getElementById("touchnet").checked) {
-        Svg_Net.gfx.svg_node.addEventListener("pointerdown", handlePin, false);
+
     } else {
-        Svg_Net.gfx.svg_node.removeEventListener("pointerdown", handlePin, false);
+        Svg_Net.gfx.svg_node.removeEventListener("touchdown", handlePin, false);
+        Svg_Net.gfx.svg_node.removeEventListener("mousedown", handlePin, false);
     }
 }
 

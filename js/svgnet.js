@@ -27,14 +27,14 @@ function svg2cart(svg_cords) {
 }
 
 function cart2pol(cart_cord) {
-     distance = Math.sqrt(cart_cord.x * cart_cord.x + cart_cord.y * cart_cord.y);
-     radians = Math.atan2(cart_cord.y, cart_cord.x); //This takes y first
-     polarCord = {
-         rad: distance,
-         azh: radians
-     };
-     return polarCord
- }
+    distance = Math.sqrt(cart_cord.x * cart_cord.x + cart_cord.y * cart_cord.y);
+    radians = Math.atan2(cart_cord.y, cart_cord.x); //This takes y first
+    polarCord = {
+        rad: distance,
+        azh: radians
+    };
+    return polarCord
+}
 
 function pol2tp(pol) {
 
@@ -109,6 +109,20 @@ function Group_obj(stroke, stroke_wth, fill, id) {
     Svg_Net.gfx.svg_node.appendChild(this.newgroup);
 }
 
+function Line_obj(start, end, str,id) {
+    this.id = id;
+    this.newpath = document.createElementNS('http://www.w3.org/2000/svg', "line");
+    this.newpath.setAttributeNS(null, "x1", start.x);
+    this.newpath.setAttributeNS(null, "x2", end.x);
+    this.newpath.setAttributeNS(null, "y1", start.y);
+    this.newpath.setAttributeNS(null, "y2", end.y);
+    this.newpath.setAttributeNS(null, "stroke", str.color);
+    this.newpath.setAttributeNS(null, "stroke-width", str.width);
+    this.newpath.setAttributeNS(null, "id", this.id);
+    Svg_Net.gfx.svg_node.appendChild(this.newpath);
+    return this.newpath;
+}
+
 function Circ_obj(cen, radius, stroke, stroke_wth, fill, deg, id) {
     this.id = id;
     this.newpath = document.createElementNS('http://www.w3.org/2000/svg', "circle");
@@ -156,7 +170,7 @@ function Ssdr2cart(strike, dip, rake, op_flag) {
 function Plane(strike, dip, clr, lwidth, id) {
     this.strike = strike;
     this.dip = dip;
-
+    this.clr = clr;
     this.draw = function () {
         if (this.dip !== 90) {
 
@@ -164,19 +178,19 @@ function Plane(strike, dip, clr, lwidth, id) {
                 gsp = [];
                 for (i = 0; i <= 90; i += 5) gsp.push(Ssdr2cart(this.strike, this.dip, i, false));
                 for (i = 85; i >= 0; i -= 5) gsp.push(Ssdr2cart(this.strike, this.dip, i, true));
-                this.plot = new Path_obj(polytext(gsp), clr, lwidth, "none", 0, id);
+                this.plot = new Path_obj(polytext(gsp), this.clr, lwidth, "none", 0, id);
             } else {
                 this.plot = new Path_obj(
                     arcText(
                         this.strike, Svg_Net.radius_primitive / Math.cos(torad(this.dip)), 180 + this.strike, 1),
-                    clr, lwidth, "none", 0, id);
+                    this.clr, lwidth, "none", 0, id);
             }
         } else {
             this.plot = new Path_obj(
                 linText(
                     new Pt(Svg_Net.radius_primitive * Math.sin(torad(this.strike)), Svg_Net.radius_primitive * Math.cos(torad(this.strike))),
                     new Pt(Svg_Net.radius_primitive * Math.sin(torad(this.strike + 180)), Svg_Net.radius_primitive * Math.cos(torad(this.strike + 180)))
-                ), clr, lwidth, "none", 0, id);
+                ), this.clr, lwidth, "none", 0, id);
         }
     }
 
@@ -187,7 +201,7 @@ function Plane(strike, dip, clr, lwidth, id) {
 function Line(trend, plunge, clr, id) {
     this.trend = trend;
     this.plunge = plunge;
-
+    this.clr = clr;
     this.draw = function () {
         if (SchmidtNet_Flag)
             this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, clr, 3, "none", 0, id);
@@ -235,9 +249,9 @@ function PoletoPlane(ofPlane, clr, id) {
 
     this.draw = function () {
         if (SchmidtNet_Flag)
-            this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, "blue", 1.5, clr, 0, this.id);
+            this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, "blue", 1.5, this.clr, 0, this.id);
         else
-            this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, "blue", 1.5, clr, 0, this.id);
+            this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, "blue", 1.5, this.clr, 0, this.id);
     };
 
 
@@ -321,4 +335,3 @@ function SchmidtNet() {
     Plane(0, 90, "black", 0.5, "gc90");
     Plane(90, 90, "black", 0.5, "sc90");
 }
-

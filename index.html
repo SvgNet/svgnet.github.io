@@ -29,16 +29,16 @@
     <link rel="stylesheet" href="./css/material.icons.css">
     <link rel="stylesheet" href="css/material.custom.css">
     <script src="js/dialog-polyfill.js" defer></script>
-    <script src="js/pep.js"></script>
 
     <script src="js/material.min.js"></script>
     <script src="js/mdl-selectfield.min.js" defer></script>
-    <script src="js/ui.js" defer></script>
     <script src="js/svgnet.js"></script>
     <script src="js/pouchdb.min.js"></script>
     <script src="js/init.js" defer></script>
     <script src="js/util.js" defer></script>
     <script src="js/loc.js" defer></script>
+    <script src="js/ui.js" defer></script>
+
 </head>
 
 <body>
@@ -54,7 +54,7 @@
                     <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="shownet">
                         <input type="checkbox" id="shownet" class="mdl-switch__input" onchange="netOn()" /> <span class="mdl-switch__label">Grids</span> </label>
                     <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="touchnet">
-                        <input type="checkbox" id="touchnet" class="mdl-switch__input" onchange="togglePin()" /> <span class="mdl-switch__label">Tap Input</span> </label>
+                        <input type="checkbox" id="touchnet" class="mdl-switch__input" /> <span class="mdl-switch__label">Tap Input</span> </label>
                     <hr>
                     <label> <span class="mdl-switch__label">Opacity</span>
                         <input class="mdl-slider mdl-js-slider mdl-badge" data-badge="100" type="range" id="fadenet" min="10" max="100" value="100" step="1" oninput="fadeNet()" disabled/> </label>
@@ -179,13 +179,69 @@
                                 <div class="mdl-cell mdl-cell--12-col svgnet_container">
                                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--accent mdl-js-ripple-effect fabURight mdl-cell--hide-desktop mdl-cell--hide-tablet" id="show-dialog"> <i class="material-icons">add</i> </button>
                                     <div id="svg_wrapper" class="mdl-shadow--4dp mdl-cell mdl-cell--12-col"> </div>
-                                    <span><b class="mdl-typography--button">line:</b><b id="currTP">tap or movemouse</b></span>
+                                    <div class="mdl-typography--text-center"><b id="currType"></b><b id="currTP">0&rarr;0</b></div>
+                                </div>
+                                <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
+
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="optin_pl">
+                                        <input checked class="mdl-radio__button" id="optin_pl" name="optIn" type="radio" onchange="showINP()"> <span class="mdl-radio__label mdl-typography--body-2-color-contrast">Plane</span>
+                                    </label>
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="optin_ln">
+                                        <input class="mdl-radio__button" id="optin_ln" name="optIn" type="radio" onchange="showINP()"> <span class="mdl-radio__label mdl-typography--body-2-color-contrast">Line</span>
+                                    </label>
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="optin_popl">
+                                        <input class="mdl-radio__button" id="optin_popl" name="optIn" type="radio" onchange="showINP()"> <span class="mdl-radio__label mdl-typography--body-2-color-contrast">Pole</span>
+                                    </label>
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="optin_lnpl">
+                                        <input class="mdl-radio__button" id="optin_lnpl" name="optIn" type="radio" onchange="showINP()"> <span class="mdl-radio__label mdl-typography--body-2-color-contrast">Rake</span> </label>
+
+                                    <div id="in_pl">
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label svgnet-azh">
+                                            <input class="mdl-textfield__input" type="number" id="st" max="360" min="0" step=any>
+                                            <label class="mdl-textfield__label" for="st"> Strike</label>
+                                            <span class="mdl-textfield__error">0&le;<b>strike</b>&lt;360</span>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label svgnet-amt">
+                                            <input class="mdl-textfield__input" type="number" id="dd" max="90" min="0" step=any>
+                                            <label class="mdl-textfield__label" for="dd"> Dip</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield svgnet-auto">
+                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="poto">
+                                                <input type="checkbox" id="poto" class="mdl-checkbox__input" /> <span class="mdl-checkbox__label">Plot <b>Pole</b></span> </label>
+                                        </div>
+                                        <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+                                            <i class="material-icons">add_circle</i>
+                                        </button>
+                                    </div>
+                                    <div id="in_ln"></div>
+                                    <div id="in_popl"></div>
+                                    <div id="in_lnpl">
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label svgnet-azh">
+                                            <input class="mdl-textfield__input" type="number" id="rst" max="360" min="0" step=any>
+                                            <label class="mdl-textfield__label" for="rst"> Strike</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label svgnet-amt">
+                                            <input class="mdl-textfield__input" type="number" id="rdd" max="90" min="0" step=any>
+                                            <label class="mdl-textfield__label" for="rdd"> Dip</label>
+                                        </div>
+
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield mdl-textfield--floating-label svgnet-azh">
+                                            <input class="mdl-textfield__input" type="number" id="rpi" max="90" min="0" step=any>
+                                            <label class="mdl-textfield__label" for="rpi">Rake</label>
+                                        </div>
+
+                                        <div class="mdl-textfield mdl-js-textfield svgnet-auto">
+                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ropfl">
+                                                <input type="checkbox" id="ropfl" class="mdl-checkbox__input" /> <span class="mdl-checkbox__label">Rake from 180+strike</span> </label>
+                                        </div>
+                                        <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+                                            <i class="material-icons">add_circle</i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--12-col">
                                     <label> <span class="mdl-switch__label">Rotate Net</span>
                                         <input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotatenet" min="0" max="359" value="0" step="1" oninput="rotateNet()" disabled/> </label>
-                                </div>
-                                <div class="mdl-cell mdl-cell--12-col">
                                     <label> <span class="mdl-switch__label">Rotate Overlay</span>
                                         <input class="mdl-slider mdl-js-slider mdl-badge" data-badge="0" type="range" id="rotateol" min="0" max="359" value="0" step="1" oninput="rotateOl()" /> </label>
                                 </div>

@@ -97,4 +97,6 @@ dialog {
 .LocBox {
     color: #424242!important;
 }
-.svgnet_container >*{touch-action:none}
+.svgnet-azh{width: 3em!important;}
+.svgnet-amt{width: 2em!important;}
+.svgnet-auto{width: auto!important;}
