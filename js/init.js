@@ -119,7 +119,7 @@ Svg_Net.gfx.svg_node.addEventListener("mousemove", onPointerMove, false);
 
 
 var curPL = new Plane(0, 90, 4, "white", "curpl");
-//var curLN = new Line(0, 90, "white", "curln")
+var curLN = new Line(0, 90, "white", "curln")
 var curXY = {};
 
 
@@ -140,7 +140,7 @@ function onPointerMove(e) {
 function onPointerUp(e) {
     clearcurTP()
 }
-/*
+
 lineDash = new Line_obj({
     x: 0,
     y: 0
@@ -151,9 +151,9 @@ lineDash = new Line_obj({
     color: "gray",
     width: 3
 }, "lineDash")
-lineDash.setAttribute("stroke-dasharray","10, 5")*/
+lineDash.setAttribute("stroke-dasharray","10, 5")
 function showTP(evt) {
-    /*var showlin = function(){linSymbol.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
+    var showlin = function(){linSymbol.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
             EnD = cart2svg({
                 x: Svg_Net.radius_primitive * Math.cos(pol.azh),
                 y: Svg_Net.radius_primitive * Math.sin(pol.azh)
@@ -161,7 +161,7 @@ function showTP(evt) {
             lineDash.setAttribute('x1', Svgxy.x);
             lineDash.setAttribute('x2', EnD.x);
             lineDash.setAttribute('y1', Svgxy.y);
-            lineDash.setAttribute('y2', EnD.y)}*/
+            lineDash.setAttribute('y2', EnD.y)}
     var Svgxy = cursorPoint(evt)
 
     var pt = svg2cart(Svgxy);
@@ -177,7 +177,7 @@ function showTP(evt) {
         if (document.getElementById("optin_ln").checked) {
             curPL.clr = "white";
             curPL.modify();
-            showlin()
+            //showlin()
 
 
             document.getElementById("currType").innerHTML = "Line:";
