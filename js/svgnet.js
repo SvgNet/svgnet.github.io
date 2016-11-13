@@ -4,7 +4,7 @@ function Svg_obj(in_id, id, obj_center) {
     this.svg_node.setAttributeNS(null, "width", "100%");
     this.center = this.svg_node.createSVGPoint();
     this.center.x = obj_center.x, this.center.y = obj_center.y;
-    this.svg_node.setAttributeNS(null, "viewBox", "0 0 " + 2 * this.center.x + " " + 2 * this.center.y);
+    this.svg_node.setAttributeNS(null, "viewBox", "-20 -20 " + 2 * (this.center.x + 20) + " " + 2 * (this.center.y + 20));;
     this.svg_node.setAttributeNS(null, "id", this.id);
     this.svg_node.setAttribute("xmlns", "http://www.w3.org/2000/svg");
     this.svg_node.setAttributeNS(null, "version", "1.1");
@@ -109,7 +109,7 @@ function Group_obj(stroke, stroke_wth, fill, id) {
     Svg_Net.gfx.svg_node.appendChild(this.newgroup);
 }
 
-function Line_obj(start, end, str,id) {
+function Line_obj(start, end, str, id) {
     this.id = id;
     this.newpath = document.createElementNS('http://www.w3.org/2000/svg', "line");
     this.newpath.setAttributeNS(null, "x1", start.x);
@@ -171,6 +171,7 @@ function Plane(strike, dip, clr, lwidth, id) {
     this.strike = strike;
     this.dip = dip;
     this.clr = clr;
+    this.lwidth = lwidth;
     this.draw = function () {
         if (this.dip !== 90) {
 
@@ -178,19 +179,19 @@ function Plane(strike, dip, clr, lwidth, id) {
                 gsp = [];
                 for (i = 0; i <= 90; i += 5) gsp.push(Ssdr2cart(this.strike, this.dip, i, false));
                 for (i = 85; i >= 0; i -= 5) gsp.push(Ssdr2cart(this.strike, this.dip, i, true));
-                this.plot = new Path_obj(polytext(gsp), this.clr, lwidth, "none", 0, id);
+                this.plot = new Path_obj(polytext(gsp), this.clr, this.lwidth, "none", 0, id);
             } else {
                 this.plot = new Path_obj(
                     arcText(
                         this.strike, Svg_Net.radius_primitive / Math.cos(torad(this.dip)), 180 + this.strike, 1),
-                    this.clr, lwidth, "none", 0, id);
+                    this.clr, this.lwidth, "none", 0, id);
             }
         } else {
             this.plot = new Path_obj(
                 linText(
                     new Pt(Svg_Net.radius_primitive * Math.sin(torad(this.strike)), Svg_Net.radius_primitive * Math.cos(torad(this.strike))),
                     new Pt(Svg_Net.radius_primitive * Math.sin(torad(this.strike + 180)), Svg_Net.radius_primitive * Math.cos(torad(this.strike + 180)))
-                ), this.clr, lwidth, "none", 0, id);
+                ), this.clr, this.lwidth, "none", 0, id);
         }
     }
 

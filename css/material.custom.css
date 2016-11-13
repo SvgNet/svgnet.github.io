@@ -2,9 +2,10 @@ body {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 #svg_wrapper {
-    margin: 10px;
-    border-radius: 50%;
+    margin: 0!important;
+    width: 100%!important;
 }
+
 .mdl-card {
     width: 100%;
 }
@@ -84,6 +85,7 @@ dialog .close {
 }
 .svgnet_container {
     position: relative;
+    width: 100%
 }
 .tabData {
     min-height: 380px;
@@ -97,6 +99,22 @@ dialog {
 .LocBox {
     color: #424242!important;
 }
-.svgnet-azh{width: 3em!important;}
-.svgnet-amt{width: 2em!important;}
-.svgnet-auto{width: auto!important;}
+.svgnet-azh {
+    width: 3rem!important;
+}
+.svgnet-amt {
+    width: 2rem!important;
+}
+.svgnet-5char {
+    width: 3.5rem!important;
+}
+.svgnet-auto {
+    width: auto!important;
+}
+svgnet_container {
+    margin: 0;
+    width: 100%;
+}
+.svgnet-grid2 {
+    padding-top: 4px
+}

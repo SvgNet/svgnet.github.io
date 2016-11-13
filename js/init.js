@@ -118,7 +118,7 @@ Svg_Net.gfx.svg_node.addEventListener("mousemove", onPointerMove, false);
 //Svg_Net.gfx.svg_node.addEventListener("mouseleave", onPointerUp, false);
 
 
-var curPL = new Plane(0, 90, 4, "white", "curpl");
+var curPL = new Plane(0, 90, "white", 2, "curpl");
 var curLN = new Line(0, 90, "white", "curln")
 var curXY = {};
 
@@ -151,17 +151,20 @@ lineDash = new Line_obj({
     color: "gray",
     width: 3
 }, "lineDash")
-lineDash.setAttribute("stroke-dasharray","10, 5")
+lineDash.setAttribute("stroke-dasharray", "10, 5")
+
 function showTP(evt) {
-    var showlin = function(){linSymbol.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
-            EnD = cart2svg({
-                x: Svg_Net.radius_primitive * Math.cos(pol.azh),
-                y: Svg_Net.radius_primitive * Math.sin(pol.azh)
-            }, Svg_Net.svgOrigin)
-            lineDash.setAttribute('x1', Svgxy.x);
-            lineDash.setAttribute('x2', EnD.x);
-            lineDash.setAttribute('y1', Svgxy.y);
-            lineDash.setAttribute('y2', EnD.y)}
+    var showlin = function () {
+        linSymbol.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
+        EnD = cart2svg({
+            x: Svg_Net.radius_primitive * Math.cos(pol.azh),
+            y: Svg_Net.radius_primitive * Math.sin(pol.azh)
+        }, Svg_Net.svgOrigin)
+        lineDash.setAttribute('x1', Svgxy.x);
+        lineDash.setAttribute('x2', EnD.x);
+        lineDash.setAttribute('y1', Svgxy.y);
+        lineDash.setAttribute('y2', EnD.y)
+    }
     var Svgxy = cursorPoint(evt)
 
     var pt = svg2cart(Svgxy);
@@ -250,6 +253,9 @@ function togglePin() {
         Svg_Net.gfx.svg_node.removeEventListener("mousedown", handlePin, false);
     }
 }
+document.querySelector("#toggleQip").addEventListener("change", function () {
+    document.querySelector("#quickInput").classList.toggle("hidden")
+})
 
 //Svg_Net.gfx.svg_node.addEventListener("pointerleave", function (evt) {
 //  clearcurTP();

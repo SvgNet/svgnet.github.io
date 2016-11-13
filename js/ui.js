@@ -104,3 +104,5 @@ function showINP() {
 
 
 }
+
+showINP()
