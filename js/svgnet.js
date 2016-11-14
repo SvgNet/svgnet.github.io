@@ -4,8 +4,10 @@ function Svg_obj(in_id, id, obj_center) {
     this.svg_node.setAttributeNS(null, "width", "100%");
     this.center = this.svg_node.createSVGPoint();
     this.center.x = obj_center.x, this.center.y = obj_center.y;
-    this.svg_node.setAttributeNS(null, "viewBox", "-20 -20 " + 2 * (this.center.x + 20) + " " + 2 * (this.center.y + 20));;
+    this.svg_node.setAttributeNS(null, "viewBox", "-20 -20 " + 2 * (this.center.x + 20) + " " + 2 * (this.center.y + 20));
+
     this.svg_node.setAttributeNS(null, "id", this.id);
+    this.svg_node.setAttributeNS(null, "preserveAspectRatio", "xMinYMin meet");
     this.svg_node.setAttribute("xmlns", "http://www.w3.org/2000/svg");
     this.svg_node.setAttributeNS(null, "version", "1.1");
     document.getElementById(in_id).appendChild(this.svg_node);
@@ -199,15 +201,17 @@ function Plane(strike, dip, clr, lwidth, id) {
         this.draw();
 }
 
-function Line(trend, plunge, clr, id) {
+function Line(trend, plunge, clr, id, rad, fill) {
     this.trend = trend;
     this.plunge = plunge;
     this.clr = clr;
+    this.fill = fill == undefined ? "none" : fill
+    this.rad = rad == undefined ? 3 : rad
     this.draw = function () {
         if (SchmidtNet_Flag)
-            this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, clr, 3, "none", 0, id);
+            this.plot = new Circ_obj(new Stp2cart(this.plunge, this.trend), 2, this.clr, this.rad, this.fill, 0, id);
         else
-            this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, clr, 3, "none", 0, id);
+            this.plot = new Circ_obj(new Wtp2cart(this.plunge, this.trend), 2, this.clr, this.rad, this.fill, 0, id);
     }
 
     if (clr !== undefined) {
@@ -335,4 +339,69 @@ function SchmidtNet() {
     }
     Plane(0, 90, "black", 0.5, "gc90");
     Plane(90, 90, "black", 0.5, "sc90");
+}
+/*Vector stuff*/
+
+function att2dc(tp_in) {
+    if (tp instanceof Plane)
+        var tp = new PoletoPlane(tp_in)
+
+    var tp = tp_in;
+
+    n = Math.sin(torad(tp.plunge));
+    l = Math.cos(torad(tp.plunge)) * Math.cos(torad(tp.trend));
+    m = Math.sin(torad(tp.trend)) * Math.cos(torad(tp.plunge));
+    return {
+        l: l,
+        m: m,
+        n: n
+    }
+}
+
+function dc2tp(dirCosine) {
+
+    var plunge = todeg(Math.asin(dirCosine.n));
+
+
+    var trend = todeg(Math.atan2(dirCosine.m, dirCosine.l));
+    if (trend < 0)
+        trend = trend + 360;
+
+
+    if (plunge < 0) {
+        plunge = -1 * plunge;
+        trend += 180;
+        if (trend > 360)
+            trend = trend - 360;
+    }
+    return {
+        trend: trend,
+        plunge: plunge
+    }
+}
+
+function dcmat(dcArray) {
+    var n = dcArray.length;
+    /*
+      0  1  2
+    0 ll lm ln
+    1 lm mm mn
+    2 ln mn nn
+    */
+    var dcm = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    for (var i = 0; i < n; i++) {
+        dcm[0][0] = dcm[0][0] + dcArray[i].l * dcArray[i].l;
+        dcm[0][1] = dcm[0][1] + dcArray[i].l * dcArray[i].m;
+        dcm[0][2] = dcm[0][2] + dcArray[i].l * dcArray[i].n;
+
+        dcm[1][1] = dcm[1][1] + dcArray[i].m * dcArray[i].m;
+        dcm[1][2] = dcm[1][2] + dcArray[i].m * dcArray[i].n;
+
+        dcm[2][2] = dcm[2][2] + dcArray[i].n * dcArray[i].n;
+    }
+    dcm[1][0] = dcm[0][1];
+    dcm[2][0] = dcm[0][2];
+    dcm[2][1] = dcm[1][2];
+    return dcm;
+
 }

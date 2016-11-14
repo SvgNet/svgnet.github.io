@@ -32,6 +32,7 @@
 
     <script src="js/material.min.js"></script>
     <script src="js/mdl-selectfield.min.js" defer></script>
+    <script src="js/science.v1.min.js" defer></script>
     <script src="js/svgnet.js"></script>
     <script src="js/pouchdb.min.js"></script>
     <script src="js/init.js" defer></script>
@@ -44,7 +45,7 @@
 <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header  mdl-layout--fixed-tabs">
         <header class="mdl-layout__header">
-            <div class="mdl-layout__header-row "> <span class="mdl-layout-title" id="rof">SvgNet&#40;Dev Build&#41;<i class="material-icons ">explore</i></span>
+            <div class="mdl-layout__header-row "> <span class="mdl-layout-title" id="rof">SvgNet&#40;v3.3.9-exp&#41;<i class="material-icons ">explore</i></span>
                 <div class="mdl-layout-spacer"></div> <a id="pdl" onclick="triggerDownload()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored  mdl-js-ripple-effect"><i class="material-icons">save</i></a> <span class="mdl-tooltip mdl-tooltip--large" for="pdl">Save As Vector &#91;.SVG&#93;</span> <a id="PNGdl" onclick="triggerDownloadPNG()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect"><i class="material-icons">photo</i></a> <span class="mdl-tooltip  mdl-tooltip--large" for="PNGdl">Save As Raster &#91;.PNG&#93;</span> </div>
             <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-shadow--4dp"> <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Input and Plot</a> <a href="#fixed-tab-2" class="mdl-layout__tab">Data Output</a> </div>
         </header>
@@ -73,6 +74,10 @@
                     <br> <b id="Angdat"></b>
                     <br>
                     <button onclick="AngleSelected()" class="mdl-button mdl-js-button mdl-button--mini-fab mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Calculate </button>
+                    <hr>
+                    Eigen Vectors of Selected Data
+                    <br>
+                    <button onclick="eigenSelected_Data()" class="mdl-button mdl-js-button mdl-button--mini-fab mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Plot </button>
                 </div>
 
                 <div class="mdl-navigation__link mdl-typography--body-1 LocBox">

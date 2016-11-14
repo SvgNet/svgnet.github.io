@@ -93,7 +93,7 @@ function showINP() {
         sel_in = {};
 
     for (i = 0; i < inps.length; i++) {
-        console.log(inps[i])
+        //console.log(inps[i])
         document.getElementById("in_" + inps[i].id.slice(6)).classList.add("hidden");
         if (inps[i].checked)
             document.getElementById("in_" + inps[i].id.slice(6)).classList.toggle("hidden");

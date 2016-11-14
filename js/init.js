@@ -40,7 +40,7 @@ drawSaved();
 
 function draw_offlineData(savedData) {
     for (var i = 0; i < savedData.length; i++) {
-        console.log(savedData[i].doc)
+        // console.log(savedData[i].doc)
         if (savedData[i].doc.orientType == "Plane") {
             ur_pl.push(new Plane(savedData[i].doc.strike, savedData[i].doc.dip, "blue", 1, savedData[i].id));
             insertdata(ur_pl[ur_pl.length - 1]);
@@ -118,8 +118,8 @@ Svg_Net.gfx.svg_node.addEventListener("mousemove", onPointerMove, false);
 //Svg_Net.gfx.svg_node.addEventListener("mouseleave", onPointerUp, false);
 
 
-var curPL = new Plane(0, 90, "white", 2, "curpl");
-var curLN = new Line(0, 90, "white", "curln")
+var curPL = new Plane(0, 90, "rgba(255, 255, 255, 0)", 2, "curpl");
+//var curLN = new Line(0, 90, "white", "curln")
 var curXY = {};
 
 
@@ -166,8 +166,11 @@ function showTP(evt) {
         lineDash.setAttribute('y2', EnD.y)
     }
     var Svgxy = cursorPoint(evt)
-
+    if (document.getElementById("optin_lnpl").checked) {
+        Svgxy.y -= 100
+    }
     var pt = svg2cart(Svgxy);
+
     var pol = cart2pol(pt);
     //var pnt = pt.matrixTransform(Svg_Net.gfx.svg_node.getScreenCTM().inverse());
 
@@ -178,7 +181,7 @@ function showTP(evt) {
 
 
         if (document.getElementById("optin_ln").checked) {
-            curPL.clr = "white";
+            curPL.clr = "rgba(255, 255, 255, 0)";
             curPL.modify();
             //showlin()
 
@@ -229,6 +232,7 @@ function showTP(evt) {
 function handlePin(evt) {
 
     var pt = svg2cart(cursorPoint(evt));
+    if (document.getElementById("optin_lnpl").checked) pt.y += 100
     var pol = cart2pol(pt);
     if (pol.rad <= Svg_Net.radius_primitive) {
         cursorSym.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
@@ -260,3 +264,49 @@ document.querySelector("#toggleQip").addEventListener("change", function () {
 //Svg_Net.gfx.svg_node.addEventListener("pointerleave", function (evt) {
 //  clearcurTP();
 //}, false)
+var evDecom = science.lin.decompose()
+    /*var dca = [];
+    for (var i = 0; i < ur_ln.length; i++) dca[i] = att2dc(ur_ln[i]);
+    var DcMat = dcmat(dca)
+    var evs = evDecom(DcMat);*/
+
+
+function eigenSelected_Data() {
+    if (ur_selected.length) {
+        var dca = [];
+        for (var i = 0; i < ur_selected.length; i++) dca[i] = att2dc(ur_selected[i]);
+        var DcMat = dcmat(dca);
+        var evs = evDecom(DcMat);
+        var e1 = dc2tp({
+            l: evs.V[0][0],
+            m: evs.V[1][0],
+            n: evs.V[2][0]
+        });
+        var e2 = dc2tp({
+            l: evs.V[0][1],
+            m: evs.V[1][1],
+            n: evs.V[2][1]
+        });
+        var e3 = dc2tp({
+            l: evs.V[0][2],
+            m: evs.V[1][2],
+            n: evs.V[2][2]
+        });
+
+        new Plane(e1.trend + 90, 90 - e1.plunge, "#00807b", 4, "pl_e1")
+
+        new Plane(e2.trend + 90, 90 - e2.plunge, "#eeff25", 4, "pl_e2")
+
+        new Plane(e3.trend + 90, 90 - e3.plunge, "#b400ad", 4, "pl_e3")
+
+        new Line(e1.trend, e1.plunge, "#00807b", "e1", 10, "#00807b")
+
+        new Line(e2.trend, e2.plunge, "#eeff25", "e2", 10, "#eeff25")
+
+        new Line(e3.trend, e3.plunge, "#b400ad", "e2", 10, "#b400ad")
+
+        console.log(e1);
+        console.log(e2);
+        console.log(e3);
+    }
+}
