@@ -272,41 +272,13 @@ var evDecom = science.lin.decompose()
 
 
 function eigenSelected_Data() {
-    if (ur_selected.length) {
-        var dca = [];
-        for (var i = 0; i < ur_selected.length; i++) dca[i] = att2dc(ur_selected[i]);
-        var DcMat = dcmat(dca);
-        var evs = evDecom(DcMat);
-        var e1 = dc2tp({
-            l: evs.V[0][0],
-            m: evs.V[1][0],
-            n: evs.V[2][0]
-        });
-        var e2 = dc2tp({
-            l: evs.V[0][1],
-            m: evs.V[1][1],
-            n: evs.V[2][1]
-        });
-        var e3 = dc2tp({
-            l: evs.V[0][2],
-            m: evs.V[1][2],
-            n: evs.V[2][2]
-        });
-
-        new Plane(e1.trend + 90, 90 - e1.plunge, "#00807b", 4, "pl_e1")
-
-        new Plane(e2.trend + 90, 90 - e2.plunge, "#eeff25", 4, "pl_e2")
-
-        new Plane(e3.trend + 90, 90 - e3.plunge, "#b400ad", 4, "pl_e3")
-
-        new Line(e1.trend, e1.plunge, "#00807b", "e1", 10, "#00807b")
-
-        new Line(e2.trend, e2.plunge, "#eeff25", "e2", 10, "#eeff25")
-
-        new Line(e3.trend, e3.plunge, "#b400ad", "e2", 10, "#b400ad")
-
-        console.log(e1);
-        console.log(e2);
-        console.log(e3);
+    var _eigV = eigen_Data(ur_selected);
+    var _ShowData = document.getElementById("Eigdat")
+    if (_eigV == -1) {
+        _ShowData.innerHTML = "Select Data First"
+    } else {
+        _ShowData.innerHTML =
+            "e1:" + Math.round(_eigV.e3.plunge) + "&rarr;" + Math.round(_eigV.e3.trend) + "<br>" + "e2:" + Math.round(_eigV.e2.plunge) + "&rarr;" + Math.round(_eigV.e2.trend) + "<br>" + "e3:" + Math.round(_eigV.e1.plunge) + "&rarr;" + Math.round(_eigV.e1.trend) + "<br>";
     }
+    console.log(_eigV)
 }

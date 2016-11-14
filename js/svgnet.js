@@ -405,3 +405,47 @@ function dcmat(dcArray) {
     return dcm;
 
 }
+
+function eigen_Data(dataIn) {
+    if (dataIn.length) {
+        var dca = [];
+        for (var i = 0; i < dataIn.length; i++) dca[i] = att2dc(dataIn[i]);
+        var DcMat = dcmat(dca);
+        var evs = evDecom(DcMat);
+        var e1 = dc2tp({
+            l: evs.V[0][0],
+            m: evs.V[1][0],
+            n: evs.V[2][0]
+        });
+        var e2 = dc2tp({
+            l: evs.V[0][1],
+            m: evs.V[1][1],
+            n: evs.V[2][1]
+        });
+        var e3 = dc2tp({
+            l: evs.V[0][2],
+            m: evs.V[1][2],
+            n: evs.V[2][2]
+        });
+
+        new Plane(e1.trend + 90, 90 - e1.plunge, "#00807b", 4, "pl_e1")
+
+        new Plane(e2.trend + 90, 90 - e2.plunge, "#eeff25", 4, "pl_e2")
+
+        new Plane(e3.trend + 90, 90 - e3.plunge, "#b400ad", 4, "pl_e3")
+
+        new Line(e1.trend, e1.plunge, "#00807b", "e1", 10, "#00807b")
+
+        new Line(e2.trend, e2.plunge, "#eeff25", "e2", 10, "#eeff25")
+
+        new Line(e3.trend, e3.plunge, "#b400ad", "e2", 10, "#b400ad")
+
+
+        return {
+            values: [evs.D[0][0] / dataIn.length, evs.D[1][1] / dataIn.length, evs.D[2][2] / dataIn.length],
+            e1: e1,
+            e2: e2,
+            e3: e3
+        }
+    } else return -1
+}
