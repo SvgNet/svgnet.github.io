@@ -106,3 +106,116 @@ function showINP() {
 }
 
 showINP()
+
+
+
+
+
+
+/*speed dial*/
+// Contains
+Element.prototype.is = function (el) {
+    // If is same element
+    return this === el;
+};
+
+// Material Design - Bottom sheet
+
+(function () {
+
+    "use strict";
+
+    var MaterialSpeedDial = function (element) {
+        this.element = element;
+        this.init();
+    };
+
+    window.MaterialSpeedDial = MaterialSpeedDial;
+
+    // Prototype
+
+    MaterialSpeedDial.prototype = {
+
+        // Element
+        element: null,
+
+        // Constants
+        constants: {},
+
+        // Classes
+        classes: {
+            speedDial: "material-speed-dial",
+            active: "is-active"
+        },
+
+        // Init
+        init: function () {
+            var self = this,
+                f = function (e) {
+                    if (e.target instanceof Element) {
+                        var target = e.target;
+                        if (self.element.is(target) === true || self.element.contains(target) === true) {
+                            self.element.classList.add(self.classes.active);
+                        } else {
+                            self.element.classList.remove(self.classes.active);
+                        }
+                    }
+                };
+            // On click and mouse move
+            document.addEventListener("click", f);
+            document.addEventListener("mouseover", f);
+        }
+
+    };
+
+    // Component handler registration
+    componentHandler.register({
+        constructor: MaterialSpeedDial,
+        classAsString: "SpeedDial",
+        cssClass: MaterialSpeedDial.prototype.classes.speedDial,
+        widget: true
+    });
+
+}());
+
+/**
+ * Toolbars
+ */
+
+var MaterialToolBar = function() {};
+
+// Add mouse event on element
+MaterialToolBar.upgradeItem = function(item) {
+  if (item instanceof Element && item.matches(".mdl-toolbar") !== false) {
+    if (item.firstElementChild !== null) {
+      // Adding classes
+      item.classList.add("mdl-color--accent");
+      item.classList.add("mdl-color-text--accent-contrast");
+      // On mouse enter
+      item.firstElementChild.addEventListener("mouseenter", function(e) {
+        item.classList.add("is-active");
+        item.classList.add("mdl-shadow--2dp");
+      });
+      // On mouse leave
+      item.addEventListener("mouseleave", function(e) {
+        item.classList.remove("is-active");
+        item.classList.remove("mdl-shadow--2dp");
+      });
+    }
+  }
+};
+
+// Add events on multiple elements
+MaterialToolBar.upgradeItems = function(items) {
+    for (var i = 0; i < items.length; i++) {
+      MaterialToolBar.upgradeItem(items[i]);
+    }
+}
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+      // Upgrading toolbars
+      var items = document.getElementsByClassName("mdl-toolbar");
+      MaterialToolBar.upgradeItems(items);
+
+    });

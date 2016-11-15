@@ -5,7 +5,6 @@ body {
     margin: 0!important;
     width: 100%!important;
 }
-
 .mdl-card {
     width: 100%;
 }
@@ -117,4 +116,168 @@ svgnet_container {
 }
 .svgnet-grid2 {
     padding-top: 4px
+}
+
+/*speed Dial*/
+
+.material-speed-dial {
+    display: flex;
+    bottom: 16px;
+    right: 16px;
+    flex-flow: column-reverse nowrap;
+    align-items: center;
+    z-index: 20;
+    position: fixed;
+}
+.material-speed-dial:not(.is-active) {
+    pointer-events: none;
+}
+.material-speed-dial .mdl-button {
+    pointer-events: all;
+}
+.material-speed-dial .mdl-button--fab:first-child .material-icons:not(:only-of-type),
+.material-speed-dial .mdl-button--mini-fab {
+    transition-duration: 0.2s;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    transform-origin: center center;
+    transition-property: transform, opacity;
+    will-change: transform, opacity;
+}
+.material-speed-dial.is-active .mdl-button--fab:first-child .material-icons:first-child:not(:only-of-type),
+.material-speed-dial .mdl-button--fab:first-child .material-icons:nth-child(2) {
+    opacity: 0;
+}
+.material-speed-dial.is-active .mdl-button--fab:first-child .material-icons:first-child:not(:only-of-type) {
+    transform: rotate(90deg) translate(-12px, 12px);
+}
+.material-speed-dial .mdl-button--fab:first-child .material-icons:nth-child(2) {
+    transform: rotate(-90deg);
+    top: 16px;
+    left: 16px;
+}
+.material-speed-dial.is-active .mdl-button--fab:first-child .material-icons:nth-child(2) {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+.material-speed-dial .mdl-button--mini-fab {
+    transform: scale(0, 0);
+    margin-bottom: 16px;
+}
+.material-speed-dial.is-active .mdl-button--mini-fab {
+    transform: scale(1, 1);
+}
+.material-speed-dial .mdl-button--mini-fab:nth-of-type(6),
+.material-speed-dial.is-active .mdl-button--mini-fab:nth-of-type(2) {
+    transition-delay: 0s;
+}
+.material-speed-dial .mdl-button--mini-fab:nth-of-type(5),
+.material-speed-dial.is-active .mdl-button--mini-fab:nth-of-type(3) {
+    transition-delay: 50ms;
+}
+.material-speed-dial .mdl-button--mini-fab:nth-of-type(4) {
+    transition-delay: 100ms;
+}
+.material-speed-dial .mdl-button--mini-fab:nth-of-type(3) {
+    transition-delay: 150ms;
+}
+.material-speed-dial.is-active .mdl-button--mini-fab:nth-of-type(5) {
+    transition-delay: 150ms;
+}
+.material-speed-dial .mdl-button--mini-fab:nth-of-type(2),
+.material-speed-dial.is-active .mdl-button--mini-fab:nth-of-type(6) {
+    transition-delay: 200ms;
+}
+
+/* Toolbars */
+
+.mdl-toolbar {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  flex-flow: row nowrap;
+  border-radius: 50%;
+  transition-property: all;
+  transition-duration: 0.4s;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transform-origin: center center;
+  box-sizing: border-box;
+  justify-content: flex-start;
+}
+
+.mdl-toolbar--left {
+  left: 16px;
+}
+
+.mdl-toolbar--right {
+  right: 16px;
+}
+
+.mdl-toolbar--fixed {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+}
+
+.mdl-toolbar.is-active {
+  width: 100%;
+  border-radius: 0;
+  padding: 0 32px;
+  right: 0;
+}
+
+.mdl-toolbar--left.is-active {
+  left: 0;
+}
+
+.mdl-toolbar--fixed.is-active {
+  bottom: 0;
+  height: 72px;
+}
+
+.mdl-toolbar.is-active {
+  justify-content: flex-start;
+}
+
+.mdl-toolbar--right.is-active {
+  justify-content: flex-end;
+}
+
+.mdl-toolbar--center.is-active {
+  justify-content: center;
+}
+
+.mdl-toolbar--stretch.is-active {
+  justify-content: space-around;
+}
+
+.mdl-toolbar .mdl-button:nth-child(n+2) {
+  display: none;
+  opacity: 0;
+}
+
+.mdl-toolbar.is-active .mdl-button--fab:first-child {
+  display: none;
+}
+
+.mdl-toolbar.is-active .mdl-button:nth-child(n+2) {
+  display: inline-block;
+  opacity: 1;
+}
+
+.mdl-toolbar--left.is-active .mdl-button:nth-child(n+3) {
+  margin: 0 0 0 16px;
+}
+
+.mdl-toolbar--right.is-active .mdl-button:nth-child(n+2):not(:last-child) {
+  margin: 0 16px 0 0;
+}
+
+.mdl-toolbar--center.is-active .mdl-button:nth-child(n+2) {
+  margin: 0 8px;
+}
+
+.mdl-toolbar--stretch.is-active .mdl-button:nth-child(n+2) {
+  margin: 0;
 }

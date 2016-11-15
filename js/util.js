@@ -144,25 +144,31 @@ SvgNet_db.changes({
     live: true
 }).on('change', updateData);
 
+function genID() {
+    return new Date().toISOString()
+}
+
 function addPl() {
+
     var mob_input = input_Dialog.open ? "mob_" : "";
-    ur_pl.push(new Plane(+document.getElementById(mob_input + "st").value, +document.getElementById(mob_input + "dd").value, "blue", 1, "Pur_pl[" + ur_pl.length + "]"));
+    ur_pl.push(new Plane(+document.getElementById(mob_input + "st").value, +document.getElementById(mob_input + "dd").value, "blue", 1, "Pur_pl[" + genID() + "]"));
     ur_pl[ur_pl.length - 1].LocData = userLoc.coords;
 
-    SvgNet_db.post({
+    SvgNet_db.put({
+        _id: ur_pl[ur_pl.length - 1].plot.id,
         orientType: "Plane",
         strike: ur_pl[ur_pl.length - 1].strike,
         dip: ur_pl[ur_pl.length - 1].dip,
-        gpsdata: ur_pl[ur_pl.length - 1].LocData
+        /* gpsdata: ur_pl[ur_pl.length - 1].LocData*/
     }, function (err, result) {
         if (!err) {
             console.log(result.id)
         } else(console.error(err))
     });
     if (document.getElementById(mob_input + "poto").checked) {
-        ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length - 1], "orange", "Pur_popl[" + ur_popl.length + "]"));
+        ur_popl.push(new PoletoPlane(ur_pl[ur_pl.length - 1], "orange", "Pur_popl[" + genID() + "]"));
         SvgNet_db.put({
-            _id: "Pur_popl[" + (ur_popl.length - 1) + "]",
+            _id: ur_popl[ur_popl.length - 1].plot.id,
             orientType: "PoletoPlane",
             trend: ur_popl[ur_popl.length - 1].trend,
             plunge: ur_popl[ur_popl.length - 1].plunge
@@ -177,10 +183,10 @@ function addLn(trend, plunge) {
     var mob_input = input_Dialog.open ? "mob_" : "";
 
     ur_ln.push(new Line(
-        (trend == undefined || plunge == undefined) ? +document.getElementById(mob_input + "tr").value : trend, (trend == undefined || plunge == undefined) ? +document.getElementById(mob_input + "pl").value : plunge, "red", "Pur_ln[" + ur_ln.length + "]"));
-    ur_ln[ur_ln.length - 1].LocData = JSON.stringify(userLoc.coords);
+        (trend == undefined || plunge == undefined) ? +document.getElementById(mob_input + "tr").value : trend, (trend == undefined || plunge == undefined) ? +document.getElementById(mob_input + "pl").value : plunge, "red", "Pur_ln[" + genID() + "]"));
+    //ur_ln[ur_ln.length - 1].LocData = JSON.stringify(userLoc.coords);
     SvgNet_db.put({
-        _id: "Pur_ln[" + (ur_ln.length - 1) + "]",
+        _id: ur_ln[ur_ln.length - 1].plot.id,
         orientType: "Line",
         trend: ur_ln[ur_ln.length - 1].trend,
         plunge: ur_ln[ur_ln.length - 1].plunge,
@@ -194,9 +200,9 @@ function addLn(trend, plunge) {
 
 function addPoPl() {
     var mob_input = input_Dialog.open ? "mob_" : "";
-    ur_popl.push(new PoletoPlane(new Plane(+document.getElementById(mob_input + "pst").value, +document.getElementById(mob_input + "pdd").value), "orange", "Pur_popl[" + ur_popl.length + "]"));
+    ur_popl.push(new PoletoPlane(new Plane(+document.getElementById(mob_input + "pst").value, +document.getElementById(mob_input + "pdd").value), "orange", "Pur_popl[" + genID() + "]"));
     SvgNet_db.put({
-        _id: "Pur_ln[" + (ur_ln.length - 1) + "]",
+        _id: ur_popl[ur_popl.length - 1].plot.id,
         orientType: "PoletoPlane",
         trend: ur_popl[ur_popl.length - 1].trend,
         plunge: ur_popl[ur_popl.length - 1].plunge
@@ -208,9 +214,9 @@ function addPoPl() {
 
 function addLnPl() {
     var mob_input = input_Dialog.open ? "mob_" : "";
-    ur_lnpl.push(new LineonPlane(new Plane(+document.getElementById(mob_input + "rst").value, +document.getElementById(mob_input + "rdd").value), document.getElementById(mob_input + "rpi").value, document.getElementById(mob_input + "ropfl").checked, "teal", "Pur_lnpl[" + ur_lnpl.length + "]"));
+    ur_lnpl.push(new LineonPlane(new Plane(+document.getElementById(mob_input + "rst").value, +document.getElementById(mob_input + "rdd").value), document.getElementById(mob_input + "rpi").value, document.getElementById(mob_input + "ropfl").checked, "teal", "Pur_lnpl[" + genID() + "]"));
     SvgNet_db.put({
-        _id: "Pur_lnpl[" + (ur_lnpl.length - 1) + "]",
+        _id: ur_lnpl[ur_lnpl.length - 1].plot.id,
         orientType: "LineonPlane",
         trend: ur_lnpl[ur_lnpl.length - 1].trend,
         plunge: ur_lnpl[ur_lnpl.length - 1].plunge
