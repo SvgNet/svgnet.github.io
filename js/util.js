@@ -305,6 +305,9 @@ function modifyPlots() {
         for (var i = 0; i < ur_popl.length; i++) ur_popl[i].modify();
     if (ur_lnpl.length)
         for (var i = 0; i < ur_lnpl.length; i++) ur_lnpl[i].modify();
+    if (ur_ev.length)
+        for (var i = 0; i < ur_ev.length; i++) ur_ev[i].modify();
+    curPL.modify()
 }
 
 function switchNet() {

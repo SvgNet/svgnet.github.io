@@ -428,17 +428,7 @@ function eigen_Data(dataIn) {
             n: evs.V[2][2]
         });
 
-        new Plane(e1.trend + 90, 90 - e1.plunge, "#00807b", 4, "pl_e1")
 
-        new Plane(e2.trend + 90, 90 - e2.plunge, "#eeff25", 4, "pl_e2")
-
-        new Plane(e3.trend + 90, 90 - e3.plunge, "#b400ad", 4, "pl_e3")
-
-        new Line(e1.trend, e1.plunge, "#00807b", "e1", 10, "#00807b")
-
-        new Line(e2.trend, e2.plunge, "#eeff25", "e2", 10, "#eeff25")
-
-        new Line(e3.trend, e3.plunge, "#b400ad", "e2", 10, "#b400ad")
 
 
         return {
