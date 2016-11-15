@@ -347,7 +347,7 @@ function att2dc(tp_in) {
         var tp = new PoletoPlane(tp_in)
     else
         var tp = tp_in;
-    console.log(tp,tp_in)
+   // console.log(tp,tp_in)
     n = Math.sin(torad(tp.plunge));
     l = Math.cos(torad(tp.plunge)) * Math.cos(torad(tp.trend));
     m = Math.sin(torad(tp.trend)) * Math.cos(torad(tp.plunge));

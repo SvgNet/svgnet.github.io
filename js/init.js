@@ -274,23 +274,28 @@ var evDecom = science.lin.decompose()
 
 function eigenSelected_Data() {
     var _eigV = eigen_Data(ur_selected);
+    for (var i = 0; i < ur_selected.length; i++) {
+        if (ur_selected[i] instanceof Plane)
+            ur_selected[i] = new PoletoPlane(ur_selected[i])
+    }
     var _ShowData = document.getElementById("Eigdat")
     if (_eigV == -1) {
         _ShowData.innerHTML = "Select Data First"
     } else {
         _ShowData.innerHTML =
             "e1:" + Math.round(_eigV.e3.plunge) + "&rarr;" + Math.round(_eigV.e3.trend) + "<br>" + "e2:" + Math.round(_eigV.e2.plunge) + "&rarr;" + Math.round(_eigV.e2.trend) + "<br>" + "e3:" + Math.round(_eigV.e1.plunge) + "&rarr;" + Math.round(_eigV.e1.trend) + "<br>";
+        ur_ev.push(new Plane(_eigV.e1.trend + 90, 90 - _eigV.e1.plunge, "#00807b", 4, "pl_e1"));
+
+        ur_ev.push(new Plane(_eigV.e2.trend + 90, 90 - _eigV.e2.plunge, "#eeff25", 4, "pl_e2"));
+
+        ur_ev.push(new Plane(_eigV.e3.trend + 90, 90 - _eigV.e3.plunge, "#b400ad", 4, "pl_e3"));
+
+        ur_ev.push(new Line(_eigV.e1.trend, _eigV.e1.plunge, "#00807b", "e1", 10, "#00807b"));
+
+        ur_ev.push(new Line(_eigV.e2.trend, _eigV.e2.plunge, "#eeff25", "e2", 10, "#eeff25"));
+
+        ur_ev.push(new Line(_eigV.e3.trend, _eigV.e3.plunge, "#b400ad", "e2", 10, "#b400ad"));
     }
-    ur_ev.push(new Plane(_eigV.e1.trend + 90, 90 - _eigV.e1.plunge, "#00807b", 4, "pl_e1"));
 
-    ur_ev.push(new Plane(_eigV.e2.trend + 90, 90 - _eigV.e2.plunge, "#eeff25", 4, "pl_e2"));
-
-    ur_ev.push(new Plane(_eigV.e3.trend + 90, 90 - _eigV.e3.plunge, "#b400ad", 4, "pl_e3"));
-
-    ur_ev.push(new Line(_eigV.e1.trend, _eigV.e1.plunge, "#00807b", "e1", 10, "#00807b"));
-
-    ur_ev.push(new Line(_eigV.e2.trend, _eigV.e2.plunge, "#eeff25", "e2", 10, "#eeff25"));
-
-    ur_ev.push(new Line(_eigV.e3.trend, _eigV.e3.plunge, "#b400ad", "e2", 10, "#b400ad"));
     console.log(_eigV)
 }
