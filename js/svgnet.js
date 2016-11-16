@@ -344,7 +344,7 @@ function SchmidtNet() {
 
 function att2dc(tp_in) {
     if (tp_in instanceof Plane)
-        var tp = new PoletoPlane(tp_in)
+        var tp = new PoletoPlane(tp_in);
     else
         var tp = tp_in;
    // console.log(tp,tp_in)

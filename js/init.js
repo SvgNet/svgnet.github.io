@@ -274,21 +274,28 @@ var evDecom = science.lin.decompose()
 
 function eigenSelected_Data() {
     var _eigV = eigen_Data(ur_selected);
-    var _ShowData = document.getElementById("Eigdat")
+
+    var _ShowData = document.getElementById("Eigdat");
+
     if (_eigV == -1) {
-        _ShowData.innerHTML = "Select Data First"
+        notification.MaterialSnackbar.showSnackbar({
+            message: "Select Data First"
+        });
+
     } else {
-        _ShowData.innerHTML =
-            "e1:" + Math.round(_eigV.e3.plunge) + "&rarr;" + Math.round(_eigV.e3.trend) + "<br>" + "e2:" + Math.round(_eigV.e2.plunge) + "&rarr;" + Math.round(_eigV.e2.trend) + "<br>" + "e3:" + Math.round(_eigV.e1.plunge) + "&rarr;" + Math.round(_eigV.e1.trend) + "<br>";
-        ur_ev.push(new Plane(_eigV.e1.trend + 90, 90 - _eigV.e1.plunge, "#00807b", 4, "pl_e1"));
+        _ShowData.classList.remove("hidden")
+        _ShowData.children[0].innerHTML = Math.round(_eigV.e3.plunge) + "&rarr;" + Math.round(_eigV.e3.trend)
+        _ShowData.children[1].innerHTML = Math.round(_eigV.e2.plunge) + "&rarr;" + Math.round(_eigV.e2.trend)
+        _ShowData.children[2].innerHTML = Math.round(_eigV.e1.plunge) + "&rarr;" + Math.round(_eigV.e1.trend)
+        ur_ev.push(new Plane(_eigV.e1.trend + 90, 90 - _eigV.e3.plunge, "#00807b", 4, "pl_e1"));
 
-        ur_ev.push(new Plane(_eigV.e2.trend + 90, 90 - _eigV.e2.plunge, "#eeff25", 4, "pl_e2"));
+        ur_ev.push(new Plane(_eigV.e2.trend + 90, 90 - _eigV.e2.plunge, "#d9c000", 4, "pl_e2"));
 
-        ur_ev.push(new Plane(_eigV.e3.trend + 90, 90 - _eigV.e3.plunge, "#b400ad", 4, "pl_e3"));
+        ur_ev.push(new Plane(_eigV.e3.trend + 90, 90 - _eigV.e1.plunge, "#b400ad", 4, "pl_e3"));
 
         ur_ev.push(new Line(_eigV.e1.trend, _eigV.e1.plunge, "#00807b", "e1", 10, "#00807b"));
 
-        ur_ev.push(new Line(_eigV.e2.trend, _eigV.e2.plunge, "#eeff25", "e2", 10, "#eeff25"));
+        ur_ev.push(new Line(_eigV.e2.trend, _eigV.e2.plunge, "#d9c000", "e2", 10, "#eeff25"));
 
         ur_ev.push(new Line(_eigV.e3.trend, _eigV.e3.plunge, "#b400ad", "e2", 10, "#b400ad"));
     }

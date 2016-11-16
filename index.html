@@ -32,7 +32,7 @@
 
     <script src="js/material.min.js"></script>
     <script src="js/mdl-selectfield.min.js" defer></script>
-    <script src="js/science.v1.min.js" defer></script>
+    <script src="js/science.v1.js" defer></script>
     <script src="js/svgnet.js"></script>
     <script src="js/pouchdb.min.js"></script>
     <script src="js/init.js" defer></script>
@@ -44,7 +44,7 @@
 
 <body>
 
-<!--<div class="material-speed-dial mdl-cell--hide-desktop mdl-cell--hide-tablet">
+    <!--<div class="material-speed-dial mdl-cell--hide-desktop mdl-cell--hide-tablet">
   <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"><i class="material-icons">add</i><i class="material-icons">edit</i></button>
   <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-color--grey-200"><i class="material-icons">add</i></button>
   <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-color--grey-200"><i class="material-icons">add</i></button>
@@ -83,10 +83,16 @@
                     <br> <b id="Angdat"></b>
                     <br>
                     <button onclick="AngleSelected()" class="mdl-button mdl-js-button mdl-button--mini-fab mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Calculate </button>
-                    <hr>
-                    Eigen Vectors of Selected Data:
+                    <hr> Eigen Vectors of Selected Data:
+
                     <br>
-                    <b id="Eigdat"></b>
+                    <b>
+                    <ol class="eigendat hidden" id="Eigdat">
+                        <li class="e1"></li>
+                        <li class="e2"></li>
+                        <li class="e3"></li>
+                    </ol>
+                    </b>
                     <br>
                     <button onclick="eigenSelected_Data()" class="mdl-button mdl-js-button mdl-button--mini-fab mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Plot </button>
                 </div>
