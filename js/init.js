@@ -274,10 +274,6 @@ var evDecom = science.lin.decompose()
 
 function eigenSelected_Data() {
     var _eigV = eigen_Data(ur_selected);
-    for (var i = 0; i < ur_selected.length; i++) {
-        if (ur_selected[i] instanceof Plane)
-            ur_selected[i] = new PoletoPlane(ur_selected[i])
-    }
     var _ShowData = document.getElementById("Eigdat")
     if (_eigV == -1) {
         _ShowData.innerHTML = "Select Data First"
