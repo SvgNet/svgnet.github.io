@@ -347,7 +347,7 @@ function att2dc(tp_in) {
         var tp = new PoletoPlane(tp_in);
     else
         var tp = tp_in;
-   // console.log(tp,tp_in)
+    // console.log(tp,tp_in)
     n = Math.sin(torad(tp.plunge));
     l = Math.cos(torad(tp.plunge)) * Math.cos(torad(tp.trend));
     m = Math.sin(torad(tp.trend)) * Math.cos(torad(tp.plunge));
@@ -432,10 +432,10 @@ function eigen_Data(dataIn) {
 
 
         return {
-            values: [evs.D[0][0] / dataIn.length, evs.D[1][1] / dataIn.length, evs.D[2][2] / dataIn.length],
-            e1: e1,
+            values: [evs.D[2][1] / dataIn.length, evs.D[1][1] / dataIn.length, evs.D[0][0] / dataIn.length],
+            e1: e3,
             e2: e2,
-            e3: e3
+            e3: e1
         }
     } else return -1
 }
