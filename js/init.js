@@ -103,7 +103,7 @@ var cursorSym = new Path_obj(linText({
 }), "black", 1.1, "none", 0, "cursor")
 var pointers = {};
 
-var linSymbol = new Circ_obj(new Pt(0, 0), 50, "#00b468", 4, "none", 0)
+var linSymbol = new Circ_obj(new Pt(0, 0), 50, "rgba(0, 180, 104, 0)", 4, "none", 0)
 
 
 function clearcurTP() {
@@ -266,11 +266,6 @@ document.querySelector("#toggleQip").addEventListener("change", function () {
 //  clearcurTP();
 //}, false)
 var evDecom = science.lin.decompose()
-    /*var dca = [];
-    for (var i = 0; i < ur_ln.length; i++) dca[i] = att2dc(ur_ln[i]);
-    var DcMat = dcmat(dca)
-    var evs = evDecom(DcMat);*/
-
 
 function eigenSelected_Data() {
     var _eigV = eigen_Data(ur_selected);
@@ -284,9 +279,12 @@ function eigenSelected_Data() {
 
     } else {
         _ShowData.classList.remove("hidden")
-        _ShowData.children[0].innerHTML = Math.round(_eigV.e1.plunge) + "&rarr;" + Math.round(_eigV.e1.trend)
-        _ShowData.children[1].innerHTML = Math.round(_eigV.e2.plunge) + "&rarr;" + Math.round(_eigV.e2.trend)
-        _ShowData.children[2].innerHTML = Math.round(_eigV.e3.plunge) + "&rarr;" + Math.round(_eigV.e3.trend)
+        _ShowData.children[0].innerHTML = "max " +
+            Math.round(_eigV.e1.plunge) + "&rarr;" + Math.round(_eigV.e1.trend)
+        _ShowData.children[1].innerHTML = "int " +
+            Math.round(_eigV.e2.plunge) + "&rarr;" + Math.round(_eigV.e2.trend)
+        _ShowData.children[2].innerHTML = "min " +
+            Math.round(_eigV.e3.plunge) + "&rarr;" + Math.round(_eigV.e3.trend)
         ur_ev.push(new Plane(_eigV.e1.trend + 90, 90 - _eigV.e1.plunge, "#00807b", 4, "pl_e1"));
 
         ur_ev.push(new Plane(_eigV.e2.trend + 90, 90 - _eigV.e2.plunge, "#d9c000", 4, "pl_e2"));
