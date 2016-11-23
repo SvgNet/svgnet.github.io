@@ -120,7 +120,8 @@ Svg_Net.gfx.svg_node.addEventListener("mousemove", onPointerMove, false);
 
 
 var curPL = new Plane(0, 90, "rgba(255, 255, 255, 0)", 2, "curpl");
-//var curLN = new Line(0, 90, "white", "curln")
+curPL.plot.setAttribute("stroke-dasharray", "10, 5");
+    //var curLN = new Line(0, 90, "white", "curln")
 var curXY = {};
 
 
@@ -142,7 +143,7 @@ function onPointerUp(e) {
     clearcurTP()
 }
 
-lineDash = new Line_obj({
+/*lineDash = new Line_obj({
     x: 0,
     y: 0
 }, {
@@ -152,10 +153,10 @@ lineDash = new Line_obj({
     color: "gray",
     width: 3
 }, "lineDash")
-lineDash.setAttribute("stroke-dasharray", "10, 5")
+lineDash.setAttribute("stroke-dasharray", "10, 5")*/
 
 function showTP(evt) {
-    var showlin = function () {
+    /*var showlin = function () {
         linSymbol.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
         EnD = cart2svg({
             x: Svg_Net.radius_primitive * Math.cos(pol.azh),
@@ -165,65 +166,81 @@ function showTP(evt) {
         lineDash.setAttribute('x2', EnD.x);
         lineDash.setAttribute('y1', Svgxy.y);
         lineDash.setAttribute('y2', EnD.y)
-    }
-    var Svgxy = cursorPoint(evt)
-    if (document.getElementById("optin_lnpl").checked) {
-        Svgxy.y -= 100
-    }
-    var pt = svg2cart(Svgxy);
-
-    var pol = cart2pol(pt);
-    //var pnt = pt.matrixTransform(Svg_Net.gfx.svg_node.getScreenCTM().inverse());
-
-    if (pol.rad <= Svg_Net.radius_primitive) {
-
-        cursorSym.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
-        var tp = pol2tp(pol);
-
-
-        if (document.getElementById("optin_ln").checked) {
-            curPL.clr = "rgba(255, 255, 255, 0)";
-            curPL.modify();
-            //showlin()
-
-
-            document.getElementById("currType").innerHTML = "Line:";
-            document.getElementById("currTP").innerHTML = Math.round(tp.plunge) + "&rarr;" + Math.round(tp.trend);
-        }
-        if (document.getElementById("optin_pl").checked) {
-            curPL.plot.remove();
-            document.getElementById("currType").innerHTML = "Plane:";
-            curPL.strike = (tp.trend + 90) % 360;
-            curPL.dip = 90 - tp.plunge;
-            curPL.clr = "#00d4d4";
-            document.getElementById("currTP").innerHTML = Math.round(curPL.strike) + "/" + Math.round(curPL.dip);
-            curPL.modify();
-        }
+    }*/
+    if (document.querySelector("#toggleQip").checked) {
+        var Svgxy = cursorPoint(evt)
         if (document.getElementById("optin_lnpl").checked) {
-            curPL.clr = "#00d4d4";
-
-
-            //document.getElementById("currTP").innerHTML = Math.round(curPL.strike) + "/" + Math.round(curPL.dip);
-
-            curPL.modify();
-            showlin();
-            var plnlang = AngDist(tp, curPL);
-            if (plnlang < 88 || plnlang > 92) {
-                linSymbol.setAttribute('stroke', "#ff2525")
-                console.log("red")
-            } else
-                linSymbol.setAttribute('stroke', "#00b468")
-            linSymbol.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
-            ang = AngDist(new Line(curPL.strike, 0), tp);;
-            document.getElementById("currTP").innerHTML = Math.round(curPL.strike) + "/" + Math.round(curPL.dip) + " Rake:" +
-                (ang > 90 ?
-                    (180 - Math.round(ang)) + "from" + ((Math.round(curPL.strike) + 180) % 360) : Math.round(ang) + "from" + Math.round(curPL.strike));
+            Svgxy.y -= 100
         }
+        var pt = svg2cart(Svgxy);
+
+        var pol = cart2pol(pt);
+        //var pnt = pt.matrixTransform(Svg_Net.gfx.svg_node.getScreenCTM().inverse());
+
+        if (pol.rad <= Svg_Net.radius_primitive) {
+
+            cursorSym.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
+            var tp = pol2tp(pol);
+
+
+            if (document.getElementById("optin_ln").checked) {
+                curPL.clr = "rgba(255, 255, 255, 0)";
+                curPL.modify();
+                //showlin()
+
+                document.getElementById("qui_tr").parentNode.classList.add("is-dirty");
+                document.getElementById("qui_pl").parentNode.classList.add("is-dirty");
+                document.getElementById("qui_tr").value = Math.round(tp.trend);
+                document.getElementById("qui_pl").value = Math.round(tp.plunge);
+                document.getElementById("currType").innerHTML = "Line:";
+                // document.getElementById("currTP").innerHTML = Math.round(tp.plunge) + "&rarr;" + Math.round(tp.trend);
+            }
+            if (document.getElementById("optin_pl").checked || document.getElementById("optin_popl").checked) {
+                curPL.plot.remove();
+                // document.getElementById("currType").innerHTML = "Plane:";
+                curPL.strike = (tp.trend + 90) % 360;
+                curPL.dip = 90 - tp.plunge;
+                curPL.clr = "#00d4d4";
+                // document.getElementById("currTP").innerHTML = Math.round(curPL.strike) + "/" + Math.round(curPL.dip);
+                if (document.getElementById("optin_pl").checked) {
+                    document.getElementById("qui_st").parentNode.classList.add("is-dirty");
+                    document.getElementById("qui_dd").parentNode.classList.add("is-dirty");
+                    document.getElementById("qui_st").value = Math.round(curPL.strike);
+                    document.getElementById("qui_dd").value = Math.round(curPL.dip);
+                } else if (document.getElementById("optin_popl").checked) {
+                    document.getElementById("qui_pst").parentNode.classList.add("is-dirty");
+                    document.getElementById("qui_pdd").parentNode.classList.add("is-dirty");
+                    document.getElementById("qui_pst").value = Math.round(curPL.strike);
+                    document.getElementById("qui_pdd").value = Math.round(curPL.dip);
+                }
+                curPL.modify();
+            }
+            if (document.getElementById("optin_lnpl").checked) {
+                curPL.clr = "#00d4d4";
+
+
+                //document.getElementById("currTP").innerHTML = Math.round(curPL.strike) + "/" + Math.round(curPL.dip);
+
+                curPL.modify();
+                //showlin();
+                var plnlang = AngDist(tp, curPL);
+                if (plnlang < 88 || plnlang > 92) {
+                    linSymbol.setAttribute('stroke', "#ff2525")
+                    console.log("red")
+                } else
+                    linSymbol.setAttribute('stroke', "#00b468")
+                linSymbol.setAttribute('transform', "translate(" + pt.x + "," + (-pt.y) + ")");
+                ang = AngDist(new Line(curPL.strike, 0), tp);
+                document.getElementById("currTP").innerHTML = Math.round(curPL.strike) + "/" + Math.round(curPL.dip) + " Rake:" +
+                    (ang > 90 ?
+                        (180 - Math.round(ang)) + "from" + ((Math.round(curPL.strike) + 180) % 360) : Math.round(ang) + "from" + Math.round(curPL.strike));
+            }
 
 
 
-    } else {
-        clearcurTP()
+        } else {
+            clearcurTP()
+        }
     }
 
 }
