@@ -151,7 +151,7 @@ function genID() {
 function addPl() {
 
     var mob_input = input_Dialog.open ? "mob_" : "";
-    ur_pl.push(new Plane(+document.getElementById(mob_input + "st").value, +document.getElementById(mob_input + "dd").value, "blue", 1, "Pur_pl[" + genID() + "]"));
+    ur_pl.push(new Plane(+document.getElementById(mob_input + "st").value, +document.getElementById(mob_input + "dd").value, "blue", 2, "Pur_pl[" + genID() + "]"));
     ur_pl[ur_pl.length - 1].LocData = userLoc.coords;
 
     SvgNet_db.put({
