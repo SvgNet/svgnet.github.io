@@ -12,7 +12,7 @@ function svgNet(radius_primitive) {
     };
 }
 
-Svg_Net = new svgNet(400);
+Svg_Net = new svgNet(300);
 
 Svg_Net.Draw_primitiveCircle();
 
