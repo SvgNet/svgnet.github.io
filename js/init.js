@@ -313,7 +313,20 @@ function eigenSelected_Data() {
         ur_ev.push(new Line(_eigV.e2.trend, _eigV.e2.plunge, "#d9c000", "e2", 10, "#eeff25"));
 
         ur_ev.push(new Line(_eigV.e3.trend, _eigV.e3.plunge, "#b400ad", "e2", 10, "#b400ad"));
+        /* for(i=0;i<)
+        SvgNet_db.put({
+        _id: ur_pl[ur_pl.length - 1].plot.id,
+        orientType: "Plane",
+        strike: ur_pl[ur_pl.length - 1].strike,
+        dip: ur_pl[ur_pl.length - 1].dip,
+        gpsdata: ur_pl[ur_pl.length - 1].LocData
+    }, function (err, result) {
+        if (!err) {
+            console.log(result.id)
+        } else(console.error(err))
+    });*/
     }
 
     console.log(_eigV)
+    updateData();
 }

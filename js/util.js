@@ -37,6 +37,7 @@ var ur_ln = [];
 var ur_popl = [];
 var ur_lnpl = [];
 var ur_selected = [];
+var ur_ev = [];
 
 function SelectThis(event) {
     var targetElement = event.target;
@@ -87,7 +88,9 @@ function AngleSelected() {
 function updateData() {
     document.getElementById("dataout").getElementsByTagName('tbody')[0].innerHTML = "";
     if (ur_pl.length)
-        for (var i = 0; i < ur_pl.length; i++) insertdata(ur_pl[i]);
+        for (var i = 0; i < ur_pl.length; i++) insertdata(ur_pl[i],true);
+     if (ur_ev.length)
+        for (var i = 0; i < ur_ev.length; i++) insertdata(ur_ev[i]);
     if (ur_ln.length)
         for (var i = 0; i < ur_ln.length; i++) insertdata(ur_ln[i]);
     if (ur_popl.length)
@@ -96,16 +99,18 @@ function updateData() {
         for (var i = 0; i < ur_lnpl.length; i++) insertdata(ur_lnpl[i]);
 }
 
-function insertdata(ur_in) {
+function insertdata(ur_in,Eigen) {
     var table = document.getElementById("dataout").getElementsByTagName('tbody')[0];
     var row = table.insertRow(table.rows.length);
     var idf = "slP";
     var dataType = "";
     if (ur_in instanceof Line) {
         dataType = "Line";
+        if(Eigen)console.log("eigen");
         idf += "ur_ln[" + ur_ln.lastIndexOf(ur_in) + "]";
     } else if (ur_in instanceof Plane) {
         dataType = "Plane";
+        if(Eigen)console.log("eigen");
         idf += "ur_pl[" + ur_pl.lastIndexOf(ur_in) + "]";
     } else if (ur_in instanceof PoletoPlane) {
         dataType = "Pole to Plane";
